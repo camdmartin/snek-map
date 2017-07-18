@@ -12,7 +12,11 @@ import copy
 
 
 # TODO:
-# - terrain types
+# terrain types
+# - precipitation map
+# - river erosion
+# mouse response
+# commands
 
 class Tile:
     icon = '~'
@@ -117,7 +121,7 @@ class WorldMap:
     tropics_desert_percent = 30
 
     # for region generation
-    seed_region_count = 3
+    seed_region_count = 4
     region_percent = 50
 
     # variables for noise generation
@@ -147,7 +151,7 @@ class WorldMap:
         self.assign_tiles_to_regions()
         self.update_region_tiles()
 
-        self.fuzz_regions()
+        # self.fuzz_regions()
         self.gen_mountain_ranges()
 
         self.world = self.apply_simplex_noise()
@@ -552,8 +556,8 @@ class WorldMap:
             screen.refresh()
 
     def print_world_heights(self, screen: Screen):
-        # for c in self.continents:
-            # c.set_tile_icons_to_continent_icon()
+        for c in self.continents:
+            c.set_tile_icons_to_continent_icon()
 
         forest_colors = [23, 29, 22, 28, 34, 40, 46, 83, 85]
         ocean_colors = [17, 18, 19, 20, 21, 33, 45, 201, 201, 201]
@@ -578,7 +582,7 @@ class WorldMap:
 
                     color = color_table[j.height]
 
-                    screen.print_at(u'██', x_index * 2, y_index, color)
+                    screen.print_at(f'{j.height}{j.icon}', x_index * 2, y_index, colour=16, bg=color)
                     x_index += 1
                 y_index += 1
 
