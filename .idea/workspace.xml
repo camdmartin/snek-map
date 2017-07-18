@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3e3ab0e6-05ef-4ceb-99f1-e940ce134b5a" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="starmap.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/starmap.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3150">
+              <caret line="302" column="13" lean-forward="false" selection-start-line="302" selection-start-column="13" selection-end-line="302" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+                <element signature="e#369#431#0" expanded="false" />
+                <element signature="e#1959#2316#0" expanded="false" />
+                <element signature="e#2009#2316#0" expanded="false" />
+                <element signature="e#2066#2202#0" expanded="false" />
+                <element signature="e#2355#3038#0" expanded="false" />
+                <element signature="e#3092#3557#0" expanded="false" />
+                <element signature="e#3612#4116#0" expanded="false" />
+                <element signature="e#4154#4201#0" expanded="false" />
+                <element signature="e#4472#5609#0" expanded="false" />
+                <element signature="e#5766#6459#0" expanded="false" />
+                <element signature="e#6497#6704#0" expanded="false" />
+                <element signature="e#6742#6837#0" expanded="false" />
+                <element signature="e#7239#7900#0" expanded="false" />
+                <element signature="e#8305#8538#0" expanded="false" />
+                <element signature="e#8574#8700#0" expanded="false" />
+                <element signature="e#8600#8681#0" expanded="false" />
+                <element signature="e#8624#8681#0" expanded="false" />
+                <element signature="e#8746#9978#0" expanded="false" />
+                <element signature="e#8848#9040#0" expanded="false" />
+                <element signature="e#9059#9317#0" expanded="false" />
+                <element signature="e#9099#9317#0" expanded="false" />
+                <element signature="e#9359#9958#0" expanded="false" />
+                <element signature="e#9392#9828#0" expanded="false" />
+                <element signature="e#9452#9828#0" expanded="false" />
+                <element signature="e#9591#9790#0" expanded="false" />
+                <element signature="e#11156#11230#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="voromap.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/voromap.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="279">
+              <caret line="122" column="36" lean-forward="true" selection-start-line="122" selection-start-column="36" selection-end-line="122" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#4647#4771#0" expanded="false" />
+                <element signature="e#4856#5077#0" expanded="false" />
+                <element signature="e#6954#7141#0" expanded="false" />
+                <element signature="e#7599#7702#0" expanded="false" />
+                <element signature="e#7766#7818#0" expanded="false" />
+                <element signature="e#7899#7980#0" expanded="false" />
+                <element signature="e#8029#8484#0" expanded="false" />
+                <element signature="e#8537#8699#0" expanded="false" />
+                <element signature="e#8752#8960#0" expanded="false" />
+                <element signature="e#9028#9132#0" expanded="false" />
+                <element signature="e#10683#12231#0" expanded="false" />
+                <element signature="e#12308#13535#0" expanded="false" />
+                <element signature="e#14589#14831#0" expanded="false" />
+                <element signature="e#14872#15352#0" expanded="false" />
+                <element signature="e#15397#15765#0" expanded="false" />
+                <element signature="e#19457#19566#0" expanded="false" />
+                <marker date="1500405984669" expanded="false" signature="7176:7372" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>valid</find>
+      <find>vor.ver</find>
+      <find>.vertices</find>
+      <find>dis</find>
+      <find>update_tiles</find>
+      <find>upd</find>
+      <find>update_region</find>
+      <find>' '</find>
+      <find>distance_between</find>
+      <find>range</find>
+      <find>spaced_regions</find>
+      <find>adjacent</find>
+      <find>update</find>
+      <find>type</find>
+      <find>terrain</find>
+    </findStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/tile.py" />
+        <option value="$PROJECT_DIR$/starmap.py" />
+        <option value="$PROJECT_DIR$/voromap.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ToolWindowEvent Log.ShowToolbar" value="false" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.starmap">
+    <configuration default="false" name="starmap" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="starmapper" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/starmap.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="starmapper" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="starmapper" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="starmapper" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="starmapper" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;.&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Python.starmap" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Python.starmap" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3e3ab0e6-05ef-4ceb-99f1-e940ce134b5a" name="Default" comment="" />
+      <created>1499729183823</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1499729183823</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36012527" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.54633623" sideWeight="0.50208336" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18122977" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="9" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/starmap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6342">
+          <caret line="302" column="13" lean-forward="true" selection-start-line="302" selection-start-column="13" selection-end-line="302" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#369#431#0" expanded="false" />
+            <element signature="e#1959#2316#0" expanded="false" />
+            <element signature="e#2009#2316#0" expanded="false" />
+            <element signature="e#2066#2202#0" expanded="false" />
+            <element signature="e#2355#3038#0" expanded="false" />
+            <element signature="e#3092#3557#0" expanded="false" />
+            <element signature="e#3612#4116#0" expanded="false" />
+            <element signature="e#4154#4201#0" expanded="false" />
+            <element signature="e#4472#5609#0" expanded="false" />
+            <element signature="e#5766#6459#0" expanded="false" />
+            <element signature="e#6497#6704#0" expanded="false" />
+            <element signature="e#6742#6837#0" expanded="false" />
+            <element signature="e#7239#7900#0" expanded="false" />
+            <element signature="e#8305#8538#0" expanded="false" />
+            <element signature="e#8574#8700#0" expanded="false" />
+            <element signature="e#8600#8681#0" expanded="false" />
+            <element signature="e#8624#8681#0" expanded="false" />
+            <element signature="e#8746#9978#0" expanded="false" />
+            <element signature="e#8848#9040#0" expanded="false" />
+            <element signature="e#9059#9317#0" expanded="false" />
+            <element signature="e#9099#9317#0" expanded="false" />
+            <element signature="e#9359#9958#0" expanded="false" />
+            <element signature="e#9392#9828#0" expanded="false" />
+            <element signature="e#9452#9828#0" expanded="false" />
+            <element signature="e#9591#9790#0" expanded="false" />
+            <element signature="e#11156#11230#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/voromap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9009">
+          <caret line="429" column="45" lean-forward="false" selection-start-line="429" selection-start-column="45" selection-end-line="429" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#4647#4771#0" expanded="false" />
+            <element signature="e#4856#5077#0" expanded="false" />
+            <element signature="e#6954#7141#0" expanded="false" />
+            <element signature="e#7599#7702#0" expanded="false" />
+            <element signature="e#7766#7818#0" expanded="false" />
+            <element signature="e#7899#7980#0" expanded="false" />
+            <element signature="e#8029#8484#0" expanded="false" />
+            <element signature="e#8537#8699#0" expanded="false" />
+            <element signature="e#8752#8960#0" expanded="false" />
+            <element signature="e#9028#9132#0" expanded="false" />
+            <element signature="e#10683#12231#0" expanded="false" />
+            <element signature="e#12308#13535#0" expanded="false" />
+            <element signature="e#14589#14831#0" expanded="false" />
+            <element signature="e#14872#15352#0" expanded="false" />
+            <element signature="e#15397#15765#0" expanded="false" />
+            <element signature="e#19457#19566#0" expanded="false" />
+            <marker date="1500405984669" expanded="false" signature="7176:7372" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/starmap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5418">
+          <caret line="258" column="0" lean-forward="false" selection-start-line="258" selection-start-column="0" selection-end-line="258" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#369#431#0" expanded="false" />
+            <element signature="e#1959#2316#0" expanded="false" />
+            <element signature="e#2009#2316#0" expanded="false" />
+            <element signature="e#2066#2202#0" expanded="false" />
+            <element signature="e#2355#3038#0" expanded="false" />
+            <element signature="e#3092#3557#0" expanded="false" />
+            <element signature="e#3612#4116#0" expanded="false" />
+            <element signature="e#4154#4201#0" expanded="false" />
+            <element signature="e#4472#5609#0" expanded="false" />
+            <element signature="e#5766#6459#0" expanded="false" />
+            <element signature="e#6497#6704#0" expanded="false" />
+            <element signature="e#6742#6837#0" expanded="false" />
+            <element signature="e#7239#7900#0" expanded="false" />
+            <element signature="e#8305#8538#0" expanded="false" />
+            <element signature="e#8574#8700#0" expanded="false" />
+            <element signature="e#8600#8681#0" expanded="false" />
+            <element signature="e#8624#8681#0" expanded="false" />
+            <element signature="e#8746#9978#0" expanded="false" />
+            <element signature="e#8848#9040#0" expanded="false" />
+            <element signature="e#9059#9317#0" expanded="false" />
+            <element signature="e#9099#9317#0" expanded="false" />
+            <element signature="e#9359#9958#0" expanded="false" />
+            <element signature="e#9392#9828#0" expanded="false" />
+            <element signature="e#9452#9828#0" expanded="false" />
+            <element signature="e#9591#9790#0" expanded="false" />
+            <element signature="e#11156#11230#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/voromap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2646">
+          <caret line="130" column="0" lean-forward="true" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#4647#4771#0" expanded="false" />
+            <element signature="e#4856#5077#0" expanded="false" />
+            <element signature="e#6954#7141#0" expanded="false" />
+            <element signature="e#7599#7702#0" expanded="false" />
+            <element signature="e#7766#7818#0" expanded="false" />
+            <element signature="e#7899#7980#0" expanded="false" />
+            <element signature="e#8029#8484#0" expanded="false" />
+            <element signature="e#8537#8699#0" expanded="false" />
+            <element signature="e#8752#8960#0" expanded="false" />
+            <element signature="e#9028#9132#0" expanded="false" />
+            <element signature="e#10683#12231#0" expanded="false" />
+            <element signature="e#12308#13535#0" expanded="false" />
+            <element signature="e#14589#14831#0" expanded="false" />
+            <element signature="e#14872#15352#0" expanded="false" />
+            <element signature="e#15397#15765#0" expanded="false" />
+            <element signature="e#19457#19566#0" expanded="false" />
+            <marker date="1500405984669" expanded="false" signature="7176:7372" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/starmap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#369#431#0" expanded="false" />
+            <element signature="e#1959#2316#0" expanded="false" />
+            <element signature="e#2009#2316#0" expanded="false" />
+            <element signature="e#2066#2202#0" expanded="false" />
+            <element signature="e#2355#3038#0" expanded="false" />
+            <element signature="e#3092#3557#0" expanded="false" />
+            <element signature="e#3612#4116#0" expanded="false" />
+            <element signature="e#4154#4201#0" expanded="false" />
+            <element signature="e#4472#5609#0" expanded="false" />
+            <element signature="e#5766#6459#0" expanded="false" />
+            <element signature="e#6497#6704#0" expanded="false" />
+            <element signature="e#6742#6837#0" expanded="false" />
+            <element signature="e#7239#7900#0" expanded="false" />
+            <element signature="e#8305#8538#0" expanded="false" />
+            <element signature="e#8574#8700#0" expanded="false" />
+            <element signature="e#8600#8681#0" expanded="false" />
+            <element signature="e#8624#8681#0" expanded="false" />
+            <element signature="e#8746#9978#0" expanded="false" />
+            <element signature="e#8848#9040#0" expanded="false" />
+            <element signature="e#9059#9317#0" expanded="false" />
+            <element signature="e#9099#9317#0" expanded="false" />
+            <element signature="e#9359#9958#0" expanded="false" />
+            <element signature="e#9392#9828#0" expanded="false" />
+            <element signature="e#9452#9828#0" expanded="false" />
+            <element signature="e#9591#9790#0" expanded="false" />
+            <element signature="e#11156#11230#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/starmap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#369#431#0" expanded="false" />
+            <element signature="e#1959#2316#0" expanded="false" />
+            <element signature="e#2009#2316#0" expanded="false" />
+            <element signature="e#2066#2202#0" expanded="false" />
+            <element signature="e#2355#3038#0" expanded="false" />
+            <element signature="e#3092#3557#0" expanded="false" />
+            <element signature="e#3612#4116#0" expanded="false" />
+            <element signature="e#4154#4201#0" expanded="false" />
+            <element signature="e#4472#5609#0" expanded="false" />
+            <element signature="e#5766#6459#0" expanded="false" />
+            <element signature="e#6497#6704#0" expanded="false" />
+            <element signature="e#6742#6837#0" expanded="false" />
+            <element signature="e#7239#7900#0" expanded="false" />
+            <element signature="e#8305#8538#0" expanded="false" />
+            <element signature="e#8574#8700#0" expanded="false" />
+            <element signature="e#8600#8681#0" expanded="false" />
+            <element signature="e#8624#8681#0" expanded="false" />
+            <element signature="e#8746#9978#0" expanded="false" />
+            <element signature="e#8848#9040#0" expanded="false" />
+            <element signature="e#9059#9317#0" expanded="false" />
+            <element signature="e#9099#9317#0" expanded="false" />
+            <element signature="e#9359#9958#0" expanded="false" />
+            <element signature="e#9392#9828#0" expanded="false" />
+            <element signature="e#9452#9828#0" expanded="false" />
+            <element signature="e#9591#9790#0" expanded="false" />
+            <element signature="e#11156#11230#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/noise-master/examples/animate_tex.py" />
+    <entry file="file://$USER_HOME$/Desktop/noise-master/examples/planet.py" />
+    <entry file="file://$PROJECT_DIR$/starmap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#369#431#0" expanded="false" />
+            <element signature="e#1959#2316#0" expanded="false" />
+            <element signature="e#2009#2316#0" expanded="false" />
+            <element signature="e#2066#2202#0" expanded="false" />
+            <element signature="e#2355#3038#0" expanded="false" />
+            <element signature="e#3092#3557#0" expanded="false" />
+            <element signature="e#3612#4116#0" expanded="false" />
+            <element signature="e#4154#4201#0" expanded="false" />
+            <element signature="e#4472#5609#0" expanded="false" />
+            <element signature="e#5766#6459#0" expanded="false" />
+            <element signature="e#6497#6704#0" expanded="false" />
+            <element signature="e#6742#6837#0" expanded="false" />
+            <element signature="e#7239#7900#0" expanded="false" />
+            <element signature="e#8305#8538#0" expanded="false" />
+            <element signature="e#8574#8700#0" expanded="false" />
+            <element signature="e#8600#8681#0" expanded="false" />
+            <element signature="e#8624#8681#0" expanded="false" />
+            <element signature="e#8746#9978#0" expanded="false" />
+            <element signature="e#8848#9040#0" expanded="false" />
+            <element signature="e#9059#9317#0" expanded="false" />
+            <element signature="e#9099#9317#0" expanded="false" />
+            <element signature="e#9359#9958#0" expanded="false" />
+            <element signature="e#9392#9828#0" expanded="false" />
+            <element signature="e#9452#9828#0" expanded="false" />
+            <element signature="e#9591#9790#0" expanded="false" />
+            <element signature="e#11156#11230#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/noise-master/examples/animate_tex.py" />
+    <entry file="file://$USER_HOME$/Desktop/noise-master/examples/planet.py" />
+    <entry file="file://$PROJECT_DIR$/starmap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3738">
+          <caret line="185" column="22" lean-forward="false" selection-start-line="185" selection-start-column="22" selection-end-line="185" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#369#431#0" expanded="false" />
+            <element signature="e#1959#2316#0" expanded="false" />
+            <element signature="e#2009#2316#0" expanded="false" />
+            <element signature="e#2066#2202#0" expanded="false" />
+            <element signature="e#2355#3038#0" expanded="false" />
+            <element signature="e#3092#3557#0" expanded="false" />
+            <element signature="e#3612#4116#0" expanded="false" />
+            <element signature="e#4154#4201#0" expanded="false" />
+            <element signature="e#4472#5609#0" expanded="false" />
+            <element signature="e#5766#6459#0" expanded="false" />
+            <element signature="e#6497#6704#0" expanded="false" />
+            <element signature="e#6742#6837#0" expanded="false" />
+            <element signature="e#7239#7900#0" expanded="false" />
+            <element signature="e#8305#8538#0" expanded="false" />
+            <element signature="e#8574#8700#0" expanded="false" />
+            <element signature="e#8600#8681#0" expanded="false" />
+            <element signature="e#8624#8681#0" expanded="false" />
+            <element signature="e#8746#9978#0" expanded="false" />
+            <element signature="e#8848#9040#0" expanded="false" />
+            <element signature="e#9059#9317#0" expanded="false" />
+            <element signature="e#9099#9317#0" expanded="false" />
+            <element signature="e#9359#9958#0" expanded="false" />
+            <element signature="e#9392#9828#0" expanded="false" />
+            <element signature="e#9452#9828#0" expanded="false" />
+            <element signature="e#9591#9790#0" expanded="false" />
+            <element signature="e#11156#11230#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/noise-master/examples/animate_tex.py" />
+    <entry file="file://$USER_HOME$/Desktop/noise-master/examples/2dtexture.py" />
+    <entry file="file://$USER_HOME$/Desktop/noise-master/examples/planet.py" />
+    <entry file="file://$PROJECT_DIR$/starmap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="37" lean-forward="false" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#369#431#0" expanded="false" />
+            <element signature="e#1959#2316#0" expanded="false" />
+            <element signature="e#2009#2316#0" expanded="false" />
+            <element signature="e#2066#2202#0" expanded="false" />
+            <element signature="e#2355#3038#0" expanded="false" />
+            <element signature="e#3092#3557#0" expanded="false" />
+            <element signature="e#3612#4116#0" expanded="false" />
+            <element signature="e#4154#4201#0" expanded="false" />
+            <element signature="e#4472#5609#0" expanded="false" />
+            <element signature="e#5766#6459#0" expanded="false" />
+            <element signature="e#6497#6704#0" expanded="false" />
+            <element signature="e#6742#6837#0" expanded="false" />
+            <element signature="e#7239#7900#0" expanded="false" />
+            <element signature="e#8305#8538#0" expanded="false" />
+            <element signature="e#8574#8700#0" expanded="false" />
+            <element signature="e#8600#8681#0" expanded="false" />
+            <element signature="e#8624#8681#0" expanded="false" />
+            <element signature="e#8746#9978#0" expanded="false" />
+            <element signature="e#8848#9040#0" expanded="false" />
+            <element signature="e#9059#9317#0" expanded="false" />
+            <element signature="e#9099#9317#0" expanded="false" />
+            <element signature="e#9359#9958#0" expanded="false" />
+            <element signature="e#9392#9828#0" expanded="false" />
+            <element signature="e#9452#9828#0" expanded="false" />
+            <element signature="e#9591#9790#0" expanded="false" />
+            <element signature="e#11156#11230#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/noise-master/examples/2dtexture.py" />
+    <entry file="file://$USER_HOME$/Desktop/noise-master/examples/planet.py" />
+    <entry file="file://$USER_HOME$/Desktop/noise-master/examples/animate_tex.py" />
+    <entry file="file://$PROJECT_DIR$/starmap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3150">
+          <caret line="302" column="13" lean-forward="false" selection-start-line="302" selection-start-column="13" selection-end-line="302" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#369#431#0" expanded="false" />
+            <element signature="e#1959#2316#0" expanded="false" />
+            <element signature="e#2009#2316#0" expanded="false" />
+            <element signature="e#2066#2202#0" expanded="false" />
+            <element signature="e#2355#3038#0" expanded="false" />
+            <element signature="e#3092#3557#0" expanded="false" />
+            <element signature="e#3612#4116#0" expanded="false" />
+            <element signature="e#4154#4201#0" expanded="false" />
+            <element signature="e#4472#5609#0" expanded="false" />
+            <element signature="e#5766#6459#0" expanded="false" />
+            <element signature="e#6497#6704#0" expanded="false" />
+            <element signature="e#6742#6837#0" expanded="false" />
+            <element signature="e#7239#7900#0" expanded="false" />
+            <element signature="e#8305#8538#0" expanded="false" />
+            <element signature="e#8574#8700#0" expanded="false" />
+            <element signature="e#8600#8681#0" expanded="false" />
+            <element signature="e#8624#8681#0" expanded="false" />
+            <element signature="e#8746#9978#0" expanded="false" />
+            <element signature="e#8848#9040#0" expanded="false" />
+            <element signature="e#9059#9317#0" expanded="false" />
+            <element signature="e#9099#9317#0" expanded="false" />
+            <element signature="e#9359#9958#0" expanded="false" />
+            <element signature="e#9392#9828#0" expanded="false" />
+            <element signature="e#9452#9828#0" expanded="false" />
+            <element signature="e#9591#9790#0" expanded="false" />
+            <element signature="e#11156#11230#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/voromap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="122" column="36" lean-forward="true" selection-start-line="122" selection-start-column="36" selection-end-line="122" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#4647#4771#0" expanded="false" />
+            <element signature="e#4856#5077#0" expanded="false" />
+            <element signature="e#6954#7141#0" expanded="false" />
+            <element signature="e#7599#7702#0" expanded="false" />
+            <element signature="e#7766#7818#0" expanded="false" />
+            <element signature="e#7899#7980#0" expanded="false" />
+            <element signature="e#8029#8484#0" expanded="false" />
+            <element signature="e#8537#8699#0" expanded="false" />
+            <element signature="e#8752#8960#0" expanded="false" />
+            <element signature="e#9028#9132#0" expanded="false" />
+            <element signature="e#10683#12231#0" expanded="false" />
+            <element signature="e#12308#13535#0" expanded="false" />
+            <element signature="e#14589#14831#0" expanded="false" />
+            <element signature="e#14872#15352#0" expanded="false" />
+            <element signature="e#15397#15765#0" expanded="false" />
+            <element signature="e#19457#19566#0" expanded="false" />
+            <marker date="1500405984669" expanded="false" signature="7176:7372" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
