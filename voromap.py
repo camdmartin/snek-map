@@ -145,32 +145,45 @@ class WorldMap:
         self.set_seeds()
 
         self.voronoi_diagram = spatial.Voronoi(self.seeds)
-        self.world = self.create_base_map(width, height, min_altitude)
+        self.world = self.create_base_map(self.width, self.height, self.min_altitude)
+        self.regions = []
+        self.continents = []
+
+        self.regenerate()
+
+        self.selected_tile = self.world[0][0]
+
+        self.terrain_filter()
+
+    # basic generation methods
+
+    def regenerate(self):
+        self.regions = []
+        self.continents = []
+        self.seeds = []
+
+        self.set_seeds()
+
+        self.voronoi_diagram = spatial.Voronoi(self.seeds)
+        self.world = self.create_base_map(self.width, self.height, self.min_altitude)
 
         self.regions = self.set_world_regions(self.voronoi_diagram)
-        # self.regions = self.get_seed_regions()
 
-        self.continents = []
         self.regions = self.generate_continents()
 
         self.assign_tiles_to_regions()
         self.update_region_tiles()
 
-        # self.fuzz_regions()
         self.gen_mountain_ranges()
 
         self.world = self.apply_simplex_noise()
         self.world = self.gaussian_smooth()
 
         self.set_sea_tiles()
-        # self.gen_desert_regions()
-        # self.update_tile_terrains()
 
         self.truncate_tile_heights()
 
-        self.selected_tile = self.world[0][0]
-
-    # basic generation methods
+        self.terrain_filter()
 
     def set_seeds(self):
         for i in range(0, self.seed_count):
@@ -314,12 +327,53 @@ class WorldMap:
         return None
 
     def get_continent_of_tile(self, t: Tile):
-        return self.get_continent_of_region(self.get_region_of_tile(t))
+        for c in self.continents:
+            all_tiles = []
+            for r in c.regions:
+                for t in r.tiles:
+                    all_tiles.append(t)
+            if all_tiles.__contains__(t):
+                return c
+
+        return None
 
     def swap_tile_region(self, t: Tile, swap_to: Region):
         swap_from = self.get_region_of_tile(t)
         swap_from.tiles.remove(t)
         swap_to.tiles.append(t)
+
+    # tile color filters
+    def continent_filter(self):
+        for c in self.continents:
+            all_tiles = []
+            for r in c.regions:
+                for t in r.tiles:
+                    t.color = c.color
+
+    def get_terrain_color(self, tile):
+        forest_colors = [23, 29, 22, 28, 34, 40, 46, 83, 85]
+        ocean_colors = [17, 18, 19, 20, 21, 33, 45, 201, 201, 201]
+        mountain_colors = [201, 201, 201, 233, 235, 237, 241, 248, 252, 255]
+        desert_colors = [3, 186, 190, 226, 227, 228, 229, 230, 252, 255]
+        # orange desert colors [130, 136, 172, 178, 220, 226, 228, 230, 252, 255]
+
+        color_table = [201, 201, 201, 201, 201, 201, 201, 201, 201]
+
+        if tile.type is not 'Land':
+            color_table = ocean_colors
+        elif tile.terrain is 'Desert':
+            color_table = desert_colors
+        elif tile.height < 6:
+            color_table = forest_colors
+        elif tile.height >= 6:
+            color_table = mountain_colors
+
+        return color_table[tile.height]
+
+    def terrain_filter(self):
+        for i in self.world:
+            for j in i:
+                j.color = self.get_terrain_color(j)
 
     # region modification
 

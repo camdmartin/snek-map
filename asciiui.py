@@ -4,7 +4,10 @@ from asciimatics.screen import Screen
 from asciimatics.scene import Scene
 import voromap
 import os
-import copy
+
+# TODO:
+# wrapping on bottom and right of map
+# fix map cutoff 1 space before edge
 
 
 class ConsoleView(widgets.Widget):
@@ -17,6 +20,7 @@ class ConsoleView(widgets.Widget):
 
         self.height = height
         self.text_lines = []
+        self._is_tab_stop = False
         for h in range(0, height):
             self.text_lines.append('')
 
@@ -27,7 +31,7 @@ class ConsoleView(widgets.Widget):
 
     def process_event(self, event):
         if isinstance(event, asciimatics.event.KeyboardEvent):
-            global_shortcuts()
+            global_shortcuts(event)
         return
 
     def required_height(self, offset, width):
@@ -64,7 +68,6 @@ class VoromapView(widgets.Widget):
         # self._is_tab_stop = False
         self.world_map = world_map
         self.display = display
-        self.apply_color_filter(self.world_map.color_filter)
 
     @property
     def value(self):
@@ -97,89 +100,129 @@ class VoromapView(widgets.Widget):
                 x_index += 1
             y_index += 1
 
-    def apply_color_filter(self, filter: str):
-        for i in self.world_map.world:
-            for j in i:
-                if filter is 'Terrain':
-                    color = self.get_terrain_color(j)
-                elif filter is 'Continent':
-                    c = self.world_map.get_continent_of_tile(j)
-                    if c is not None:
-                        color = c.color
-                    else:
-                        color = 17
-
-                j.color = color
-
-    def get_terrain_color(self, tile):
-        forest_colors = [23, 29, 22, 28, 34, 40, 46, 83, 85]
-        ocean_colors = [17, 18, 19, 20, 21, 33, 45, 201, 201, 201]
-        mountain_colors = [201, 201, 201, 233, 235, 237, 241, 248, 252, 255]
-        desert_colors = [3, 186, 190, 226, 227, 228, 229, 230, 252, 255]
-        # orange desert colors [130, 136, 172, 178, 220, 226, 228, 230, 252, 255]
-
-        color_table = [201, 201, 201, 201, 201, 201, 201, 201, 201]
-
-        if tile.type is not 'Land':
-            color_table = ocean_colors
-        elif tile.terrain is 'Desert':
-            color_table = desert_colors
-        elif tile.height < 6:
-            color_table = forest_colors
-        elif tile.height >= 6:
-            color_table = mountain_colors
-
-        return color_table[tile.height]
-
-    def handle_arrow_input(self, key_code):
+    def handle_arrow_input(self, event):
+        key_code = event.key_code
         t = self.world_map.selected_tile
+        location_changed = False
 
         try:
             if key_code is Screen.KEY_LEFT:
                 self.world_map.selected_tile = self.world_map.world[t.y][t.x - 1]
+                location_changed = True
             elif key_code is Screen.KEY_RIGHT:
                 self.world_map.selected_tile = self.world_map.world[t.y][t.x + 1]
+                location_changed = True
             elif key_code is Screen.KEY_UP:
                 self.world_map.selected_tile = self.world_map.world[t.y - 1][t.x]
+                location_changed = True
             elif key_code is Screen.KEY_DOWN:
                 self.world_map.selected_tile = self.world_map.world[t.y + 1][t.x]
+                location_changed = True
             elif key_code == 393:
                 self.world_map.selected_tile = self.world_map.world[t.y][t.x - 10]
+                location_changed = True
             elif key_code == 402:
                 self.world_map.selected_tile = self.world_map.world[t.y][t.x + 10]
+                location_changed = True
             elif key_code == 337:
                 self.world_map.selected_tile = self.world_map.world[t.y - 10][t.x]
+                location_changed = True
             elif key_code == 336:
                 self.world_map.selected_tile = self.world_map.world[t.y + 10][t.x]
+                location_changed = True
+
         except IndexError:
-            ()
+            location_changed = False
 
-        self.display.add_line(text=f"Selected: ({self.world_map.selected_tile.x}, {self.world_map.selected_tile.y})")
-        self.update(0)
+        if location_changed:
+            self.display.add_line(
+                text=f"Selected: ({self.world_map.selected_tile.x}, {self.world_map.selected_tile.y})")
+            self.update(0)
 
-    def handle_enter_input(self, key_code):
-        if key_code == 10:
+    def handle_enter_input(self, event):
+        if event.key_code == 10:
             self.display.reset()
             self.display.update(1)
+            return None
+        return event
 
     def process_event(self, event):
         if isinstance(event, asciimatics.event.KeyboardEvent):
+
             global_shortcuts(event)
-            self.handle_arrow_input(event.key_code)
-            self.handle_enter_input(event.key_code)
-            # print(event.key_code)
-        return
+
+            t = self.world_map.selected_tile
+
+            if event.key_code in (Screen.KEY_LEFT, Screen.KEY_RIGHT, Screen.KEY_UP, Screen.KEY_DOWN,
+                                  393, 402, 337, 336):
+                self.handle_arrow_input(event)
+                return None
+            elif event.key_code == 10:
+                self.display.reset()
+                self.display.update(0)
+                return None
+            else:
+                return event
+                self.display.add_line(str(event.key_code))
+        else:
+            return event
+
+        return event
 
     def required_height(self, offset, width):
         return self.world_map.height
 
 
 class TextInputView(widgets.Text):
-    def __init__(self, model):
+    commands = ['filter', 'f', 'Filter', 'F',
+                'regen', 'rg', 'Regen', 'RG']
+    raw_command = ''
+
+    def __init__(self, model, map_display, console):
         super(TextInputView, self).__init__(name='Input')
         self._label = '>'
         self._model = model
+        self.console = console
+        self.map_display = map_display
         self.custom_colour = 'edit_text'
+
+    def handle_command(self, command):
+        command_array = command.split(' ')
+        if len(command_array) > 0:
+            if self.commands.__contains__(command_array[0]):
+                main_command = command_array.pop(0)
+                if main_command in ('filter', 'f', 'Filter', 'F'):
+                    if command_array[0] in ('terrain', 't', 'Terrain', 'T'):
+                        self._model.terrain_filter()
+                        self.console.add_line('Terrain filter on.')
+                    elif command_array[0] in ('continent', 'c', "Continent", 'C'):
+                        self._model.continent_filter()
+                        self.console.add_line('Continent filter on.')
+                    else:
+                        self.console.add_line('Invalid filter type.')
+                if main_command in ('regen', 'rg', 'Regen', 'RG'):
+                    self._model.regenerate()
+            else:
+                self.console.add_line('Invalid command.')
+
+    def process_event(self, event):
+        if isinstance(event, asciimatics.event.KeyboardEvent):
+            global_shortcuts(event)
+
+            if event.key_code in (Screen.KEY_UP, Screen.KEY_DOWN):
+                return None
+            if event.key_code == 10:
+                raw_command = self._value
+                self.handle_command(raw_command)
+                self._value = ''
+                self.update(0)
+                self.map_display.update(0)
+            else:
+                super(TextInputView, self).process_event(event)
+        else:
+            return event
+
+        return event
 
 
 class TestView(widgets.Frame):
@@ -195,13 +238,13 @@ class TestView(widgets.Frame):
 
         self.palette['background'] = (Screen.COLOUR_WHITE, Screen.A_NORMAL, Screen.COLOUR_BLACK)
         self.palette['edit_text'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
-        self.palette['label'] = (Screen.COLOUR_CYAN, Screen.A_BOLD, Screen.COLOUR_BLACK)
+        self.palette['label'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
 
         self._model = model
         # self._map_label = widgets.Label(label=f"Selected: ({model.selected_tile.x}, {model.selected_tile.y})")
         self._map_console = ConsoleView(screen.height - self._model.height - 1)
         self._map_view = VoromapView(model, self._map_console)
-        self._text_input = TextInputView(model)
+        self._text_input = TextInputView(model, self._map_view, self._map_console)
 
         layout = widgets.Layout([1], fill_frame=True)
         # layout2 = widgets.Layout([1])
@@ -214,7 +257,7 @@ class TestView(widgets.Frame):
         layout.add_widget(self._text_input)
         # layout2.add_widget(widgets.Button("Quit", self._quit), 0)
 
-        self._map_view.focus()
+        # self._map_view.focus()
         self.fix()
 
     def _reload_map(self):
