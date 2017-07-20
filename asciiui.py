@@ -61,6 +61,8 @@ class ConsoleView(widgets.Widget):
 class VoromapView(widgets.Widget):
     # generation variables eventually
     # color filter supports Terrain, Continent
+    show_heights = False
+    show_icons = False
 
     def __init__(self, world_map: voromap.WorldMap, display: ConsoleView):
         super(VoromapView, self).__init__(name="World")
@@ -88,7 +90,17 @@ class VoromapView(widgets.Widget):
         for i in self.world_map.world:
             x_index = 0
             for j in i:
-                l = "  "
+                icon1 = ' '
+                icon2 = ' '
+
+                if self.show_icons is True:
+                    icon1 = j.icon
+
+                if self.show_heights is True:
+                    icon2 = j.height
+
+                l = f'{icon1}{icon2}'
+
                 color = j.color
 
                 if j is self.world_map.selected_tile:
@@ -175,7 +187,9 @@ class VoromapView(widgets.Widget):
 
 class TextInputView(widgets.Text):
     commands = ['filter', 'f', 'Filter', 'F',
-                'regen', 'rg', 'Regen', 'RG']
+                'regen', 'rg', 'Regen', 'RG',
+                'height', 'h', 'Height', 'H',
+                'icon', 'i', 'Icon', 'I']
     raw_command = ''
 
     def __init__(self, model, map_display, console):
@@ -200,8 +214,17 @@ class TextInputView(widgets.Text):
                         self.console.add_line('Continent filter on.')
                     else:
                         self.console.add_line('Invalid filter type.')
-                if main_command in ('regen', 'rg', 'Regen', 'RG'):
+                elif main_command in ('regen', 'rg', 'Regen', 'RG'):
                     self._model.regenerate()
+                    self.console.add_line('World regenerated.')
+                elif main_command in ('height', 'h', 'Height', 'H'):
+                    self.map_display.show_heights = not self.map_display.show_heights
+                    self.console.add_line(f'Showing heights: {self.map_display.show_heights}')
+                    self.map_display.update(0)
+                elif main_command in ('icon', 'i', 'Icon', 'I'):
+                    self.map_display.show_icons = not self.map_display.show_icons
+                    self.console.add_line(f'Showing icons: {self.map_display.show_icons}')
+                    self.map_display.update(0)
             else:
                 self.console.add_line('Invalid command.')
 

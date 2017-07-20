@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3e3ab0e6-05ef-4ceb-99f1-e940ce134b5a" name="Default" comment="Implemented text input and command structure. Basic filtering now available. World regeneration from console now available.">
+    <list default="true" id="3e3ab0e6-05ef-4ceb-99f1-e940ce134b5a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asciiui.py" afterPath="$PROJECT_DIR$/asciiui.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/voromap.py" afterPath="$PROJECT_DIR$/voromap.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,11 +46,12 @@
       <file leaf-file-name="asciiui.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/asciiui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="4" column="14" lean-forward="true" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+            <state relative-caret-position="693">
+              <caret line="227" column="17" lean-forward="true" selection-start-line="227" selection-start-column="17" selection-end-line="227" selection-end-column="17" />
               <folding>
-                <element signature="e#2861#4532#0" expanded="false" />
-                <element signature="e#4583#4720#0" expanded="false" />
+                <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#3144#4815#0" expanded="false" />
+                <element signature="e#4866#5003#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -294,7 +294,14 @@
       <option name="project" value="LOCAL" />
       <updated>1500558870735</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Implemented text input and command structure. Basic filtering now available. World regeneration from console now available.">
+      <created>1500566235356</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1500566235356</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -834,11 +841,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/asciiui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="14" lean-forward="true" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+        <state relative-caret-position="693">
+          <caret line="227" column="17" lean-forward="true" selection-start-line="227" selection-start-column="17" selection-end-line="227" selection-end-column="17" />
           <folding>
-            <element signature="e#2861#4532#0" expanded="false" />
-            <element signature="e#4583#4720#0" expanded="false" />
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#3144#4815#0" expanded="false" />
+            <element signature="e#4866#5003#0" expanded="false" />
           </folding>
         </state>
       </provider>
