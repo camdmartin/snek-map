@@ -202,21 +202,23 @@ class VoromapView(widgets.Widget):
                 return None
             else:
                 return event
-                self.display.add_line(str(event.key_code))
+                # self.display.add_line(str(event.key_code))
         else:
             return event
 
         return event
 
     def required_height(self, offset, width):
-        return self.world_map.height
+        return self.world_map.generation_dict['height']
 
 
 class TextInputView(widgets.Text):
     commands = ['filter', 'f', 'Filter', 'F',
                 'regen', 'rg', 'Regen', 'RG',
                 'height', 'h', 'Height', 'H',
-                'icon', 'i', 'Icon', 'I']
+                'icon', 'i', 'Icon', 'I',
+                'genvars', 'gv', 'GenVars', 'GV',
+                'edit', 'e', 'Edit', 'E']
     raw_command = ''
 
     def __init__(self, model, map_display, console):
@@ -232,6 +234,7 @@ class TextInputView(widgets.Text):
         if len(command_array) > 0:
             if self.commands.__contains__(command_array[0]):
                 main_command = command_array.pop(0)
+
                 if main_command in ('filter', 'f', 'Filter', 'F'):
                     if command_array[0] in ('terrain', 't', 'Terrain', 'T'):
                         self._model.terrain_filter()
@@ -241,19 +244,41 @@ class TextInputView(widgets.Text):
                         self.console.add_line('Continent filter on.')
                     else:
                         self.console.add_line('Invalid filter type.')
+
                 elif main_command in ('regen', 'rg', 'Regen', 'RG'):
                     self._model.regenerate()
                     self.console.add_line('World regenerated.')
+
                 elif main_command in ('height', 'h', 'Height', 'H'):
                     self.map_display.show_heights = not self.map_display.show_heights
                     self.console.add_line(f'Showing heights: {self.map_display.show_heights}')
                     self.map_display.update(0)
+
                 elif main_command in ('icon', 'i', 'Icon', 'I'):
                     self.map_display.show_icons = not self.map_display.show_icons
                     self.console.add_line(f'Showing icons: {self.map_display.show_icons}')
                     self.map_display.update(0)
+
+                elif main_command in ('genvars', 'gv', 'GenVars', 'GV'):
+                    for i in self.map_display.world_map.generation_dict:
+                        self.console.add_line(f'{i}: {self.map_display.world_map.generation_dict[i]}')
+
+                elif main_command in ('edit', 'e', 'Edit', 'E'):
+                    if command_array[0] in self.map_display.world_map.generation_dict.keys() and len(command_array) > 1 \
+                            and self.test_valid_int(command_array[1]):
+                        self.map_display.world_map.generation_dict[command_array[0]] = int(command_array[1])
+                        self.console.add_line(f'{command_array[0]} set to {command_array[1]}')
+                    else:
+                        self.console.add_line('Input a valid generation variable and integer value.')
             else:
                 self.console.add_line('Invalid command.')
+
+    def test_valid_int(self, s):
+        try:
+            int(s)
+        except ValueError:
+            return False
+        return True
 
     def process_event(self, event):
         if isinstance(event, asciimatics.event.KeyboardEvent):
@@ -292,7 +317,7 @@ class TestView(widgets.Frame):
 
         self._model = model
         # self._map_label = widgets.Label(label=f"Selected: ({model.selected_tile.x}, {model.selected_tile.y})")
-        self._map_console = ConsoleView(screen.height - self._model.height - 1)
+        self._map_console = ConsoleView(screen.height - self._model.generation_dict['height'] - 1)
         self._map_view = VoromapView(model, self._map_console)
         self._text_input = TextInputView(model, self._map_view, self._map_console)
 
@@ -337,6 +362,7 @@ def demo(screen, scene):
 
 last_scene = None
 os.environ['TERM'] = 'xterm-256color'
+
 while True:
     try:
         Screen.wrapper(demo, catch_interrupt=True, arguments=[last_scene])

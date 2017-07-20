@@ -148,13 +148,6 @@ class WorldMap:
         self.generation_dict['sea_level'] = sea_level
         self.generation_dict['seed_count'] = seed_count
 
-        self.width = width
-        self.height = height
-        self.min_altitude = min_altitude
-        self.sea_level = sea_level
-        self.max_altitude = max_altitude
-
-        self.seed_count = seed_count
         self.seeds = []
         self.set_seeds()
 
@@ -201,8 +194,10 @@ class WorldMap:
 
         self.terrain_filter()
 
+        self.selected_tile = self.world[0][0]
+
     def set_seeds(self):
-        for i in range(0, self.seed_count):
+        for i in range(0, self.generation_dict['seed_count']):
             self.seeds.append([randint(0, self.generation_dict['width'] - 1), randint(0, self.generation_dict['height'] - 1)])
 
     def create_base_map(self, width: int, height: int, min_altitude: int):
@@ -420,7 +415,7 @@ class WorldMap:
                             temp_regions.remove(t)
                             break
 
-        while len(seed_regions) < self.seed_region_count:
+        while len(seed_regions) < self.generation_dict['continent_count']:
             shuffle(temp_regions)
             r = temp_regions[0]
 
@@ -491,7 +486,7 @@ class WorldMap:
     def set_continent_mountain_ranges(self, continent: Continent):
         generated_regions = []
 
-        for i in range(0, self.mountain_range_count):
+        for i in range(0, self.generation_dict['mountains_per_continent']):
             range_lines = []
             i = randint(0, len(continent.regions) - 1)
             continent.regions[i].terrain = 'Mountain'
@@ -500,7 +495,7 @@ class WorldMap:
             c = t.get_region_center()
             previous_point = c
 
-            for j in range(0, self.mountain_range_length):
+            for j in range(0, self.generation_dict['mountain_range_length']):
                 adjacent = self.adjacent_regions(t)
                 shuffle(adjacent)
                 for r in generated_regions:
@@ -587,8 +582,11 @@ class WorldMap:
 
         for i in noise_map:
             for j in i:
-                j.height += int(self.noise_weight * (noise_generator.noise2(
-                    noise_generator, j.x * self.noise_scale, j.y * self.noise_scale)))
+                j.height += int(
+                    self.generation_dict['noise_weight'] *
+                    (noise_generator.noise2(noise_generator,
+                                            j.x * self.generation_dict['noise_scale'],
+                                            j.y * self.generation_dict['noise_scale'])))
 
         return noise_map
 
@@ -598,7 +596,7 @@ class WorldMap:
             for t in r.tiles:
                 a = self.adjacent_tiles(t)
                 for q in a:
-                    if randint(0, 99) < self.fuzz_percent and q.type is not 'Land':
+                    if randint(0, 99) < self.generation_dict['fuzz_percent'] and q.type is not 'Land':
                         q.icon = r.icon
                         q.type = 'Land'
                         tiles_to_fuzz.append(q)

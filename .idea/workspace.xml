@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3e3ab0e6-05ef-4ceb-99f1-e940ce134b5a" name="Default" comment="">
+    <list default="true" id="3e3ab0e6-05ef-4ceb-99f1-e940ce134b5a" name="Default" comment="added icon and height display toggling.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asciiui.py" afterPath="$PROJECT_DIR$/asciiui.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/voromap.py" afterPath="$PROJECT_DIR$/voromap.py" />
@@ -16,39 +16,38 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="voromap.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="voromap.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/voromap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-392">
-              <caret line="65" column="32" lean-forward="true" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
+            <state relative-caret-position="825">
+              <caret line="196" column="45" lean-forward="false" selection-start-line="196" selection-start-column="45" selection-end-line="196" selection-end-column="45" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
-                <element signature="e#6056#6218#0" expanded="false" />
-                <element signature="e#6303#6524#0" expanded="false" />
-                <element signature="e#6592#7174#0" expanded="false" />
-                <element signature="e#8542#8729#0" expanded="false" />
-                <element signature="e#8773#8960#0" expanded="false" />
-                <element signature="e#9187#9290#0" expanded="false" />
-                <element signature="e#9354#9406#0" expanded="false" />
-                <element signature="e#9487#9568#0" expanded="false" />
-                <element signature="e#9617#10072#0" expanded="false" />
-                <element signature="e#10125#10287#0" expanded="false" />
-                <element signature="e#11090#11194#0" expanded="false" />
-                <element signature="e#15606#16852#0" expanded="false" />
-                <element signature="e#17944#18262#0" expanded="false" />
-                <element signature="e#18303#18783#0" expanded="false" />
-                <element signature="e#18828#19196#0" expanded="false" />
-                <marker date="1500574326608" expanded="false" signature="22905:23023" ph="..." />
+                <element signature="e#5892#6073#0" expanded="false" />
+                <element signature="e#6158#6379#0" expanded="false" />
+                <element signature="e#6447#7029#0" expanded="false" />
+                <element signature="e#8397#8584#0" expanded="false" />
+                <element signature="e#8628#8815#0" expanded="false" />
+                <element signature="e#9042#9145#0" expanded="false" />
+                <element signature="e#9209#9261#0" expanded="false" />
+                <element signature="e#9342#9423#0" expanded="false" />
+                <element signature="e#9472#9927#0" expanded="false" />
+                <element signature="e#9980#10142#0" expanded="false" />
+                <element signature="e#10945#11049#0" expanded="false" />
+                <element signature="e#15478#16765#0" expanded="false" />
+                <element signature="e#17857#18175#0" expanded="false" />
+                <element signature="e#18216#18696#0" expanded="false" />
+                <marker date="1500575935411" expanded="false" signature="23002:23120" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="asciiui.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="asciiui.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/asciiui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1155">
-              <caret line="65" column="120" lean-forward="false" selection-start-line="65" selection-start-column="120" selection-end-line="65" selection-end-column="120" />
+            <state relative-caret-position="1373">
+              <caret line="269" column="94" lean-forward="false" selection-start-line="269" selection-start-column="94" selection-end-line="269" selection-end-column="94" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#4097#5768#0" expanded="false" />
@@ -61,7 +60,7 @@
       <file leaf-file-name="widgets.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Desktop/Programs/asciimatics-master/asciimatics/widgets.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
+            <state relative-caret-position="307">
               <caret line="2102" column="36" lean-forward="false" selection-start-line="2102" selection-start-column="31" selection-end-line="2102" selection-end-column="36" />
               <folding />
             </state>
@@ -89,12 +88,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>label</find>
-      <find>.label</find>
-      <find>.Label</find>
-      <find>class L</find>
-      <find>_value</find>
-      <find>s TextB</find>
       <find>print_at</find>
       <find>s test</find>
       <find>def _pick_colours</find>
@@ -112,13 +105,19 @@
       <find>focus</find>
       <find>- 1</find>
       <find>seed_region_count</find>
-      <find>print</find>
       <find>sea_level</find>
       <find>width</find>
       <find>self.width</find>
       <find>self.sea</find>
       <find>self.min</find>
       <find>self.max</find>
+      <find>mountain_ra</find>
+      <find>seed_c</find>
+      <find>seed_r</find>
+      <find>model.</find>
+      <find>_map.</find>
+      <find>print</find>
+      <find>fuzz</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -314,7 +313,14 @@
       <option name="project" value="LOCAL" />
       <updated>1500567414183</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added icon and height display toggling.">
+      <created>1500574425402</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1500574425402</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -411,22 +417,21 @@
           <caret line="311" column="10" lean-forward="false" selection-start-line="311" selection-start-column="10" selection-end-line="311" selection-end-column="10" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#6056#6218#0" expanded="false" />
-            <element signature="e#6303#6524#0" expanded="false" />
-            <element signature="e#6592#7174#0" expanded="false" />
-            <element signature="e#8542#8729#0" expanded="false" />
-            <element signature="e#8773#8960#0" expanded="false" />
-            <element signature="e#9187#9290#0" expanded="false" />
-            <element signature="e#9354#9406#0" expanded="false" />
-            <element signature="e#9487#9568#0" expanded="false" />
-            <element signature="e#9617#10072#0" expanded="false" />
-            <element signature="e#10125#10287#0" expanded="false" />
-            <element signature="e#11090#11194#0" expanded="false" />
-            <element signature="e#15606#16852#0" expanded="false" />
-            <element signature="e#17944#18262#0" expanded="false" />
-            <element signature="e#18303#18783#0" expanded="false" />
-            <element signature="e#18828#19196#0" expanded="false" />
-            <marker date="1500574326608" expanded="false" signature="22905:23023" ph="..." />
+            <element signature="e#5892#6073#0" expanded="false" />
+            <element signature="e#6158#6379#0" expanded="false" />
+            <element signature="e#6447#7029#0" expanded="false" />
+            <element signature="e#8397#8584#0" expanded="false" />
+            <element signature="e#8628#8815#0" expanded="false" />
+            <element signature="e#9042#9145#0" expanded="false" />
+            <element signature="e#9209#9261#0" expanded="false" />
+            <element signature="e#9342#9423#0" expanded="false" />
+            <element signature="e#9472#9927#0" expanded="false" />
+            <element signature="e#9980#10142#0" expanded="false" />
+            <element signature="e#10945#11049#0" expanded="false" />
+            <element signature="e#15478#16765#0" expanded="false" />
+            <element signature="e#17857#18175#0" expanded="false" />
+            <element signature="e#18216#18696#0" expanded="false" />
+            <marker date="1500575935411" expanded="false" signature="23002:23120" ph="..." />
           </folding>
         </state>
       </provider>
@@ -473,22 +478,21 @@
           <caret line="429" column="45" lean-forward="false" selection-start-line="429" selection-start-column="45" selection-end-line="429" selection-end-column="45" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#6056#6218#0" expanded="false" />
-            <element signature="e#6303#6524#0" expanded="false" />
-            <element signature="e#6592#7174#0" expanded="false" />
-            <element signature="e#8542#8729#0" expanded="false" />
-            <element signature="e#8773#8960#0" expanded="false" />
-            <element signature="e#9187#9290#0" expanded="false" />
-            <element signature="e#9354#9406#0" expanded="false" />
-            <element signature="e#9487#9568#0" expanded="false" />
-            <element signature="e#9617#10072#0" expanded="false" />
-            <element signature="e#10125#10287#0" expanded="false" />
-            <element signature="e#11090#11194#0" expanded="false" />
-            <element signature="e#15606#16852#0" expanded="false" />
-            <element signature="e#17944#18262#0" expanded="false" />
-            <element signature="e#18303#18783#0" expanded="false" />
-            <element signature="e#18828#19196#0" expanded="false" />
-            <marker date="1500574326608" expanded="false" signature="22905:23023" ph="..." />
+            <element signature="e#5892#6073#0" expanded="false" />
+            <element signature="e#6158#6379#0" expanded="false" />
+            <element signature="e#6447#7029#0" expanded="false" />
+            <element signature="e#8397#8584#0" expanded="false" />
+            <element signature="e#8628#8815#0" expanded="false" />
+            <element signature="e#9042#9145#0" expanded="false" />
+            <element signature="e#9209#9261#0" expanded="false" />
+            <element signature="e#9342#9423#0" expanded="false" />
+            <element signature="e#9472#9927#0" expanded="false" />
+            <element signature="e#9980#10142#0" expanded="false" />
+            <element signature="e#10945#11049#0" expanded="false" />
+            <element signature="e#15478#16765#0" expanded="false" />
+            <element signature="e#17857#18175#0" expanded="false" />
+            <element signature="e#18216#18696#0" expanded="false" />
+            <marker date="1500575935411" expanded="false" signature="23002:23120" ph="..." />
           </folding>
         </state>
       </provider>
@@ -535,22 +539,21 @@
           <caret line="130" column="0" lean-forward="true" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#6056#6218#0" expanded="false" />
-            <element signature="e#6303#6524#0" expanded="false" />
-            <element signature="e#6592#7174#0" expanded="false" />
-            <element signature="e#8542#8729#0" expanded="false" />
-            <element signature="e#8773#8960#0" expanded="false" />
-            <element signature="e#9187#9290#0" expanded="false" />
-            <element signature="e#9354#9406#0" expanded="false" />
-            <element signature="e#9487#9568#0" expanded="false" />
-            <element signature="e#9617#10072#0" expanded="false" />
-            <element signature="e#10125#10287#0" expanded="false" />
-            <element signature="e#11090#11194#0" expanded="false" />
-            <element signature="e#15606#16852#0" expanded="false" />
-            <element signature="e#17944#18262#0" expanded="false" />
-            <element signature="e#18303#18783#0" expanded="false" />
-            <element signature="e#18828#19196#0" expanded="false" />
-            <marker date="1500574326608" expanded="false" signature="22905:23023" ph="..." />
+            <element signature="e#5892#6073#0" expanded="false" />
+            <element signature="e#6158#6379#0" expanded="false" />
+            <element signature="e#6447#7029#0" expanded="false" />
+            <element signature="e#8397#8584#0" expanded="false" />
+            <element signature="e#8628#8815#0" expanded="false" />
+            <element signature="e#9042#9145#0" expanded="false" />
+            <element signature="e#9209#9261#0" expanded="false" />
+            <element signature="e#9342#9423#0" expanded="false" />
+            <element signature="e#9472#9927#0" expanded="false" />
+            <element signature="e#9980#10142#0" expanded="false" />
+            <element signature="e#10945#11049#0" expanded="false" />
+            <element signature="e#15478#16765#0" expanded="false" />
+            <element signature="e#17857#18175#0" expanded="false" />
+            <element signature="e#18216#18696#0" expanded="false" />
+            <marker date="1500575935411" expanded="false" signature="23002:23120" ph="..." />
           </folding>
         </state>
       </provider>
@@ -821,46 +824,45 @@
     </entry>
     <entry file="file://$USER_HOME$/Desktop/Programs/asciimatics-master/asciimatics/widgets.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
+        <state relative-caret-position="307">
           <caret line="2102" column="36" lean-forward="false" selection-start-line="2102" selection-start-column="31" selection-end-line="2102" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/voromap.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-392">
-          <caret line="65" column="32" lean-forward="true" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#6056#6218#0" expanded="false" />
-            <element signature="e#6303#6524#0" expanded="false" />
-            <element signature="e#6592#7174#0" expanded="false" />
-            <element signature="e#8542#8729#0" expanded="false" />
-            <element signature="e#8773#8960#0" expanded="false" />
-            <element signature="e#9187#9290#0" expanded="false" />
-            <element signature="e#9354#9406#0" expanded="false" />
-            <element signature="e#9487#9568#0" expanded="false" />
-            <element signature="e#9617#10072#0" expanded="false" />
-            <element signature="e#10125#10287#0" expanded="false" />
-            <element signature="e#11090#11194#0" expanded="false" />
-            <element signature="e#15606#16852#0" expanded="false" />
-            <element signature="e#17944#18262#0" expanded="false" />
-            <element signature="e#18303#18783#0" expanded="false" />
-            <element signature="e#18828#19196#0" expanded="false" />
-            <marker date="1500574326608" expanded="false" signature="22905:23023" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/asciiui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1155">
-          <caret line="65" column="120" lean-forward="false" selection-start-line="65" selection-start-column="120" selection-end-line="65" selection-end-column="120" />
+        <state relative-caret-position="1373">
+          <caret line="269" column="94" lean-forward="false" selection-start-line="269" selection-start-column="94" selection-end-line="269" selection-end-column="94" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
             <element signature="e#4097#5768#0" expanded="false" />
             <element signature="e#5819#5956#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/voromap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="825">
+          <caret line="196" column="45" lean-forward="false" selection-start-line="196" selection-start-column="45" selection-end-line="196" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#5892#6073#0" expanded="false" />
+            <element signature="e#6158#6379#0" expanded="false" />
+            <element signature="e#6447#7029#0" expanded="false" />
+            <element signature="e#8397#8584#0" expanded="false" />
+            <element signature="e#8628#8815#0" expanded="false" />
+            <element signature="e#9042#9145#0" expanded="false" />
+            <element signature="e#9209#9261#0" expanded="false" />
+            <element signature="e#9342#9423#0" expanded="false" />
+            <element signature="e#9472#9927#0" expanded="false" />
+            <element signature="e#9980#10142#0" expanded="false" />
+            <element signature="e#10945#11049#0" expanded="false" />
+            <element signature="e#15478#16765#0" expanded="false" />
+            <element signature="e#17857#18175#0" expanded="false" />
+            <element signature="e#18216#18696#0" expanded="false" />
+            <marker date="1500575935411" expanded="false" signature="23002:23120" ph="..." />
           </folding>
         </state>
       </provider>
