@@ -8,6 +8,7 @@ import os
 # TODO:
 # wrapping on bottom and right of map
 # fix map cutoff 1 space before edge
+# allow user to view and change map generator constants
 
 
 class ConsoleView(widgets.Widget):
@@ -20,33 +21,56 @@ class ConsoleView(widgets.Widget):
 
         self.height = height
         self.text_lines = []
-        self._is_tab_stop = False
+        # self._is_tab_stop = False
         for h in range(0, height):
             self.text_lines.append('')
+
+        self.view_bottom = 0
 
     def reset(self):
         self.text_lines = []
         for h in range(0, self.height):
             self.text_lines.append('')
+        self.view_bottom = 0
 
     def process_event(self, event):
         if isinstance(event, asciimatics.event.KeyboardEvent):
             global_shortcuts(event)
-        return
+
+            if event.key_code == Screen.KEY_UP:
+                if self.view_bottom < len(self.text_lines):
+                    self.view_bottom += 1
+                return None
+            elif event.key_code == Screen.KEY_DOWN:
+                if self.view_bottom > 0:
+                    self.view_bottom -= 1
+                return None
+        return event
 
     def required_height(self, offset, width):
         return self.height
 
     def update(self, frame_no):
+        if self._has_focus is True:
+            style = Screen.A_BOLD
+        else:
+            style = Screen.A_NORMAL
+
+        if self.view_bottom + self.height > len(self.text_lines):
+            view_top = len(self.text_lines) - 1
+        else:
+            view_top = self.view_bottom + self.height
+
         line_index = self.height - 1
-        for l in self.text_lines:
-            self._frame.canvas.print_at("> " + l, self._x, self._y + line_index, colour=Screen.COLOUR_WHITE,
+        for l in self.text_lines[self.view_bottom:view_top]:
+            self._frame.canvas.print_at("> " + l, self._x, self._y + line_index, colour=Screen.COLOUR_WHITE, attr=style,
                                         bg=Screen.COLOUR_BLACK)
             line_index -= 1
 
     def add_line(self, text: str):
-        self.text_lines.pop()
+        # self.text_lines.pop()
         self.text_lines.insert(0, text)
+        self.view_bottom = 0
         self.update(0)
 
     @property
@@ -104,7 +128,10 @@ class VoromapView(widgets.Widget):
                 color = j.color
 
                 if j is self.world_map.selected_tile:
-                    color = 201
+                    if self._has_focus is True:
+                        color = 201
+                    else:
+                        color = 219
                     l = f'{j.icon}{j.height}'
 
                 self._frame.canvas.print_at(l, self._x + x_index * 2, self._y + y_index,

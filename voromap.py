@@ -15,8 +15,6 @@ import copy
 # terrain types
 # - precipitation map
 # - river erosion
-# mouse response
-# in-program console
 
 class Tile:
     icon = '~'
@@ -112,6 +110,15 @@ class WorldMap:
     seeds: [(int, int)]
     seed_count: int
 
+    generation_dict = {'width': 80, 'height': 40,
+                       'min_altitude': 0, 'max_altitude': 9,
+                       'sea_level': 3,
+                       'seed_count': 100,
+                       'fuzz_percent': 5,
+                       'mountains_per_continent': 1, 'mountain_range_length': 3,
+                       'continent_count': 4, 'percent_land': 50,
+                       'noise_weight': 3, 'noise_scale': 0.1,}
+
     # misc generation variables
     fuzz_percent = 5
 
@@ -134,6 +141,13 @@ class WorldMap:
     color_filter = 'Terrain'
 
     def __init__(self, width: int, height: int, min_altitude: int, sea_level: int, max_altitude: int, seed_count: int):
+        self.generation_dict['width'] = width
+        self.generation_dict['height'] = height
+        self.generation_dict['min_altitude'] = min_altitude
+        self.generation_dict['max_altitude'] = max_altitude
+        self.generation_dict['sea_level'] = sea_level
+        self.generation_dict['seed_count'] = seed_count
+
         self.width = width
         self.height = height
         self.min_altitude = min_altitude
@@ -145,7 +159,8 @@ class WorldMap:
         self.set_seeds()
 
         self.voronoi_diagram = spatial.Voronoi(self.seeds)
-        self.world = self.create_base_map(self.width, self.height, self.min_altitude)
+        self.world = self.create_base_map(self.generation_dict['width'], self.generation_dict['height'],
+                                          self.generation_dict['min_altitude'])
         self.regions = []
         self.continents = []
 
@@ -165,7 +180,8 @@ class WorldMap:
         self.set_seeds()
 
         self.voronoi_diagram = spatial.Voronoi(self.seeds)
-        self.world = self.create_base_map(self.width, self.height, self.min_altitude)
+        self.world = self.create_base_map(self.generation_dict['width'], self.generation_dict['height'],
+                                          self.generation_dict['min_altitude'])
 
         self.regions = self.set_world_regions(self.voronoi_diagram)
 
@@ -187,7 +203,7 @@ class WorldMap:
 
     def set_seeds(self):
         for i in range(0, self.seed_count):
-            self.seeds.append([randint(0, self.width - 1), randint(0, self.height - 1)])
+            self.seeds.append([randint(0, self.generation_dict['width'] - 1), randint(0, self.generation_dict['height'] - 1)])
 
     def create_base_map(self, width: int, height: int, min_altitude: int):
         new_map = []
@@ -208,8 +224,8 @@ class WorldMap:
                 region_x_vertices.append(vor.vertices[i][0])
                 region_y_vertices.append(vor.vertices[i][1])
 
-            if -1 not in r and all(0 < i < self.width for i in region_x_vertices) \
-                    and all(0 < i < self.height for i in region_y_vertices) and len(r) > 0:
+            if -1 not in r and all(0 < i < self.generation_dict['width'] for i in region_x_vertices) \
+                    and all(0 < i < self.generation_dict['height'] for i in region_y_vertices) and len(r) > 0:
                 valid_regions.append(r)
 
         # print(valid_regions)
@@ -228,8 +244,9 @@ class WorldMap:
             for i in r:
                 v.append([int(s) for s in self.voronoi_diagram.vertices[i].tolist()])
 
-            reg = Region(self.region_letters[a], self.sea_level + 1, randint(self.sea_level + 1, self.max_altitude), v,
-                         t)
+            reg = Region(self.region_letters[a], self.generation_dict['sea_level'] + 1,
+                         randint(self.generation_dict['sea_level'] + 1, self.generation_dict['max_altitude']),
+                         v, t)
             temp_regions.append(reg)
             a += 1
 
@@ -249,7 +266,7 @@ class WorldMap:
                             in_region = True
                             break
                 if in_region is False:
-                    j = Tile(j.x, j.y, self.min_altitude)
+                    j = Tile(j.x, j.y, self.generation_dict['min_altitude'])
 
         # self.update_region_tiles()
 
@@ -385,7 +402,7 @@ class WorldMap:
         # pick initial region
         picked_region = False
         while picked_region is False:
-            i = self.world[randint(0, self.height - 1)][randint(0, self.width - 1)]
+            i = self.world[randint(0, self.generation_dict['height'] - 1)][randint(0, self.generation_dict['width'] - 1)]
             r = self.get_region_of_tile(i)
 
             if r is not None:
@@ -504,7 +521,7 @@ class WorldMap:
                 for l in k:
                     for m in range_lines:
                         if self.is_between(m[0], (l.x, l.y), m[1]):
-                            l.height = self.max_altitude
+                            l.height = self.generation_dict['max_altitude']
 
     def gen_mountain_ranges(self):
         for c in self.continents:
@@ -515,8 +532,8 @@ class WorldMap:
             for j in i:
                 if j.type != 'Land':
                     j.type = 'Sea'
-                    if j.height > self.sea_level:
-                        j.height = self.sea_level
+                    if j.height > self.generation_dict['sea_level']:
+                        j.height = self.generation_dict['sea_level']
 
     def gen_desert_regions(self):
         for c in self.continents:
@@ -537,10 +554,10 @@ class WorldMap:
     def truncate_tile_heights(self):
         for i in self.world:
             for j in i:
-                if j.height > self.max_altitude:
-                    j.height = self.max_altitude
-                elif j.height < self.min_altitude:
-                    j.height = self.min_altitude
+                if j.height > self.generation_dict['max_altitude']:
+                    j.height = self.generation_dict['max_altitude']
+                elif j.height < self.generation_dict['min_altitude']:
+                    j.height = self.generation_dict['min_altitude']
 
     def gaussian_smooth(self):
         blur_world = self.world

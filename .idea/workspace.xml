@@ -4,6 +4,7 @@
     <list default="true" id="3e3ab0e6-05ef-4ceb-99f1-e940ce134b5a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asciiui.py" afterPath="$PROJECT_DIR$/asciiui.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/voromap.py" afterPath="$PROJECT_DIR$/voromap.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,26 +19,26 @@
       <file leaf-file-name="voromap.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/voromap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="674">
-              <caret line="185" column="29" lean-forward="false" selection-start-line="185" selection-start-column="29" selection-end-line="185" selection-end-column="29" />
+            <state relative-caret-position="-392">
+              <caret line="65" column="32" lean-forward="true" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
-                <element signature="e#5127#5251#0" expanded="false" />
-                <element signature="e#5336#5557#0" expanded="false" />
-                <element signature="e#5625#6169#0" expanded="false" />
-                <element signature="e#7436#7623#0" expanded="false" />
-                <element signature="e#7667#7854#0" expanded="false" />
-                <element signature="e#8081#8184#0" expanded="false" />
-                <element signature="e#8248#8300#0" expanded="false" />
-                <element signature="e#8381#8462#0" expanded="false" />
-                <element signature="e#8511#8966#0" expanded="false" />
-                <element signature="e#9019#9181#0" expanded="false" />
-                <element signature="e#9984#10088#0" expanded="false" />
-                <element signature="e#14462#15689#0" expanded="false" />
-                <element signature="e#16743#16985#0" expanded="false" />
-                <element signature="e#17026#17506#0" expanded="false" />
-                <element signature="e#17551#17919#0" expanded="false" />
-                <marker date="1500566006679" expanded="false" signature="21628:21746" ph="..." />
+                <element signature="e#6056#6218#0" expanded="false" />
+                <element signature="e#6303#6524#0" expanded="false" />
+                <element signature="e#6592#7174#0" expanded="false" />
+                <element signature="e#8542#8729#0" expanded="false" />
+                <element signature="e#8773#8960#0" expanded="false" />
+                <element signature="e#9187#9290#0" expanded="false" />
+                <element signature="e#9354#9406#0" expanded="false" />
+                <element signature="e#9487#9568#0" expanded="false" />
+                <element signature="e#9617#10072#0" expanded="false" />
+                <element signature="e#10125#10287#0" expanded="false" />
+                <element signature="e#11090#11194#0" expanded="false" />
+                <element signature="e#15606#16852#0" expanded="false" />
+                <element signature="e#17944#18262#0" expanded="false" />
+                <element signature="e#18303#18783#0" expanded="false" />
+                <element signature="e#18828#19196#0" expanded="false" />
+                <marker date="1500574326608" expanded="false" signature="22905:23023" ph="..." />
               </folding>
             </state>
           </provider>
@@ -46,12 +47,12 @@
       <file leaf-file-name="asciiui.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/asciiui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="693">
-              <caret line="227" column="17" lean-forward="true" selection-start-line="227" selection-start-column="17" selection-end-line="227" selection-end-column="17" />
+            <state relative-caret-position="1155">
+              <caret line="65" column="120" lean-forward="false" selection-start-line="65" selection-start-column="120" selection-end-line="65" selection-end-column="120" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-                <element signature="e#3144#4815#0" expanded="false" />
-                <element signature="e#4866#5003#0" expanded="false" />
+                <element signature="e#4097#5768#0" expanded="false" />
+                <element signature="e#5819#5956#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -61,7 +62,7 @@
         <entry file="file://$USER_HOME$/Desktop/Programs/asciimatics-master/asciimatics/widgets.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="280">
-              <caret line="1891" column="78" lean-forward="false" selection-start-line="1891" selection-start-column="77" selection-end-line="1891" selection-end-column="78" />
+              <caret line="2102" column="36" lean-forward="false" selection-start-line="2102" selection-start-column="31" selection-end-line="2102" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -88,15 +89,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>spaced_regions</find>
-      <find>adjacent</find>
-      <find>type</find>
-      <find>terrain</find>
-      <find>KEY_</find>
-      <find>update</find>
-      <find>KE</find>
-      <find>event</find>
-      <find>17</find>
       <find>label</find>
       <find>.label</find>
       <find>.Label</find>
@@ -117,12 +109,26 @@
       <find>textbox</find>
       <find>global</find>
       <find>apply</find>
+      <find>focus</find>
       <find>- 1</find>
+      <find>seed_region_count</find>
+      <find>print</find>
+      <find>sea_level</find>
+      <find>width</find>
+      <find>self.width</find>
+      <find>self.sea</find>
+      <find>self.min</find>
+      <find>self.max</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="PUSH_TAGS">
       <GitPushTagMode />
     </option>
@@ -134,8 +140,8 @@
         <option value="$PROJECT_DIR$/starmap.py" />
         <option value="$PROJECT_DIR$/pygletui.py" />
         <option value="$USER_HOME$/Desktop/Programs/asciimatics-master/asciimatics/widgets.py" />
-        <option value="$PROJECT_DIR$/voromap.py" />
         <option value="$PROJECT_DIR$/asciiui.py" />
+        <option value="$PROJECT_DIR$/voromap.py" />
       </list>
     </option>
   </component>
@@ -301,7 +307,14 @@
       <option name="project" value="LOCAL" />
       <updated>1500566235356</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added icon and height display toggling.">
+      <created>1500567414183</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1500567414183</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -320,7 +333,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36012527" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901832" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.54633623" sideWeight="0.50208336" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901832" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18122977" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
@@ -346,7 +359,8 @@
     </ignored-roots>
     <MESSAGE value="Added simple asciimatics GUI. Text input not yet functional. Added initial support for map filters." />
     <MESSAGE value="Implemented text input and command structure. Basic filtering now available. World regeneration from console now available." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented text input and command structure. Basic filtering now available. World regeneration from console now available." />
+    <MESSAGE value="added icon and height display toggling." />
+    <option name="LAST_COMMIT_MESSAGE" value="added icon and height display toggling." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -397,22 +411,22 @@
           <caret line="311" column="10" lean-forward="false" selection-start-line="311" selection-start-column="10" selection-end-line="311" selection-end-column="10" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#5127#5251#0" expanded="false" />
-            <element signature="e#5336#5557#0" expanded="false" />
-            <element signature="e#5625#6169#0" expanded="false" />
-            <element signature="e#7436#7623#0" expanded="false" />
-            <element signature="e#7667#7854#0" expanded="false" />
-            <element signature="e#8081#8184#0" expanded="false" />
-            <element signature="e#8248#8300#0" expanded="false" />
-            <element signature="e#8381#8462#0" expanded="false" />
-            <element signature="e#8511#8966#0" expanded="false" />
-            <element signature="e#9019#9181#0" expanded="false" />
-            <element signature="e#9984#10088#0" expanded="false" />
-            <element signature="e#14462#15689#0" expanded="false" />
-            <element signature="e#16743#16985#0" expanded="false" />
-            <element signature="e#17026#17506#0" expanded="false" />
-            <element signature="e#17551#17919#0" expanded="false" />
-            <marker date="1500566006679" expanded="false" signature="21628:21746" ph="..." />
+            <element signature="e#6056#6218#0" expanded="false" />
+            <element signature="e#6303#6524#0" expanded="false" />
+            <element signature="e#6592#7174#0" expanded="false" />
+            <element signature="e#8542#8729#0" expanded="false" />
+            <element signature="e#8773#8960#0" expanded="false" />
+            <element signature="e#9187#9290#0" expanded="false" />
+            <element signature="e#9354#9406#0" expanded="false" />
+            <element signature="e#9487#9568#0" expanded="false" />
+            <element signature="e#9617#10072#0" expanded="false" />
+            <element signature="e#10125#10287#0" expanded="false" />
+            <element signature="e#11090#11194#0" expanded="false" />
+            <element signature="e#15606#16852#0" expanded="false" />
+            <element signature="e#17944#18262#0" expanded="false" />
+            <element signature="e#18303#18783#0" expanded="false" />
+            <element signature="e#18828#19196#0" expanded="false" />
+            <marker date="1500574326608" expanded="false" signature="22905:23023" ph="..." />
           </folding>
         </state>
       </provider>
@@ -459,22 +473,22 @@
           <caret line="429" column="45" lean-forward="false" selection-start-line="429" selection-start-column="45" selection-end-line="429" selection-end-column="45" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#5127#5251#0" expanded="false" />
-            <element signature="e#5336#5557#0" expanded="false" />
-            <element signature="e#5625#6169#0" expanded="false" />
-            <element signature="e#7436#7623#0" expanded="false" />
-            <element signature="e#7667#7854#0" expanded="false" />
-            <element signature="e#8081#8184#0" expanded="false" />
-            <element signature="e#8248#8300#0" expanded="false" />
-            <element signature="e#8381#8462#0" expanded="false" />
-            <element signature="e#8511#8966#0" expanded="false" />
-            <element signature="e#9019#9181#0" expanded="false" />
-            <element signature="e#9984#10088#0" expanded="false" />
-            <element signature="e#14462#15689#0" expanded="false" />
-            <element signature="e#16743#16985#0" expanded="false" />
-            <element signature="e#17026#17506#0" expanded="false" />
-            <element signature="e#17551#17919#0" expanded="false" />
-            <marker date="1500566006679" expanded="false" signature="21628:21746" ph="..." />
+            <element signature="e#6056#6218#0" expanded="false" />
+            <element signature="e#6303#6524#0" expanded="false" />
+            <element signature="e#6592#7174#0" expanded="false" />
+            <element signature="e#8542#8729#0" expanded="false" />
+            <element signature="e#8773#8960#0" expanded="false" />
+            <element signature="e#9187#9290#0" expanded="false" />
+            <element signature="e#9354#9406#0" expanded="false" />
+            <element signature="e#9487#9568#0" expanded="false" />
+            <element signature="e#9617#10072#0" expanded="false" />
+            <element signature="e#10125#10287#0" expanded="false" />
+            <element signature="e#11090#11194#0" expanded="false" />
+            <element signature="e#15606#16852#0" expanded="false" />
+            <element signature="e#17944#18262#0" expanded="false" />
+            <element signature="e#18303#18783#0" expanded="false" />
+            <element signature="e#18828#19196#0" expanded="false" />
+            <marker date="1500574326608" expanded="false" signature="22905:23023" ph="..." />
           </folding>
         </state>
       </provider>
@@ -521,22 +535,22 @@
           <caret line="130" column="0" lean-forward="true" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#5127#5251#0" expanded="false" />
-            <element signature="e#5336#5557#0" expanded="false" />
-            <element signature="e#5625#6169#0" expanded="false" />
-            <element signature="e#7436#7623#0" expanded="false" />
-            <element signature="e#7667#7854#0" expanded="false" />
-            <element signature="e#8081#8184#0" expanded="false" />
-            <element signature="e#8248#8300#0" expanded="false" />
-            <element signature="e#8381#8462#0" expanded="false" />
-            <element signature="e#8511#8966#0" expanded="false" />
-            <element signature="e#9019#9181#0" expanded="false" />
-            <element signature="e#9984#10088#0" expanded="false" />
-            <element signature="e#14462#15689#0" expanded="false" />
-            <element signature="e#16743#16985#0" expanded="false" />
-            <element signature="e#17026#17506#0" expanded="false" />
-            <element signature="e#17551#17919#0" expanded="false" />
-            <marker date="1500566006679" expanded="false" signature="21628:21746" ph="..." />
+            <element signature="e#6056#6218#0" expanded="false" />
+            <element signature="e#6303#6524#0" expanded="false" />
+            <element signature="e#6592#7174#0" expanded="false" />
+            <element signature="e#8542#8729#0" expanded="false" />
+            <element signature="e#8773#8960#0" expanded="false" />
+            <element signature="e#9187#9290#0" expanded="false" />
+            <element signature="e#9354#9406#0" expanded="false" />
+            <element signature="e#9487#9568#0" expanded="false" />
+            <element signature="e#9617#10072#0" expanded="false" />
+            <element signature="e#10125#10287#0" expanded="false" />
+            <element signature="e#11090#11194#0" expanded="false" />
+            <element signature="e#15606#16852#0" expanded="false" />
+            <element signature="e#17944#18262#0" expanded="false" />
+            <element signature="e#18303#18783#0" expanded="false" />
+            <element signature="e#18828#19196#0" expanded="false" />
+            <marker date="1500574326608" expanded="false" signature="22905:23023" ph="..." />
           </folding>
         </state>
       </provider>
@@ -808,45 +822,45 @@
     <entry file="file://$USER_HOME$/Desktop/Programs/asciimatics-master/asciimatics/widgets.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
-          <caret line="1891" column="78" lean-forward="false" selection-start-line="1891" selection-start-column="77" selection-end-line="1891" selection-end-column="78" />
+          <caret line="2102" column="36" lean-forward="false" selection-start-line="2102" selection-start-column="31" selection-end-line="2102" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/voromap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="674">
-          <caret line="185" column="29" lean-forward="false" selection-start-line="185" selection-start-column="29" selection-end-line="185" selection-end-column="29" />
+        <state relative-caret-position="-392">
+          <caret line="65" column="32" lean-forward="true" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#5127#5251#0" expanded="false" />
-            <element signature="e#5336#5557#0" expanded="false" />
-            <element signature="e#5625#6169#0" expanded="false" />
-            <element signature="e#7436#7623#0" expanded="false" />
-            <element signature="e#7667#7854#0" expanded="false" />
-            <element signature="e#8081#8184#0" expanded="false" />
-            <element signature="e#8248#8300#0" expanded="false" />
-            <element signature="e#8381#8462#0" expanded="false" />
-            <element signature="e#8511#8966#0" expanded="false" />
-            <element signature="e#9019#9181#0" expanded="false" />
-            <element signature="e#9984#10088#0" expanded="false" />
-            <element signature="e#14462#15689#0" expanded="false" />
-            <element signature="e#16743#16985#0" expanded="false" />
-            <element signature="e#17026#17506#0" expanded="false" />
-            <element signature="e#17551#17919#0" expanded="false" />
-            <marker date="1500566006679" expanded="false" signature="21628:21746" ph="..." />
+            <element signature="e#6056#6218#0" expanded="false" />
+            <element signature="e#6303#6524#0" expanded="false" />
+            <element signature="e#6592#7174#0" expanded="false" />
+            <element signature="e#8542#8729#0" expanded="false" />
+            <element signature="e#8773#8960#0" expanded="false" />
+            <element signature="e#9187#9290#0" expanded="false" />
+            <element signature="e#9354#9406#0" expanded="false" />
+            <element signature="e#9487#9568#0" expanded="false" />
+            <element signature="e#9617#10072#0" expanded="false" />
+            <element signature="e#10125#10287#0" expanded="false" />
+            <element signature="e#11090#11194#0" expanded="false" />
+            <element signature="e#15606#16852#0" expanded="false" />
+            <element signature="e#17944#18262#0" expanded="false" />
+            <element signature="e#18303#18783#0" expanded="false" />
+            <element signature="e#18828#19196#0" expanded="false" />
+            <marker date="1500574326608" expanded="false" signature="22905:23023" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/asciiui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="693">
-          <caret line="227" column="17" lean-forward="true" selection-start-line="227" selection-start-column="17" selection-end-line="227" selection-end-column="17" />
+        <state relative-caret-position="1155">
+          <caret line="65" column="120" lean-forward="false" selection-start-line="65" selection-start-column="120" selection-end-line="65" selection-end-column="120" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#3144#4815#0" expanded="false" />
-            <element signature="e#4866#5003#0" expanded="false" />
+            <element signature="e#4097#5768#0" expanded="false" />
+            <element signature="e#5819#5956#0" expanded="false" />
           </folding>
         </state>
       </provider>
