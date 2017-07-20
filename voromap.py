@@ -26,6 +26,7 @@ class Tile:
         self.x = x
         self.y = y
         self.height = height
+        self.entities = []
 
 
 class Region:

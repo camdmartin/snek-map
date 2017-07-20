@@ -3,12 +3,16 @@ import asciimatics.widgets as widgets
 from asciimatics.screen import Screen
 from asciimatics.scene import Scene
 import voromap
+import game
 import os
 
 # TODO:
 # wrapping on bottom and right of map
 # fix map cutoff 1 space before edge
-# allow user to view and change map generator constants
+# resize console on map regeneration
+# restrict map generation variables to positive integers
+# fix odd backspace behavior on text input field
+# help command
 
 
 class ConsoleView(widgets.Widget):
@@ -83,7 +87,6 @@ class ConsoleView(widgets.Widget):
 
 
 class VoromapView(widgets.Widget):
-    # generation variables eventually
     # color filter supports Terrain, Continent
     show_heights = False
     show_icons = False
@@ -114,28 +117,39 @@ class VoromapView(widgets.Widget):
         for i in self.world_map.world:
             x_index = 0
             for j in i:
-                icon1 = ' '
-                icon2 = ' '
-
-                if self.show_icons is True:
+                if len(j.entities) > 0:
+                    icon1 = j.entities[0].icon
+                    icon_color_1 = j.entities[0].faction_color
+                elif self.show_icons is True:
                     icon1 = j.icon
+                    icon_color_1 = 16
+                else:
+                    icon1 = ' '
+                    icon_color_1 = j.color
 
                 if self.show_heights is True:
-                    icon2 = j.height
-
-                l = f'{icon1}{icon2}'
-
-                color = j.color
+                    icon2 = f'{j.height}'
+                    icon_color_2 = 16
+                else:
+                    icon2 = ' '
+                    icon_color_2 = j.color
 
                 if j is self.world_map.selected_tile:
                     if self._has_focus is True:
-                        color = 201
+                        bg_color = 201
+                        bg_color_2 = 201
                     else:
-                        color = 219
-                    l = f'{j.icon}{j.height}'
+                        bg_color = 219
+                        bg_color_2 = 219
+                else:
+                    bg_color = j.color
+                    bg_color_2 = j.color
 
-                self._frame.canvas.print_at(l, self._x + x_index * 2, self._y + y_index,
-                                            colour=Screen.COLOUR_BLACK, bg=color)
+                self._frame.canvas.paint(f'{icon1}{icon2}', self._x + x_index * 2, self._y + y_index,
+                                         colour=icon_color_1, bg=bg_color,
+                                         colour_map=[(icon_color_1, Screen.A_NORMAL, bg_color),
+                                                     (icon_color_2, Screen.A_NORMAL, bg_color_2)])
+
                 x_index += 1
             y_index += 1
 
@@ -146,28 +160,28 @@ class VoromapView(widgets.Widget):
 
         try:
             if key_code is Screen.KEY_LEFT:
-                self.world_map.selected_tile = self.world_map.world[t.y][t.x - 1]
+                self.world_map.selected_tile = self.world_map.tile_at_point(t.x - 1, t.y)
                 location_changed = True
             elif key_code is Screen.KEY_RIGHT:
-                self.world_map.selected_tile = self.world_map.world[t.y][t.x + 1]
+                self.world_map.selected_tile = self.world_map.tile_at_point(t.x + 1, t.y)
                 location_changed = True
             elif key_code is Screen.KEY_UP:
-                self.world_map.selected_tile = self.world_map.world[t.y - 1][t.x]
+                self.world_map.selected_tile = self.world_map.tile_at_point(t.x, t.y - 1)
                 location_changed = True
             elif key_code is Screen.KEY_DOWN:
-                self.world_map.selected_tile = self.world_map.world[t.y + 1][t.x]
+                self.world_map.selected_tile = self.world_map.tile_at_point(t.x, t.y + 1)
                 location_changed = True
             elif key_code == 393:
-                self.world_map.selected_tile = self.world_map.world[t.y][t.x - 10]
+                self.world_map.selected_tile = self.world_map.tile_at_point(t.x - 10, t.y)
                 location_changed = True
             elif key_code == 402:
-                self.world_map.selected_tile = self.world_map.world[t.y][t.x + 10]
+                self.world_map.selected_tile = self.world_map.tile_at_point(t.x + 10, t.y)
                 location_changed = True
             elif key_code == 337:
-                self.world_map.selected_tile = self.world_map.world[t.y - 10][t.x]
+                self.world_map.selected_tile = self.world_map.tile_at_point(t.x, t.y - 10)
                 location_changed = True
             elif key_code == 336:
-                self.world_map.selected_tile = self.world_map.world[t.y + 10][t.x]
+                self.world_map.selected_tile = self.world_map.tile_at_point(t.x, t.y + 10)
                 location_changed = True
 
         except IndexError:
@@ -206,8 +220,6 @@ class VoromapView(widgets.Widget):
         else:
             return event
 
-        return event
-
     def required_height(self, offset, width):
         return self.world_map.generation_dict['height']
 
@@ -237,16 +249,17 @@ class TextInputView(widgets.Text):
 
                 if main_command in ('filter', 'f', 'Filter', 'F'):
                     if command_array[0] in ('terrain', 't', 'Terrain', 'T'):
-                        self._model.terrain_filter()
+                        self._model.world_map.terrain_filter()
                         self.console.add_line('Terrain filter on.')
                     elif command_array[0] in ('continent', 'c', "Continent", 'C'):
-                        self._model.continent_filter()
+                        self._model.world_map.continent_filter()
                         self.console.add_line('Continent filter on.')
                     else:
                         self.console.add_line('Invalid filter type.')
 
                 elif main_command in ('regen', 'rg', 'Regen', 'RG'):
-                    self._model.regenerate()
+                    self._model.create_new_game(True)
+                    # self.console.height = Screen.height - self._model.world_map.generation_dict['height'] - 1
                     self.console.add_line('World regenerated.')
 
                 elif main_command in ('height', 'h', 'Height', 'H'):
@@ -284,8 +297,9 @@ class TextInputView(widgets.Text):
         if isinstance(event, asciimatics.event.KeyboardEvent):
             global_shortcuts(event)
 
-            if event.key_code in (Screen.KEY_UP, Screen.KEY_DOWN):
-                return None
+            # if event.key_code in (Screen.KEY_UP, Screen.KEY_DOWN):
+                # return None
+
             if event.key_code == 10:
                 raw_command = self._value
                 self.handle_command(raw_command)
@@ -293,7 +307,7 @@ class TextInputView(widgets.Text):
                 self.update(0)
                 self.map_display.update(0)
             else:
-                super(TextInputView, self).process_event(event)
+                return super(TextInputView, self).process_event(event)
         else:
             return event
 
@@ -317,8 +331,8 @@ class TestView(widgets.Frame):
 
         self._model = model
         # self._map_label = widgets.Label(label=f"Selected: ({model.selected_tile.x}, {model.selected_tile.y})")
-        self._map_console = ConsoleView(screen.height - self._model.generation_dict['height'] - 1)
-        self._map_view = VoromapView(model, self._map_console)
+        self._map_console = ConsoleView(screen.height - self._model.world_map.generation_dict['height'] - 1)
+        self._map_view = VoromapView(model.world_map, self._map_console)
         self._text_input = TextInputView(model, self._map_view, self._map_console)
 
         layout = widgets.Layout([1], fill_frame=True)
@@ -336,7 +350,7 @@ class TestView(widgets.Frame):
         self.fix()
 
     def _reload_map(self):
-        self._map_view.world = self._model
+        self._map_view.world = self._model.world_map
 
     @staticmethod
     def _quit():
@@ -353,9 +367,10 @@ def global_shortcuts(event):
 
 def demo(screen, scene):
     t = voromap.WorldMap(80, 40, 0, 3, 9, 100)
+    g = game.Game(t, 3)
 
     scenes = [
-        Scene([TestView(screen, t)], -1, name="Main")
+        Scene([TestView(screen, g)], -1, name="Main")
     ]
 
     screen.play(scenes, stop_on_resize=True, start_scene=scene, unhandled_input=global_shortcuts)
