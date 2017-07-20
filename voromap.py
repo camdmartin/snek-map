@@ -16,12 +16,13 @@ import copy
 # - precipitation map
 # - river erosion
 # mouse response
-# commands
+# in-program console
 
 class Tile:
     icon = '~'
     type = 'Void'  # Land vs Sea
     terrain = 'Void'  # Desert/Coast/Mountain/Forest/Barren
+    color = 15
 
     def __init__(self, x: int, y: int, height: int):
         self.x = x
@@ -74,9 +75,10 @@ class Region:
 
 
 class Continent:
-    def __init__(self, regions: [Region], icon: str):
+    def __init__(self, regions: [Region], icon: str, color: int):
         self.regions = regions
         self.icon = icon
+        self.color = color
 
     def set_tile_icons_to_continent_icon(self):
         for r in self.regions:
@@ -128,9 +130,12 @@ class WorldMap:
     noise_weight = 3
     noise_scale = 0.1
 
+    selected_tile: Tile
+    color_filter = 'Terrain'
+
     def __init__(self, width: int, height: int, min_altitude: int, sea_level: int, max_altitude: int, seed_count: int):
-        self.width = width - 1
-        self.height = height - 1
+        self.width = width
+        self.height = height
         self.min_altitude = min_altitude
         self.sea_level = sea_level
         self.max_altitude = max_altitude
@@ -163,6 +168,8 @@ class WorldMap:
 
         self.truncate_tile_heights()
 
+        self.selected_tile = self.world[0][0]
+
     # basic generation methods
 
     def set_seeds(self):
@@ -192,7 +199,7 @@ class WorldMap:
                     and all(0 < i < self.height for i in region_y_vertices) and len(r) > 0:
                 valid_regions.append(r)
 
-        print(valid_regions)
+        # print(valid_regions)
 
         return valid_regions
 
@@ -300,6 +307,15 @@ class WorldMap:
                     return r
         return None
 
+    def get_continent_of_region(self, r: Region):
+        for c in self.continents:
+            if c.regions.__contains__(r):
+                return c
+        return None
+
+    def get_continent_of_tile(self, t: Tile):
+        return self.get_continent_of_region(self.get_region_of_tile(t))
+
     def swap_tile_region(self, t: Tile, swap_to: Region):
         swap_from = self.get_region_of_tile(t)
         swap_from.tiles.remove(t)
@@ -309,13 +325,13 @@ class WorldMap:
 
     def get_seed_regions(self):
         temp_regions = copy.deepcopy(self.regions)
-        print(len(temp_regions))
+        # print(len(temp_regions))
         seed_regions = []
 
         # pick initial region
         picked_region = False
         while picked_region is False:
-            i = self.world[randint(0, self.height)][randint(0, self.width)]
+            i = self.world[randint(0, self.height - 1)][randint(0, self.width - 1)]
             r = self.get_region_of_tile(i)
 
             if r is not None:
@@ -361,12 +377,12 @@ class WorldMap:
         seed_regions = self.get_seed_regions()
 
         for r in seed_regions:
-            self.continents.append(Continent([r], r.icon))
+            self.continents.append(Continent([r], r.icon, randint(0, 256)))
             total_regions.append(r)
 
         region_quota = int(len(self.regions) * (self.region_percent / 100))
 
-        print(region_quota)
+        # print(region_quota)
 
         while len(total_regions) < region_quota:
             shuffle(self.continents)
@@ -395,7 +411,7 @@ class WorldMap:
                                 and not append_to_c.__contains__(a):
                             total_regions.append(a)
                             append_to_c.append(a)
-                            print(len(total_regions))
+                            # print(len(total_regions))
 
                 c.regions += append_to_c
 
@@ -620,5 +636,5 @@ class WorldMap:
             print('\n')
 
 
-w = WorldMap(100, 40, 0, 3, 9, 100)
-Screen.wrapper(w.print_world_heights)
+# w = WorldMap(80, 40, 0, 3, 9, 100)
+# Screen.wrapper(w.print_world_heights)
