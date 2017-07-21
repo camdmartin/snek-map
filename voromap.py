@@ -290,10 +290,13 @@ class WorldMap:
     # a few helper methods
 
     def tile_at_point(self, x: int, y: int):
-        try:
-            return self.world[y][x]
-        except IndexError:
-            return Tile(-1, -1, -1)
+        if x >= self.generation_dict['width']:
+            x -= self.generation_dict['width']
+
+        if y >= self.generation_dict['height']:
+            y -= self.generation_dict['height']
+
+        return self.world[y][x]
 
     def distance(self, a: (int, int), b: (int, int)):
         return sqrt((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2)

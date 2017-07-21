@@ -10,6 +10,7 @@ class Faction:
 
 class Entity:
     icon = '#'
+    name = 'Entity'
 
     def __init__(self, owner: Faction):
         self.owner = owner

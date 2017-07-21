@@ -7,12 +7,12 @@ import game
 import os
 
 # TODO:
-# wrapping on bottom and right of map
-# fix map cutoff 1 space before edge
 # resize console on map regeneration
 # restrict map generation variables to positive integers
 # fix odd backspace behavior on text input field
 # help command
+# entity list selectable
+# better entity list descriptors
 
 
 class ConsoleView(widgets.Widget):
@@ -86,17 +86,54 @@ class ConsoleView(widgets.Widget):
         self._value = new_value
 
 
+class EntityView(widgets.Widget):
+
+    def __init__(self, entity_list):
+        super(EntityView, self).__init__('Entities', tab_stop=False)
+        self._entity_list = entity_list
+        self.location = (0, 0)
+
+    def update(self, frame_no):
+        line = 0
+
+        self._frame.canvas.print_at(f'Entities {self.location}', self._x, self._y + line, colour=Screen.COLOUR_WHITE, attr=Screen.A_BOLD)
+        line += 1
+
+        for e in self._entity_list:
+            self._frame.canvas.print_at(f'{e.icon}: {e.name}', self._x, self._y + line, colour=e.faction_color)
+            line += 1
+
+    def reset(self):
+        self._entity_list = []
+
+    def process_event(self, event):
+        return event
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, new_value):
+        self._value = new_value
+
+    def required_height(self, offset, width):
+        return len(self._entity_list) * 4
+
+
+
 class VoromapView(widgets.Widget):
     # color filter supports Terrain, Continent
     show_heights = False
     show_icons = False
 
-    def __init__(self, world_map: voromap.WorldMap, display: ConsoleView):
+    def __init__(self, world_map: voromap.WorldMap, console: ConsoleView, entity_display: EntityView):
         super(VoromapView, self).__init__(name="World")
 
         # self._is_tab_stop = False
         self.world_map = world_map
-        self.display = display
+        self.console = console
+        self.entity_display = entity_display
 
     @property
     def value(self):
@@ -107,9 +144,21 @@ class VoromapView(widgets.Widget):
         self._value = new_value
 
     def reset(self):
+        self.world_map.generation_dict = {'width': 80, 'height': 40,
+                                          'min_altitude': 0, 'max_altitude': 9,
+                                          'sea_level': 3,
+                                          'seed_count': 100,
+                                          'fuzz_percent': 5,
+                                          'mountains_per_continent': 1, 'mountain_range_length': 3,
+                                          'continent_count': 4, 'percent_land': 50,
+                                          'noise_weight': 3, 'noise_scale': 0.1,}
         return None
 
     def update(self, frame_no):
+        self.entity_display.location = (self.world_map.selected_tile.x, self.world_map.selected_tile.y)
+        self.entity_display._entity_list = self.world_map.selected_tile.entities
+        self.entity_display.update(0)
+
         for c in self.world_map.continents:
             c.set_tile_icons_to_continent_icon()
 
@@ -188,16 +237,9 @@ class VoromapView(widgets.Widget):
             location_changed = False
 
         if location_changed:
-            self.display.add_line(
+            self.console.add_line(
                 text=f"Selected: ({self.world_map.selected_tile.x}, {self.world_map.selected_tile.y})")
             self.update(0)
-
-    def handle_enter_input(self, event):
-        if event.key_code == 10:
-            self.display.reset()
-            self.display.update(1)
-            return None
-        return event
 
     def process_event(self, event):
         if isinstance(event, asciimatics.event.KeyboardEvent):
@@ -211,12 +253,12 @@ class VoromapView(widgets.Widget):
                 self.handle_arrow_input(event)
                 return None
             elif event.key_code == 10:
-                self.display.reset()
-                self.display.update(0)
+                self.console.reset()
+                self.console.update(0)
                 return None
             else:
                 return event
-                # self.display.add_line(str(event.key_code))
+                # self.console.add_line(str(event.key_code))
         else:
             return event
 
@@ -316,8 +358,10 @@ class TextInputView(widgets.Text):
 
 class TestView(widgets.Frame):
     def __init__(self, screen, model):
+        self._model = model
+
         super(TestView, self).__init__(screen,
-                                       width=int(screen.width * .75),
+                                       width=int(self._model.world_map.generation_dict['width'] * 2 + 20),
                                        height=screen.height,
                                        on_load=self._reload_map,
                                        hover_focus=True,
@@ -329,24 +373,20 @@ class TestView(widgets.Frame):
         self.palette['edit_text'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
         self.palette['label'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
 
-        self._model = model
-        # self._map_label = widgets.Label(label=f"Selected: ({model.selected_tile.x}, {model.selected_tile.y})")
+        self._entity_display = EntityView([])
         self._map_console = ConsoleView(screen.height - self._model.world_map.generation_dict['height'] - 1)
-        self._map_view = VoromapView(model.world_map, self._map_console)
+        self._map_view = VoromapView(model.world_map, self._map_console, self._entity_display)
         self._text_input = TextInputView(model, self._map_view, self._map_console)
 
-        layout = widgets.Layout([1], fill_frame=True)
-        # layout2 = widgets.Layout([1])
+        layout = widgets.Layout([int(self._model.world_map.generation_dict['width'] * 2), 20])
 
         self.add_layout(layout)
-        # self.add_layout(layout2)
 
-        layout.add_widget(self._map_view)
-        layout.add_widget(self._map_console)
-        layout.add_widget(self._text_input)
-        # layout2.add_widget(widgets.Button("Quit", self._quit), 0)
+        layout.add_widget(self._map_view, 0)
+        layout.add_widget(self._map_console, 0)
+        layout.add_widget(self._text_input, 0)
+        layout.add_widget(self._entity_display, 1)
 
-        # self._map_view.focus()
         self.fix()
 
     def _reload_map(self):
