@@ -7,14 +7,18 @@ class Faction:
         self.faction_color = faction_color
         self.entities = []
 
+    def create_entity(self, entity_icon):
+        e = Entity(self, entity_icon)
+        self.entities.append(e)
+        return e
+
 
 class Entity:
     icon = '#'
     name = 'Entity'
 
-    def __init__(self, owner: Faction):
+    def __init__(self, owner: Faction, icon: str):
         self.owner = owner
-        self.owner.entities.append(self)
         self.faction_color = owner.faction_color
 
 
@@ -26,8 +30,10 @@ class Game:
 
         self.create_new_game(False)
 
-    def create_entity(self, owner: Faction, x, y):
-        self.world_map.tile_at_point(x, y).entities.append(Entity(owner))
+    def create_entity(self, owner: Faction, tile, icon='#'):
+        e = Entity(owner, icon)
+        tile.entities.append(e)
+        owner.entities.append(e)
 
     def create_new_game(self, regenerate_world: bool):
         self.factions = []
@@ -35,8 +41,7 @@ class Game:
         if regenerate_world:
             self.world_map.regenerate()
 
-        for i in range(0, self.faction_count - 1):
+        for i in range(0, self.faction_count):
             f = Faction(randint(0, 255))
             self.factions.append(f)
-            self.create_entity(f, randint(0, self.world_map.generation_dict['width']),
-                               randint(0, self.world_map.generation_dict['height']))
+            self.create_entity(f, self.world_map.get_random_land_tile())

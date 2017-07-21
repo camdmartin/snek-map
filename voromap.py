@@ -13,8 +13,9 @@ import copy
 
 # TODO:
 # terrain types
-# - precipitation map
-# - river erosion
+# precipitation map
+# river erosion
+# get random tile in continent/region
 
 class Tile:
     icon = '~'
@@ -95,21 +96,13 @@ class WorldMap:
     voronoi_diagram: spatial.Voronoi
     continents: [Continent]
     regions: [Region]
+    seeds: [(int, int)]
 
     region_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
                       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
                       'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4',
                       '5', '6', '7', '8', '9', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+',
                       '`', '[', '{', ']', '}', '|', '\\', '/', '<', ',', '.', '>', '?']
-
-    width: int
-    height: int
-    min_altitude: int
-    sea_level: int
-    max_altitude: int
-
-    seeds: [(int, int)]
-    seed_count: int
 
     generation_dict = {'width': 80, 'height': 40,
                        'min_altitude': 0, 'max_altitude': 9,
@@ -119,24 +112,6 @@ class WorldMap:
                        'mountains_per_continent': 1, 'mountain_range_length': 3,
                        'continent_count': 4, 'percent_land': 50,
                        'noise_weight': 3, 'noise_scale': 0.1,}
-
-    # misc generation variables
-    fuzz_percent = 5
-
-    # terrain generation variables
-    mountain_range_count = 1
-    mountain_range_length = 3
-    tropics_latitude = 23
-    base_desert_percent = 10
-    tropics_desert_percent = 30
-
-    # for region generation
-    seed_region_count = 4
-    region_percent = 50
-
-    # variables for noise generation
-    noise_weight = 3
-    noise_scale = 0.1
 
     selected_tile: Tile
     color_filter = 'Terrain'
@@ -353,6 +328,12 @@ class WorldMap:
 
         return None
 
+    def get_random_land_tile(self):
+        c = self.continents[randint(0, len(self.continents) - 1)]
+        r = c.regions[randint(0, len(c.regions) - 1)]
+        t = r.tiles[randint(0, len(r.tiles) - 1)]
+        return t
+
     def swap_tile_region(self, t: Tile, swap_to: Region):
         swap_from = self.get_region_of_tile(t)
         swap_from.tiles.remove(t)
@@ -450,7 +431,7 @@ class WorldMap:
             self.continents.append(Continent([r], r.icon, randint(0, 256)))
             total_regions.append(r)
 
-        region_quota = int(len(self.regions) * (self.region_percent / 100))
+        region_quota = int(len(self.regions) * (self.generation_dict['percent_land'] / 100))
 
         # print(region_quota)
 

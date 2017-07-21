@@ -12,20 +12,16 @@ import os
 # fix odd backspace behavior on text input field
 # help command
 # entity list selectable
-# better entity list descriptors
+# bright faction colors only and/or faction flags
+# faction list (above entites? part of entity list?)
 
 
 class ConsoleView(widgets.Widget):
-    # a console display for text output
-    # may eventually handle text input as well?
-    # text_lines holds all current text, 0 is bottom line
-
     def __init__(self, height):
         super(ConsoleView, self).__init__(name="Console")
 
         self.height = height
         self.text_lines = []
-        # self._is_tab_stop = False
         for h in range(0, height):
             self.text_lines.append('')
 
@@ -87,6 +83,9 @@ class ConsoleView(widgets.Widget):
 
 
 class EntityView(widgets.Widget):
+    # Format:
+    # Type Icon: Name
+    #   Owner: Faction
 
     def __init__(self, entity_list):
         super(EntityView, self).__init__('Entities', tab_stop=False)
@@ -100,7 +99,9 @@ class EntityView(widgets.Widget):
         line += 1
 
         for e in self._entity_list:
-            self._frame.canvas.print_at(f'{e.icon}: {e.name}', self._x, self._y + line, colour=e.faction_color)
+            self._frame.canvas.print_at(f'{e.icon}: {e.name}', self._x, self._y + line)
+            line += 1
+            self._frame.canvas.print_at(f'    Owner: {e.faction_color}', self._x, self._y + line, colour=e.faction_color)
             line += 1
 
     def reset(self):
@@ -119,7 +120,6 @@ class EntityView(widgets.Widget):
 
     def required_height(self, offset, width):
         return len(self._entity_list) * 4
-
 
 
 class VoromapView(widgets.Widget):
@@ -257,8 +257,8 @@ class VoromapView(widgets.Widget):
                 self.console.update(0)
                 return None
             else:
+                self.console.add_line(str(event.key_code))
                 return event
-                # self.console.add_line(str(event.key_code))
         else:
             return event
 
@@ -407,7 +407,7 @@ def global_shortcuts(event):
 
 def demo(screen, scene):
     t = voromap.WorldMap(80, 40, 0, 3, 9, 100)
-    g = game.Game(t, 3)
+    g = game.Game(t, 6)
 
     scenes = [
         Scene([TestView(screen, g)], -1, name="Main")
@@ -422,5 +422,5 @@ while True:
     try:
         Screen.wrapper(demo, catch_interrupt=True, arguments=[last_scene])
         exit(0)
-    except asciimatics.exceptions.ResizeScreenError as e:
-        last_scene = e.scene
+    except asciimatics.exceptions.ResizeScreenError as ex:
+        last_scene = ex.scene
