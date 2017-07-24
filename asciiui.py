@@ -12,13 +12,54 @@ import copy
 # restrict map generation variables to positive integers
 # fix odd backspace behavior on text input field
 # help command
-# improve focus switching on entity selection
 # indicator of display focus
 # continent icon missing from tile display
+# taking turns!
 
 
 vm = voromap.WorldMap(80, 40, 0, 3, 9, 100)
 model = game.Game(vm, 6)
+
+
+class InfoBar(widgets.Widget):
+
+    def __init__(self, game_model):
+        super(InfoBar, self).__init__(name='InfoBar')
+        self._model = game_model
+
+    def reset(self):
+        return
+
+    def process_event(self, event):
+        return event
+
+    def update(self, frame_no):
+        player_faction = next((f for f in self._model.factions if f.is_player), self._model.factions[0])
+        offset = 0
+
+        self._frame.canvas.print_at(f'Turn {self._model.turn}', self._x + offset, self._y, colour=Screen.COLOUR_CYAN)
+        offset += 10
+
+        self._frame.canvas.print_at(f'₡{player_faction.currency}', self._x + offset, self._y,
+                                    colour=Screen.COLOUR_YELLOW)
+        offset += 10
+
+        self._frame.canvas.print_at(f'Ѫ{player_faction.minerals}', self._x + offset, self._y, colour=Screen.COLOUR_RED)
+        offset += 10
+
+        self._frame.canvas.print_at(f'Pop {player_faction.population}', self._x + offset, self._y,
+                                    colour=Screen.COLOUR_GREEN)
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, new_value):
+        self._value = new_value
+
+    def required_height(self, offset, width):
+        return 1
 
 
 class ConsoleView(widgets.Widget):
@@ -136,19 +177,32 @@ class EntityView(widgets.Widget):
                                     attr=Screen.A_BOLD)
         line += 1
 
-        for e in self._entity_list:
-            if e is self.selected_entity and self._has_focus:
-                self._frame.canvas.print_at(f'{e.icon}: {e.name}', self._x, self._y + line, colour=Screen.COLOUR_BLACK,
-                                            bg=e.faction_color)
-                line += 1
-                self._frame.canvas.print_at(f'    Owner: {e.faction_color}', self._x, self._y + line,
-                                            colour=Screen.COLOUR_BLACK, bg=e.faction_color)
-            else:
-                self._frame.canvas.print_at(f'{e.icon}: {e.name}', self._x, self._y + line)
-                line += 1
-                self._frame.canvas.print_at(f'    Owner: {e.faction_color}', self._x, self._y + line,
-                                            colour=e.faction_color)
+        temp_list = []
 
+        if self.world.is_anchored:
+            temp_list.append(self.world.selected_entity)
+        else:
+            temp_list = self._entity_list
+
+        for e in temp_list:
+            if e is self.selected_entity and self._has_focus:
+                e_color = Screen.COLOUR_BLACK
+                e_bg = e.faction_color
+            else:
+                e_color = e.faction_color
+                e_bg = Screen.COLOUR_BLACK
+
+            self._frame.canvas.print_at(f'{e.icon}: {e.name}', self._x, self._y + line, colour=e_color,
+                                        bg=e_bg)
+            line += 1
+
+            self._frame.canvas.print_at(f'    Owner: {e.faction_color}', self._x, self._y + line,
+                                        colour=e_color, bg=e_bg)
+
+            line += 1
+
+            self._frame.canvas.print_at(f'    Moved {e.used_movement}/{e.move_data[0]}', self._x, self._y + line,
+                                        colour=e_color, bg=e_bg)
             line += 1
 
     def reset(self):
@@ -289,21 +343,21 @@ class VoromapView(widgets.Widget):
         anchored = self.world_map.is_anchored
 
         if key_code is Screen.KEY_LEFT:
-            location_changed = self.move_cursor(event, -1, 0, anchored)
+            location_changed = self.move_cursor(-1, 0, anchored)
         elif key_code is Screen.KEY_RIGHT:
-            location_changed = self.move_cursor(event, 1, 0, anchored)
+            location_changed = self.move_cursor(1, 0, anchored)
         elif key_code is Screen.KEY_UP:
-            location_changed = self.move_cursor(event, 0, -1, anchored)
+            location_changed = self.move_cursor(0, -1, anchored)
         elif key_code is Screen.KEY_DOWN:
-            location_changed = self.move_cursor(event, 0, 1, anchored)
+            location_changed = self.move_cursor(0, 1, anchored)
         elif key_code == 393:
-            location_changed = self.move_cursor(event, -10, 0, anchored)
+            location_changed = self.move_cursor(-10, 0, anchored)
         elif key_code == 402:
-            location_changed = self.move_cursor(event, 10, 0, anchored)
+            location_changed = self.move_cursor(10, 0, anchored)
         elif key_code == 337:
-            location_changed = self.move_cursor(event, 0, -10, anchored)
+            location_changed = self.move_cursor(0, -10, anchored)
         elif key_code == 336:
-            location_changed = self.move_cursor(event, 0, 10, anchored)
+            location_changed = self.move_cursor(0, 10, anchored)
 
         if location_changed:
             self.entity_display.reset()
@@ -313,16 +367,16 @@ class VoromapView(widgets.Widget):
 
             self.entity_display.update(0)
 
-            self.console.add_line(
-                text=f"Selected: ({self.world_map.selected_tile.x}, {self.world_map.selected_tile.y})")
+            # self.console.add_line(
+            # text=f"Selected: ({self.world_map.selected_tile.x}, {self.world_map.selected_tile.y})")
             self.update(0)
 
-    def move_cursor(self, event, dx, dy, anchored):
+    def move_cursor(self, dx, dy, anchored):
         s = self.world_map.selected_tile
         d = self.world_map.tile_at_point(s.x + dx, s.y + dy)
 
         if anchored:
-            self.console.add_line('Anchored')
+            # self.console.add_line('Anchored')
             a = self.world_map.anchor
             if self.world_map.distance((a.x, a.y), (s.x + dx, s.y + dy)) > self.world_map.selected_entity.move_data[0] \
                     or not self.world_map.selected_entity.move_data[1].__contains__(d.type):
@@ -376,7 +430,8 @@ class TextInputView(widgets.Text):
                 'height', 'h', 'Height', 'H',
                 'icon', 'i', 'Icon', 'I',
                 'genvars', 'gv', 'GenVars', 'GV',
-                'edit', 'e', 'Edit', 'E']
+                'edit', 'e', 'Edit', 'E',
+                'end', 'n', 'End', 'N']
     raw_command = ''
 
     def __init__(self, game_model, map_display, console):
@@ -429,6 +484,9 @@ class TextInputView(widgets.Text):
                         self.console.add_line(f'{command_array[0]} set to {command_array[1]}')
                     else:
                         self.console.add_line('Input a valid generation variable and integer value.')
+                elif main_command in ('end', 'n', 'End', 'N'):
+                    self._model.end_turn()
+                    self.console.add_line(f'Turn {self._model.turn}')
             else:
                 self.console.add_line('Invalid command.')
 
@@ -475,8 +533,9 @@ class GameView(widgets.Frame):
 
         layout = widgets.Layout([int(self._model.world_map.generation_dict['width'] * 2), 20])
 
+        self._info_bar = InfoBar(self._model)
         self._entity_display = EntityView([], self._model.factions, self._model.world_map.selected_tile, self._model)
-        self._map_console = ConsoleView(screen.height - self._model.world_map.generation_dict['height'] - 1)
+        self._map_console = ConsoleView(screen.height - self._model.world_map.generation_dict['height'] - 2)
         self._map_view = VoromapView(self._model.world_map, self._map_console, self._entity_display)
         self._map_view.l = layout
         self._text_input = TextInputView(self._model, self._map_view, self._map_console)
@@ -486,6 +545,7 @@ class GameView(widgets.Frame):
         layout.add_widget(self._map_view, 0)
         layout.add_widget(self._map_console, 0)
         layout.add_widget(self._text_input, 0)
+        layout.add_widget(self._info_bar, 0)
         layout.add_widget(self._entity_display, 1)
 
         self.fix()

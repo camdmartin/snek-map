@@ -9,11 +9,23 @@ faction_icons = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
 
 
 class Faction:
+    is_player = False
+    currency = 10000
+    minerals = 500
+    population = 600000
+
     def __init__(self, faction_icon: str, faction_color: int, landing_site: voromap.Tile):
         self.faction_color = faction_color
         self.faction_icon = faction_icon
         self.origin = landing_site
         self.entities = []
+
+    def end_turn(self):
+        for e in self.entities:
+            self.currency += 100
+            self.minerals += 20
+            self.population += 1000
+        return
 
     def create_base(self):
         e = Entity(self, self.faction_icon)
@@ -27,23 +39,41 @@ class Faction:
 
 
 class Entity:
-    icon = '#'
+    icon = 'Ϫ'
     name = 'Entity'
     move_data = [2, ['Land']]
+    used_movement = 0
 
     def __init__(self, owner: Faction, icon: str):
         self.owner = owner
         self.faction_color = owner.faction_color
         self.icon = icon
 
+    def end_turn(self):
+        self.used_movement = 0
+
+
+class Structure(Entity):
+    move_data = [0, []]
+
 
 class Game:
+    turn = 0
+
     def __init__(self, world_map: voromap.WorldMap, faction_count):
         self.world_map = world_map
         self.factions = []
         self.faction_count = faction_count
 
         self.create_new_game(False)
+
+    def end_turn(self):
+        for f in self.factions:
+            f.end_turn()
+            for e in f.entities:
+                e.end_turn()
+
+        self.turn += 1
 
     def create_entity(self, owner: Faction, tile, icon='#'):
         e = Entity(owner, icon)
@@ -64,3 +94,5 @@ class Game:
             self.factions.append(f)
             self.place_entity(f.create_base(), f.origin)
             self.place_entity(f.create_base(), f.origin)
+
+        self.factions[0].is_player = True

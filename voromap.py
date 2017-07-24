@@ -607,9 +607,10 @@ class WorldMap:
         self.is_anchored = False
 
     def move_entity(self, entity, origin, destination):
-        if origin.entities.__contains__(entity):
+        if origin.entities.__contains__(entity) and entity.used_movement < entity.move_data[0]:
             origin.entities.remove(entity)
             destination.entities.append(entity)
+            entity.used_movement += int(self.distance((origin.x, origin.y), (destination.x, destination.y)))
             return True
 
         return False
