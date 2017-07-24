@@ -12,9 +12,7 @@ import copy
 # restrict map generation variables to positive integers
 # fix odd backspace behavior on text input field
 # help command
-# indicator of display focus
 # continent icon missing from tile display
-# taking turns!
 
 
 vm = voromap.WorldMap(80, 40, 0, 3, 9, 100)

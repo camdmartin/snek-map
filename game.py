@@ -1,11 +1,14 @@
 import voromap
 from random import randint
+import copy
 
 
 faction_icons = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
                  'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
                  'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '@', '#', '$', '%',
                  '^', '&', '*', '(', ')', '-', '_', '=', '+', '?']
+
+faction_colors = [1, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15]
 
 
 class Faction:
@@ -89,10 +92,20 @@ class Game:
         if regenerate_world:
             self.world_map.regenerate()
 
+        used_colors = copy.copy(faction_colors)
+        used_icons = copy.copy(faction_icons)
+
         for i in range(0, self.faction_count):
-            f = Faction(faction_icons[randint(0, len(faction_icons) - 1)], randint(0, 16), self.world_map.get_random_land_tile())
+            c = randint(0, len(faction_colors) - 1)
+            i = randint(0, len(faction_icons) - 1)
+
+            f = Faction(faction_icons[i], faction_colors[c], self.world_map.get_random_land_tile())
+
             self.factions.append(f)
             self.place_entity(f.create_base(), f.origin)
             self.place_entity(f.create_base(), f.origin)
+
+            faction_colors.remove(faction_colors[c])
+            faction_icons.remove(faction_icons[i])
 
         self.factions[0].is_player = True
