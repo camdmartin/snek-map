@@ -5,15 +5,25 @@ from asciimatics.scene import Scene
 import voromap
 import game
 import os
+import copy
 
 # TODO:
 # resize console on map regeneration
 # restrict map generation variables to positive integers
 # fix odd backspace behavior on text input field
 # help command
-# entity list selectable
-# bright faction colors only and/or faction flags
-# faction list (above entites? part of entity list?)
+# entity selection and movement
+    # logic: pressing ENTER with entity selected drops anchor on entity's tile and sets selection_data to entity's movement_data
+        # selection box goes around anchor
+        # restrict selected tile to selection box
+        # ESC escapes selection
+        # hitting ENTER again moves entity
+# refactor ui to refer to global scope voromap/model
+# continent icon missing from tile display
+
+
+vm = voromap.WorldMap(80, 40, 0, 3, 9, 100)
+model = game.Game(vm, 6)
 
 
 class ConsoleView(widgets.Widget):
@@ -83,31 +93,95 @@ class ConsoleView(widgets.Widget):
 
 
 class EntityView(widgets.Widget):
-    # Format:
-    # Type Icon: Name
-    #   Owner: Faction
-
-    def __init__(self, entity_list):
-        super(EntityView, self).__init__('Entities', tab_stop=False)
+    
+    def __init__(self, entity_list, faction_list, location):
+        super(EntityView, self).__init__('Entities')
         self._entity_list = entity_list
-        self.location = (0, 0)
+        self._faction_list = faction_list
+        self.location = location
+        self.selected_entity = 0
 
     def update(self, frame_no):
+        if len(self.location.entities) > 0 and not self.location.entities.__contains__(self.selected_entity):
+            self.selected_entity = self.location.entities[0]
+
         line = 0
 
-        self._frame.canvas.print_at(f'Entities {self.location}', self._x, self._y + line, colour=Screen.COLOUR_WHITE, attr=Screen.A_BOLD)
+        self._frame.canvas.print_at('Selected', self._x, self._y + line, colour=Screen.COLOUR_WHITE, attr=Screen.A_BOLD)
+        line += 1
+
+        self._frame.canvas.print_at(f'({self.location.x}, {self.location.y})',
+                                    self._x, self._y + line, colour=Screen.COLOUR_WHITE)
+        line += 1
+        self._frame.canvas.print_at(f'({self.location.type}, Height {self.location.height})',
+                                    self._x, self._y + line, colour=Screen.COLOUR_WHITE, attr=Screen.A_BOLD)
+
+        line += 1
+        ci = vm.get_continent_of_tile(self.location).icon
+        self._frame.canvas.print_at(f'Region: {self.location.icon}, '
+                                    f'Continent: {ci}',
+                                    self._x, self._y + line, colour=Screen.COLOUR_WHITE, attr=Screen.A_BOLD)
+        line += 2
+
+        self._frame.canvas.print_at('Factions', self._x, self._y + line, colour=Screen.COLOUR_WHITE, attr=Screen.A_BOLD)
+        line += 1
+
+        for f in self._faction_list:
+            c = copy.copy(f.faction_color)
+            self._frame.canvas.paint(f'{f.faction_icon} {f.faction_color}: ({f.origin.x}, {f.origin.y})',
+                                     self._x, self._y + line, colour=c)
+            line += 1
+
+        line += 1
+
+        self._frame.canvas.print_at(f'Entities', self._x, self._y + line, colour=Screen.COLOUR_WHITE,
+                                    attr=Screen.A_BOLD)
         line += 1
 
         for e in self._entity_list:
-            self._frame.canvas.print_at(f'{e.icon}: {e.name}', self._x, self._y + line)
-            line += 1
-            self._frame.canvas.print_at(f'    Owner: {e.faction_color}', self._x, self._y + line, colour=e.faction_color)
+            if e is self.selected_entity:
+                self._frame.canvas.print_at(f'{e.icon}: {e.name}', self._x, self._y + line, colour=Screen.COLOUR_BLACK,
+                                            bg=e.faction_color)
+                line += 1
+                self._frame.canvas.print_at(f'    Owner: {e.faction_color}', self._x, self._y + line,
+                                            colour=Screen.COLOUR_BLACK, bg=e.faction_color)
+            else:
+                self._frame.canvas.print_at(f'{e.icon}: {e.name}', self._x, self._y + line)
+                line += 1
+                self._frame.canvas.print_at(f'    Owner: {e.faction_color}', self._x, self._y + line,
+                                            colour=e.faction_color)
+
             line += 1
 
     def reset(self):
+        self.selected_entity = 0
         self._entity_list = []
 
     def process_event(self, event):
+        if isinstance(event, asciimatics.event.KeyboardEvent):
+            global_shortcuts(event)
+
+            if self.selected_entity != 0:
+                entity_index = self.location.entities.index(self.selected_entity)
+
+                if event.key_code == Screen.KEY_DOWN:
+                    if entity_index != len(self.location.entities) - 1:
+                        self.selected_entity = self.location.entities[entity_index + 1]
+                    else:
+                        self.selected_entity = self.location.entities[0]
+
+                    return None
+                elif event.key_code == Screen.KEY_UP:
+                    if entity_index != 0:
+                        self.selected_entity = self.location.entities[entity_index - 1]
+                    else:
+                        self.selected_entity = self.location.entities[-1]
+
+                    return None
+                elif event.key_code == 10:
+                    # put in call to movement method in map here
+                    return event
+
         return event
 
     @property
@@ -123,7 +197,7 @@ class EntityView(widgets.Widget):
 
 
 class VoromapView(widgets.Widget):
-    # color filter supports Terrain, Continent
+    selection_data = [3, ['Land']]
     show_heights = False
     show_icons = False
 
@@ -134,6 +208,10 @@ class VoromapView(widgets.Widget):
         self.world_map = world_map
         self.console = console
         self.entity_display = entity_display
+
+        self.world_map.terrain_filter()
+
+        self.reduce_cpu = True
 
     @property
     def value(self):
@@ -155,52 +233,51 @@ class VoromapView(widgets.Widget):
         return None
 
     def update(self, frame_no):
-        self.entity_display.location = (self.world_map.selected_tile.x, self.world_map.selected_tile.y)
-        self.entity_display._entity_list = self.world_map.selected_tile.entities
-        self.entity_display.update(0)
 
         for c in self.world_map.continents:
             c.set_tile_icons_to_continent_icon()
 
-        y_index = 0
         for i in self.world_map.world:
-            x_index = 0
             for j in i:
+                icon1 = '█'
+                icon1_color = j.color
+                icon1_attr = Screen.A_NORMAL
+                icon1_bg = j.color
+
+                icon2 = '█'
+                icon2_color = j.color
+                icon2_attr = Screen.A_NORMAL
+                icon2_bg = j.color
+
                 if len(j.entities) > 0:
                     icon1 = j.entities[0].icon
-                    icon_color_1 = j.entities[0].faction_color
-                elif self.show_icons is True:
-                    icon1 = j.icon
-                    icon_color_1 = 16
-                else:
-                    icon1 = ' '
-                    icon_color_1 = j.color
-
-                if self.show_heights is True:
-                    icon2 = f'{j.height}'
-                    icon_color_2 = 16
-                else:
+                    icon1_color = 0
+                    icon1_bg = j.entities[0].faction_color
                     icon2 = ' '
-                    icon_color_2 = j.color
+                    icon2_bg = icon1_bg
+                elif self.show_icons:
+                    icon1 = j.icon
+                    icon1_color = 0
+
+                if self.show_heights:
+                    icon2 = j.height
+                    icon2_color = 0
 
                 if j is self.world_map.selected_tile:
-                    if self._has_focus is True:
-                        bg_color = 201
-                        bg_color_2 = 201
-                    else:
-                        bg_color = 219
-                        bg_color_2 = 219
-                else:
-                    bg_color = j.color
-                    bg_color_2 = j.color
+                    icon1_bg = 201
+                    if icon1 == '█':
+                        icon1_color = 201
+                    icon2_bg = 201
+                    if icon2 == '█':
+                        icon2_color = 201
 
-                self._frame.canvas.paint(f'{icon1}{icon2}', self._x + x_index * 2, self._y + y_index,
-                                         colour=icon_color_1, bg=bg_color,
-                                         colour_map=[(icon_color_1, Screen.A_NORMAL, bg_color),
-                                                     (icon_color_2, Screen.A_NORMAL, bg_color_2)])
+                self._frame.canvas.paint(f'{icon1}{icon2}', (self._x + j.x) * 2, self._y + j.y,
+                                         colour_map=[(icon1_color, icon1_attr, icon1_bg),
+                                                     (icon2_color, icon2_attr, icon2_bg)])
 
-                x_index += 1
-            y_index += 1
+                if self.selection_data[0] > 0 and vm.distance((j.x, j.y), (vm.selected_tile.x, vm.selected_tile.y)) \
+                        <= self.selection_data[0] and self.selection_data[1].__contains__(j.type):
+                    self._frame.canvas.highlight(j.x * 2, j.y, 2, 1, fg=226, bg=icon1_bg, blend=70)
 
     def handle_arrow_input(self, event):
         key_code = event.key_code
@@ -237,13 +314,19 @@ class VoromapView(widgets.Widget):
             location_changed = False
 
         if location_changed:
+            self.entity_display.reset()
+
+            self.entity_display.location = self.world_map.selected_tile
+            self.entity_display._entity_list = self.world_map.selected_tile.entities
+
+            self.entity_display.update(0)
+
             self.console.add_line(
                 text=f"Selected: ({self.world_map.selected_tile.x}, {self.world_map.selected_tile.y})")
             self.update(0)
 
     def process_event(self, event):
         if isinstance(event, asciimatics.event.KeyboardEvent):
-
             global_shortcuts(event)
 
             t = self.world_map.selected_tile
@@ -275,10 +358,10 @@ class TextInputView(widgets.Text):
                 'edit', 'e', 'Edit', 'E']
     raw_command = ''
 
-    def __init__(self, model, map_display, console):
+    def __init__(self, game_model, map_display, console):
         super(TextInputView, self).__init__(name='Input')
         self._label = '>'
-        self._model = model
+        self._model = game_model
         self.console = console
         self.map_display = map_display
         self.custom_colour = 'edit_text'
@@ -339,9 +422,6 @@ class TextInputView(widgets.Text):
         if isinstance(event, asciimatics.event.KeyboardEvent):
             global_shortcuts(event)
 
-            # if event.key_code in (Screen.KEY_UP, Screen.KEY_DOWN):
-                # return None
-
             if event.key_code == 10:
                 raw_command = self._value
                 self.handle_command(raw_command)
@@ -357,8 +437,8 @@ class TextInputView(widgets.Text):
 
 
 class TestView(widgets.Frame):
-    def __init__(self, screen, model):
-        self._model = model
+    def __init__(self, screen, game_model):
+        self._model = game_model
 
         super(TestView, self).__init__(screen,
                                        width=int(self._model.world_map.generation_dict['width'] * 2 + 20),
@@ -373,10 +453,10 @@ class TestView(widgets.Frame):
         self.palette['edit_text'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
         self.palette['label'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
 
-        self._entity_display = EntityView([])
+        self._entity_display = EntityView([], self._model.factions, self._model.world_map.selected_tile)
         self._map_console = ConsoleView(screen.height - self._model.world_map.generation_dict['height'] - 1)
-        self._map_view = VoromapView(model.world_map, self._map_console, self._entity_display)
-        self._text_input = TextInputView(model, self._map_view, self._map_console)
+        self._map_view = VoromapView(self._model.world_map, self._map_console, self._entity_display)
+        self._text_input = TextInputView(self._model, self._map_view, self._map_console)
 
         layout = widgets.Layout([int(self._model.world_map.generation_dict['width'] * 2), 20])
 
@@ -406,11 +486,11 @@ def global_shortcuts(event):
 
 
 def demo(screen, scene):
-    t = voromap.WorldMap(80, 40, 0, 3, 9, 100)
-    g = game.Game(t, 6)
+    # t = voromap.WorldMap(80, 40, 0, 3, 9, 100)
+    # g = game.Game(t, 6)
 
     scenes = [
-        Scene([TestView(screen, g)], -1, name="Main")
+        Scene([TestView(screen, model)], -1, name="Main")
     ]
 
     screen.play(scenes, stop_on_resize=True, start_scene=scene, unhandled_input=global_shortcuts)

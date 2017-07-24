@@ -331,7 +331,10 @@ class WorldMap:
     def get_random_land_tile(self):
         c = self.continents[randint(0, len(self.continents) - 1)]
         r = c.regions[randint(0, len(c.regions) - 1)]
+        while len(r.tiles) <= 0:
+            r = c.regions[randint(0, len(c.regions) - 1)]
         t = r.tiles[randint(0, len(r.tiles) - 1)]
+
         return t
 
     def swap_tile_region(self, t: Tile, swap_to: Region):
