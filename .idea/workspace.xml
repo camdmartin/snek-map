@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3e3ab0e6-05ef-4ceb-99f1-e940ce134b5a" name="Default" comment="">
+    <list default="true" id="3e3ab0e6-05ef-4ceb-99f1-e940ce134b5a" name="Default" comment="Unit movement now limited by radius">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asciiui.py" afterPath="$PROJECT_DIR$/asciiui.py" />
     </list>
@@ -18,7 +18,7 @@
       <file leaf-file-name="voromap.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/voromap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
+            <state relative-caret-position="8589">
               <caret line="605" column="65" lean-forward="false" selection-start-line="605" selection-start-column="65" selection-end-line="605" selection-end-column="65" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
@@ -56,13 +56,13 @@
       <file leaf-file-name="asciiui.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/asciiui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="324" column="22" lean-forward="false" selection-start-line="324" selection-start-column="22" selection-end-line="324" selection-end-column="22" />
+            <state relative-caret-position="-6334">
+              <caret line="97" column="41" lean-forward="true" selection-start-line="97" selection-start-column="41" selection-end-line="97" selection-end-column="41" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-                <element signature="e#874#2808#0" expanded="false" />
+                <element signature="e#577#2511#0" expanded="false" />
                 <element signature="e#7764#8370#0" expanded="false" />
-                <element signature="e#13489#17346#0" expanded="false" />
+                <element signature="e#13898#17755#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -71,7 +71,7 @@
       <file leaf-file-name="game.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
+            <state relative-caret-position="588">
               <caret line="36" column="24" lean-forward="true" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
@@ -83,8 +83,8 @@
       <file leaf-file-name="widgets.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Desktop/Programs/asciimatics-master/asciimatics/widgets.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="196" column="11" lean-forward="true" selection-start-line="196" selection-start-column="11" selection-end-line="196" selection-end-column="11" />
+            <state relative-caret-position="-1358">
+              <caret line="1019" column="50" lean-forward="false" selection-start-line="1019" selection-start-column="44" selection-end-line="1019" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -93,7 +93,7 @@
       <file leaf-file-name="screen.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Desktop/Programs/asciimatics-master/asciimatics/screen.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
+            <state relative-caret-position="-357">
               <caret line="498" column="11" lean-forward="false" selection-start-line="498" selection-start-column="11" selection-end-line="498" selection-end-column="11" />
               <folding />
             </state>
@@ -111,15 +111,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>self.width</find>
-      <find>self.sea</find>
-      <find>self.min</find>
-      <find>self.max</find>
-      <find>mountain_ra</find>
-      <find>seed_c</find>
-      <find>seed_r</find>
-      <find>model.</find>
-      <find>_map.</find>
       <find>print</find>
       <find>fuzz</find>
       <find>map.world</find>
@@ -141,6 +132,15 @@
       <find>dista</find>
       <find>type</find>
       <find>s frame</find>
+      <find>blur</find>
+      <find>def focus</find>
+      <find>KEY_DO</find>
+      <find>f focus</find>
+      <find>process</find>
+      <find>_focus</find>
+      <find>focus</find>
+      <find>layouts</find>
+      <find>switch</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -386,7 +386,14 @@
       <option name="project" value="LOCAL" />
       <updated>1500904661361</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Unit movement now limited by radius">
+      <created>1500906528664</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1500906528664</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -438,7 +445,8 @@
     <MESSAGE value="Added random tile selection method" />
     <MESSAGE value="Implemented entity selection in display" />
     <MESSAGE value="Initial implementation of unit movement" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial implementation of unit movement" />
+    <MESSAGE value="Unit movement now limited by radius" />
+    <option name="LAST_COMMIT_MESSAGE" value="Unit movement now limited by radius" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -489,9 +497,9 @@
           <caret line="204" column="41" lean-forward="false" selection-start-line="204" selection-start-column="41" selection-end-line="204" selection-end-column="41" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#874#2808#0" expanded="false" />
+            <element signature="e#577#2511#0" expanded="false" />
             <element signature="e#7764#8370#0" expanded="false" />
-            <element signature="e#13489#17346#0" expanded="false" />
+            <element signature="e#13898#17755#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -722,15 +730,41 @@
     </entry>
     <entry file="file://$USER_HOME$/Desktop/Programs/asciimatics-master/asciimatics/screen.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
+        <state relative-caret-position="-357">
           <caret line="498" column="11" lean-forward="false" selection-start-line="498" selection-start-column="11" selection-end-line="498" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/Programs/asciimatics-master/samples/contact_list.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="153" column="53" lean-forward="false" selection-start-line="153" selection-start-column="52" selection-end-line="153" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="36" column="24" lean-forward="true" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/Programs/asciimatics-master/asciimatics/widgets.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1358">
+          <caret line="1019" column="50" lean-forward="false" selection-start-line="1019" selection-start-column="44" selection-end-line="1019" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/voromap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
+        <state relative-caret-position="8589">
           <caret line="605" column="65" lean-forward="false" selection-start-line="605" selection-start-column="65" selection-end-line="605" selection-end-column="65" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
@@ -764,33 +798,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="36" column="24" lean-forward="true" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Desktop/Programs/asciimatics-master/asciimatics/widgets.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="196" column="11" lean-forward="true" selection-start-line="196" selection-start-column="11" selection-end-line="196" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/asciiui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="324" column="22" lean-forward="false" selection-start-line="324" selection-start-column="22" selection-end-line="324" selection-end-column="22" />
+        <state relative-caret-position="-6334">
+          <caret line="97" column="41" lean-forward="true" selection-start-line="97" selection-start-column="41" selection-end-line="97" selection-end-column="41" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#874#2808#0" expanded="false" />
+            <element signature="e#577#2511#0" expanded="false" />
             <element signature="e#7764#8370#0" expanded="false" />
-            <element signature="e#13489#17346#0" expanded="false" />
+            <element signature="e#13898#17755#0" expanded="false" />
           </folding>
         </state>
       </provider>

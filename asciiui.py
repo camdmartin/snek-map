@@ -12,15 +12,8 @@ import copy
 # restrict map generation variables to positive integers
 # fix odd backspace behavior on text input field
 # help command
-# entity selection and movement
-# - logic:
-# - - pressing ENTER with entity selected drops anchor on entity's tile and sets
-# selection_data to entity's movement_data
-# - - selection box goes around anchor
-# - - restrict selected tile to selection box
-# - - ESC escapes selection
-# - - hitting ENTER again moves entity
-# refactor ui to refer to global scope voromap/model
+# improve focus switching on entity selection
+# indicator of display focus
 # continent icon missing from tile display
 
 
@@ -104,6 +97,8 @@ class EntityView(widgets.Widget):
         self.selected_entity = 0
         self.world = game_model.world_map
 
+        self._is_tab_stop = False
+
     def update(self, frame_no):
         if len(self.location.entities) > 0 and not self.location.entities.__contains__(self.selected_entity):
             self.selected_entity = self.location.entities[0]
@@ -142,7 +137,7 @@ class EntityView(widgets.Widget):
         line += 1
 
         for e in self._entity_list:
-            if e is self.selected_entity:
+            if e is self.selected_entity and self._has_focus:
                 self._frame.canvas.print_at(f'{e.icon}: {e.name}', self._x, self._y + line, colour=Screen.COLOUR_BLACK,
                                             bg=e.faction_color)
                 line += 1
@@ -183,7 +178,11 @@ class EntityView(widgets.Widget):
                     return None
                 elif event.key_code == 10:
                     self.world.start_movement(self.location, self.selected_entity)
+                    self._frame.switch_focus(self._frame._layouts[0], 0, 0)
                     return event
+                elif event.key_code == Screen.KEY_ESCAPE:
+                    self._frame.switch_focus(self._frame._layouts[0], 0, 0)
+                    return None
 
         return event
 
@@ -260,12 +259,16 @@ class VoromapView(widgets.Widget):
                     icon2_color = 0
 
                 if j is self.world_map.selected_tile:
-                    icon1_bg = 201
+                    if self._has_focus:
+                        sel_color = 201
+                    else:
+                        sel_color = 219
+
+                    icon1_bg = icon2_bg = sel_color
                     if icon1 == '█':
-                        icon1_color = 201
-                    icon2_bg = 201
+                        icon1_color = sel_color
                     if icon2 == '█':
-                        icon2_color = 201
+                        icon2_color = sel_color
 
                 self._frame.canvas.paint(f'{icon1}{icon2}', (self._x + j.x) * 2, self._y + j.y,
                                          colour_map=[(icon1_color, icon1_attr, icon1_bg),
@@ -334,7 +337,7 @@ class VoromapView(widgets.Widget):
         return location_changed
 
     def process_event(self, event):
-        if isinstance(event, asciimatics.event.KeyboardEvent):
+        if self._has_focus and isinstance(event, asciimatics.event.KeyboardEvent):
             global_shortcuts(event)
 
             t = self.world_map.selected_tile
@@ -350,7 +353,12 @@ class VoromapView(widgets.Widget):
                     return None
                 else:
                     self.blur()
-                    self.entity_display.focus()
+                    self._frame.switch_focus(self._frame._layouts[0], 1, 0)
+                return event
+            elif event.key_code == Screen.KEY_ESCAPE:
+                if self.world_map.is_anchored:
+                    self.world_map.is_anchored = False
+                    self.update(0)
                     return None
             else:
                 self.console.add_line(str(event.key_code))
@@ -449,15 +457,15 @@ class TextInputView(widgets.Text):
         return event
 
 
-class TestView(widgets.Frame):
+class GameView(widgets.Frame):
     def __init__(self, screen, game_model):
         self._model = game_model
 
-        super(TestView, self).__init__(screen,
+        super(GameView, self).__init__(screen,
                                        width=int(self._model.world_map.generation_dict['width'] * 2 + 20),
                                        height=screen.height,
                                        on_load=self._reload_map,
-                                       hover_focus=True,
+                                       hover_focus=False,
                                        title="World Map",
                                        has_border=False)
 
@@ -465,12 +473,13 @@ class TestView(widgets.Frame):
         self.palette['edit_text'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
         self.palette['label'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
 
+        layout = widgets.Layout([int(self._model.world_map.generation_dict['width'] * 2), 20])
+
         self._entity_display = EntityView([], self._model.factions, self._model.world_map.selected_tile, self._model)
         self._map_console = ConsoleView(screen.height - self._model.world_map.generation_dict['height'] - 1)
         self._map_view = VoromapView(self._model.world_map, self._map_console, self._entity_display)
+        self._map_view.l = layout
         self._text_input = TextInputView(self._model, self._map_view, self._map_console)
-
-        layout = widgets.Layout([int(self._model.world_map.generation_dict['width'] * 2), 20])
 
         self.add_layout(layout)
 
@@ -502,7 +511,7 @@ def demo(screen, scene):
     # g = game.Game(t, 6)
 
     scenes = [
-        Scene([TestView(screen, model)], -1, name="Main")
+        Scene([GameView(screen, model)], -1, name="Main")
     ]
 
     screen.play(scenes, stop_on_resize=True, start_scene=scene, unhandled_input=global_shortcuts)
