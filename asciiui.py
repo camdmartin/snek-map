@@ -13,11 +13,13 @@ import copy
 # fix odd backspace behavior on text input field
 # help command
 # entity selection and movement
-    # logic: pressing ENTER with entity selected drops anchor on entity's tile and sets selection_data to entity's movement_data
-        # selection box goes around anchor
-        # restrict selected tile to selection box
-        # ESC escapes selection
-        # hitting ENTER again moves entity
+# - logic:
+# - - pressing ENTER with entity selected drops anchor on entity's tile and sets
+# selection_data to entity's movement_data
+# - - selection box goes around anchor
+# - - restrict selected tile to selection box
+# - - ESC escapes selection
+# - - hitting ENTER again moves entity
 # refactor ui to refer to global scope voromap/model
 # continent icon missing from tile display
 
@@ -93,13 +95,14 @@ class ConsoleView(widgets.Widget):
 
 
 class EntityView(widgets.Widget):
-    
-    def __init__(self, entity_list, faction_list, location):
+
+    def __init__(self, entity_list, faction_list, location, game_model):
         super(EntityView, self).__init__('Entities')
         self._entity_list = entity_list
         self._faction_list = faction_list
         self.location = location
         self.selected_entity = 0
+        self.world = game_model.world_map
 
     def update(self, frame_no):
         if len(self.location.entities) > 0 and not self.location.entities.__contains__(self.selected_entity):
@@ -179,7 +182,7 @@ class EntityView(widgets.Widget):
 
                     return None
                 elif event.key_code == 10:
-                    # put in call to movement method in map here
+                    self.world.start_movement(self.location, self.selected_entity)
                     return event
 
         return event
@@ -197,19 +200,19 @@ class EntityView(widgets.Widget):
 
 
 class VoromapView(widgets.Widget):
-    selection_data = [3, ['Land']]
+
     show_heights = False
     show_icons = False
 
     def __init__(self, world_map: voromap.WorldMap, console: ConsoleView, entity_display: EntityView):
         super(VoromapView, self).__init__(name="World")
 
-        # self._is_tab_stop = False
         self.world_map = world_map
         self.console = console
         self.entity_display = entity_display
 
         self.world_map.terrain_filter()
+        self.anchor = self.world_map.tile_at_point(0, 0)
 
         self.reduce_cpu = True
 
@@ -234,25 +237,18 @@ class VoromapView(widgets.Widget):
 
     def update(self, frame_no):
 
-        for c in self.world_map.continents:
-            c.set_tile_icons_to_continent_icon()
-
         for i in self.world_map.world:
             for j in i:
-                icon1 = '█'
-                icon1_color = j.color
-                icon1_attr = Screen.A_NORMAL
-                icon1_bg = j.color
-
-                icon2 = '█'
-                icon2_color = j.color
-                icon2_attr = Screen.A_NORMAL
-                icon2_bg = j.color
+                icon1 = icon2 = '█'
+                icon1_color = icon2_color = j.color
+                icon1_attr = icon2_attr = Screen.A_NORMAL
+                icon1_bg = icon2_bg = j.color
 
                 if len(j.entities) > 0:
                     icon1 = j.entities[0].icon
                     icon1_color = 0
                     icon1_bg = j.entities[0].faction_color
+
                     icon2 = ' '
                     icon2_bg = icon1_bg
                 elif self.show_icons:
@@ -275,9 +271,13 @@ class VoromapView(widgets.Widget):
                                          colour_map=[(icon1_color, icon1_attr, icon1_bg),
                                                      (icon2_color, icon2_attr, icon2_bg)])
 
-                if self.selection_data[0] > 0 and vm.distance((j.x, j.y), (vm.selected_tile.x, vm.selected_tile.y)) \
-                        <= self.selection_data[0] and self.selection_data[1].__contains__(j.type):
-                    self._frame.canvas.highlight(j.x * 2, j.y, 2, 1, fg=226, bg=icon1_bg, blend=70)
+                if self.world_map.is_anchored:
+                    selection_data = self.world_map.selected_entity.move_data
+
+                    if selection_data[0] > 0 and vm.distance((j.x, j.y),
+                                                             (self.world_map.anchor.x, self.world_map.anchor.y)) \
+                            <= selection_data[0] and selection_data[1].__contains__(j.type):
+                        self._frame.canvas.highlight(j.x * 2, j.y, 2, 1, fg=226, bg=icon1_bg, blend=70)
 
     def handle_arrow_input(self, event):
         key_code = event.key_code
@@ -336,9 +336,10 @@ class VoromapView(widgets.Widget):
                 self.handle_arrow_input(event)
                 return None
             elif event.key_code == 10:
-                self.console.reset()
-                self.console.update(0)
-                return None
+                if self.world_map.is_anchored:
+                    self.world_map.end_movement()
+                    self.update(0)
+                    return None
             else:
                 self.console.add_line(str(event.key_code))
                 return event
@@ -446,14 +447,13 @@ class TestView(widgets.Frame):
                                        on_load=self._reload_map,
                                        hover_focus=True,
                                        title="World Map",
-                                       has_border=False
-                                       )
+                                       has_border=False)
 
         self.palette['background'] = (Screen.COLOUR_WHITE, Screen.A_NORMAL, Screen.COLOUR_BLACK)
         self.palette['edit_text'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
         self.palette['label'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
 
-        self._entity_display = EntityView([], self._model.factions, self._model.world_map.selected_tile)
+        self._entity_display = EntityView([], self._model.factions, self._model.world_map.selected_tile, self._model)
         self._map_console = ConsoleView(screen.height - self._model.world_map.generation_dict['height'] - 1)
         self._map_view = VoromapView(self._model.world_map, self._map_console, self._entity_display)
         self._text_input = TextInputView(self._model, self._map_view, self._map_console)

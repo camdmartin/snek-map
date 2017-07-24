@@ -98,6 +98,10 @@ class WorldMap:
     regions: [Region]
     seeds: [(int, int)]
 
+    selected_entity = 0
+    is_anchored = False
+    anchor: Tile
+
     region_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
                       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
                       'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4',
@@ -135,9 +139,11 @@ class WorldMap:
 
         self.regenerate()
 
-        self.selected_tile = self.world[0][0]
+        self.selected_tile = self.tile_at_point(0, 0)
 
         self.terrain_filter()
+
+        self.anchor = self.tile_at_point(0, 0)
 
     # basic generation methods
 
@@ -379,7 +385,6 @@ class WorldMap:
 
     def get_seed_regions(self):
         temp_regions = copy.deepcopy(self.regions)
-        # print(len(temp_regions))
         seed_regions = []
 
         # pick initial region
@@ -435,8 +440,6 @@ class WorldMap:
             total_regions.append(r)
 
         region_quota = int(len(self.regions) * (self.generation_dict['percent_land'] / 100))
-
-        # print(region_quota)
 
         while len(total_regions) < region_quota:
             shuffle(self.continents)
@@ -591,6 +594,26 @@ class WorldMap:
 
             r.tiles += tiles_to_fuzz
 
+    # entity manipulation
+
+    def start_movement(self, location, entity):
+        self.is_anchored = True
+        self.anchor = location
+
+        self.selected_entity = entity
+
+    def end_movement(self):
+        self.move_entity(self.selected_entity, self.anchor, self.selected_tile)
+        self.is_anchored = False
+
+    def move_entity(self, entity, origin, destination):
+        if origin.entities.__contains__(entity):
+            origin.entities.remove(entity)
+            destination.entities.append(entity)
+            return True
+
+        return False
+
     # printing methods
 
     def print_region_icons(self, screen: Screen):
@@ -691,7 +714,3 @@ class WorldMap:
             for j in i:
                 print(f'{j.icon}' + ' ')
             print('\n')
-
-
-# w = WorldMap(80, 40, 0, 3, 9, 100)
-# Screen.wrapper(w.print_world_heights)

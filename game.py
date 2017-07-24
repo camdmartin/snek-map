@@ -29,6 +29,7 @@ class Faction:
 class Entity:
     icon = '#'
     name = 'Entity'
+    move_data = [2, ['Land']]
 
     def __init__(self, owner: Faction, icon: str):
         self.owner = owner
