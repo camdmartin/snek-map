@@ -283,35 +283,24 @@ class VoromapView(widgets.Widget):
         key_code = event.key_code
         t = self.world_map.selected_tile
         location_changed = False
+        anchored = self.world_map.is_anchored
 
-        try:
-            if key_code is Screen.KEY_LEFT:
-                self.world_map.selected_tile = self.world_map.tile_at_point(t.x - 1, t.y)
-                location_changed = True
-            elif key_code is Screen.KEY_RIGHT:
-                self.world_map.selected_tile = self.world_map.tile_at_point(t.x + 1, t.y)
-                location_changed = True
-            elif key_code is Screen.KEY_UP:
-                self.world_map.selected_tile = self.world_map.tile_at_point(t.x, t.y - 1)
-                location_changed = True
-            elif key_code is Screen.KEY_DOWN:
-                self.world_map.selected_tile = self.world_map.tile_at_point(t.x, t.y + 1)
-                location_changed = True
-            elif key_code == 393:
-                self.world_map.selected_tile = self.world_map.tile_at_point(t.x - 10, t.y)
-                location_changed = True
-            elif key_code == 402:
-                self.world_map.selected_tile = self.world_map.tile_at_point(t.x + 10, t.y)
-                location_changed = True
-            elif key_code == 337:
-                self.world_map.selected_tile = self.world_map.tile_at_point(t.x, t.y - 10)
-                location_changed = True
-            elif key_code == 336:
-                self.world_map.selected_tile = self.world_map.tile_at_point(t.x, t.y + 10)
-                location_changed = True
-
-        except IndexError:
-            location_changed = False
+        if key_code is Screen.KEY_LEFT:
+            location_changed = self.move_cursor(event, -1, 0, anchored)
+        elif key_code is Screen.KEY_RIGHT:
+            location_changed = self.move_cursor(event, 1, 0, anchored)
+        elif key_code is Screen.KEY_UP:
+            location_changed = self.move_cursor(event, 0, -1, anchored)
+        elif key_code is Screen.KEY_DOWN:
+            location_changed = self.move_cursor(event, 0, 1, anchored)
+        elif key_code == 393:
+            location_changed = self.move_cursor(event, -10, 0, anchored)
+        elif key_code == 402:
+            location_changed = self.move_cursor(event, 10, 0, anchored)
+        elif key_code == 337:
+            location_changed = self.move_cursor(event, 0, -10, anchored)
+        elif key_code == 336:
+            location_changed = self.move_cursor(event, 0, 10, anchored)
 
         if location_changed:
             self.entity_display.reset()
@@ -324,6 +313,25 @@ class VoromapView(widgets.Widget):
             self.console.add_line(
                 text=f"Selected: ({self.world_map.selected_tile.x}, {self.world_map.selected_tile.y})")
             self.update(0)
+
+    def move_cursor(self, event, dx, dy, anchored):
+        s = self.world_map.selected_tile
+        d = self.world_map.tile_at_point(s.x + dx, s.y + dy)
+
+        if anchored:
+            self.console.add_line('Anchored')
+            a = self.world_map.anchor
+            if self.world_map.distance((a.x, a.y), (s.x + dx, s.y + dy)) > self.world_map.selected_entity.move_data[0] \
+                    or not self.world_map.selected_entity.move_data[1].__contains__(d.type):
+                return False
+
+        try:
+            self.world_map.selected_tile = self.world_map.tile_at_point(s.x + dx, s.y + dy)
+            location_changed = True
+        except IndexError:
+            location_changed = False
+
+        return location_changed
 
     def process_event(self, event):
         if isinstance(event, asciimatics.event.KeyboardEvent):
@@ -339,6 +347,10 @@ class VoromapView(widgets.Widget):
                 if self.world_map.is_anchored:
                     self.world_map.end_movement()
                     self.update(0)
+                    return None
+                else:
+                    self.blur()
+                    self.entity_display.focus()
                     return None
             else:
                 self.console.add_line(str(event.key_code))
