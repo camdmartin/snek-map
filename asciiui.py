@@ -13,6 +13,9 @@ import copy
 # fix odd backspace behavior on text input field
 # help command
 # continent icon missing from tile display
+# biomes (precipitation and temperature maps)
+# resource spread
+# mining/energy generation/construction
 
 
 vm = voromap.WorldMap(80, 40, 0, 3, 9, 100)
@@ -26,6 +29,7 @@ class InfoBar(widgets.Widget):
         self._model = game_model
 
     def reset(self):
+        self._model = model
         return
 
     def process_event(self, event):
@@ -45,7 +49,7 @@ class InfoBar(widgets.Widget):
         self._frame.canvas.print_at(f'Ѫ{player_faction.minerals}', self._x + offset, self._y, colour=Screen.COLOUR_RED)
         offset += 10
 
-        self._frame.canvas.print_at(f'Pop {player_faction.population}', self._x + offset, self._y,
+        self._frame.canvas.print_at(f'Population {player_faction.population}/{player_faction.population_cap}', self._x + offset, self._y,
                                     colour=Screen.COLOUR_GREEN)
 
     @property
@@ -112,7 +116,6 @@ class ConsoleView(widgets.Widget):
             line_index -= 1
 
     def add_line(self, text: str):
-        # self.text_lines.pop()
         self.text_lines.insert(0, text)
         self.view_bottom = 0
         self.update(0)
@@ -128,13 +131,12 @@ class ConsoleView(widgets.Widget):
 
 class EntityView(widgets.Widget):
 
-    def __init__(self, entity_list, faction_list, location, game_model):
+    def __init__(self, entity_list, location, game_model):
         super(EntityView, self).__init__('Entities')
         self._entity_list = entity_list
-        self._faction_list = faction_list
         self.location = location
-        self.selected_entity = 0
-        self.world = game_model.world_map
+        self.selected_entity = game.Entity(game_model.factions[0], game.entity_dict['null_entity'])
+        self._model = game_model
 
         self._is_tab_stop = False
 
@@ -163,7 +165,7 @@ class EntityView(widgets.Widget):
         self._frame.canvas.print_at('Factions', self._x, self._y + line, colour=Screen.COLOUR_WHITE, attr=Screen.A_BOLD)
         line += 1
 
-        for f in self._faction_list:
+        for f in self._model.factions:
             c = copy.copy(f.faction_color)
             self._frame.canvas.paint(f'{f.faction_icon} {f.faction_color}: ({f.origin.x}, {f.origin.y})',
                                      self._x, self._y + line, colour=c)
@@ -177,8 +179,8 @@ class EntityView(widgets.Widget):
 
         temp_list = []
 
-        if self.world.is_anchored:
-            temp_list.append(self.world.selected_entity)
+        if self._model.world_map.is_anchored:
+            temp_list.append(self._model.world_map.selected_entity)
         else:
             temp_list = self._entity_list
 
@@ -199,19 +201,39 @@ class EntityView(widgets.Widget):
 
             line += 1
 
-            self._frame.canvas.print_at(f'    Moved {e.used_movement}/{e.move_data[0]}', self._x, self._y + line,
-                                        colour=e_color, bg=e_bg)
-            line += 1
+            if e.move_data[0] > 0:
+                self._frame.canvas.print_at(f'    Moved {e.used_movement}/{e.move_data[0]}', self._x, self._y + line,
+                                            colour=e_color, bg=e_bg)
+                line += 1
+
+        line += 1
+
+        self._frame.canvas.print_at(f'{self.selected_entity.name}', self._x, self._y + line,
+                                    colour=self.selected_entity.faction_color, attr=Screen.A_BOLD)
+        line += 1
+        for a in self.selected_entity.abilities.keys():
+            if isinstance(self.selected_entity.abilities[a], list):
+                self._frame.canvas.print_at(f'{a}:', self._x, self._y + line, colour=self.selected_entity.faction_color)
+                line += 1
+
+                for b in self.selected_entity.abilities[a]:
+                    self._frame.canvas.print_at(f'  {b}', self._x, self._y + line,
+                                                colour=self.selected_entity.faction_color)
+                    line += 1
+            else:
+                self._frame.canvas.print_at(f'{a}: {self.selected_entity.abilities[a]}', self._x, self._y + line,
+                                            colour=self.selected_entity.faction_color)
+                line += 1
 
     def reset(self):
-        self.selected_entity = 0
+        self.selected_entity = game.Entity(self._model.factions[0], game.entity_dict['null_entity'])
         self._entity_list = []
 
     def process_event(self, event):
         if isinstance(event, asciimatics.event.KeyboardEvent):
             global_shortcuts(event)
 
-            if self.selected_entity != 0:
+            if self.selected_entity.name != '':
                 entity_index = self.location.entities.index(self.selected_entity)
 
                 if event.key_code == Screen.KEY_DOWN:
@@ -219,7 +241,6 @@ class EntityView(widgets.Widget):
                         self.selected_entity = self.location.entities[entity_index + 1]
                     else:
                         self.selected_entity = self.location.entities[0]
-
                     return None
                 elif event.key_code == Screen.KEY_UP:
                     if entity_index != 0:
@@ -229,7 +250,7 @@ class EntityView(widgets.Widget):
 
                     return None
                 elif event.key_code == 10:
-                    self.world.start_movement(self.location, self.selected_entity)
+                    self._model.world_map.start_movement(self.location, self.selected_entity)
                     self._frame.switch_focus(self._frame._layouts[0], 0, 0)
                     return event
                 elif event.key_code == Screen.KEY_ESCAPE:
@@ -264,6 +285,7 @@ class VoromapView(widgets.Widget):
 
         self.world_map.terrain_filter()
         self.anchor = self.world_map.tile_at_point(0, 0)
+        self.generation_dict_backup = copy.copy(self.world_map.generation_dict)
 
         self.reduce_cpu = True
 
@@ -276,14 +298,8 @@ class VoromapView(widgets.Widget):
         self._value = new_value
 
     def reset(self):
-        self.world_map.generation_dict = {'width': 80, 'height': 40,
-                                          'min_altitude': 0, 'max_altitude': 9,
-                                          'sea_level': 3,
-                                          'seed_count': 100,
-                                          'fuzz_percent': 5,
-                                          'mountains_per_continent': 1, 'mountain_range_length': 3,
-                                          'continent_count': 4, 'percent_land': 50,
-                                          'noise_weight': 3, 'noise_scale': 0.1,}
+        self.world_map.generation_dict = self.generation_dict_backup
+
         return None
 
     def update(self, frame_no):
@@ -307,7 +323,7 @@ class VoromapView(widgets.Widget):
                     icon1_color = 0
 
                 if self.show_heights:
-                    icon2 = j.height
+                    icon2 = j.precipitation
                     icon2_color = 0
 
                 if j is self.world_map.selected_tile:
@@ -453,6 +469,12 @@ class TextInputView(widgets.Text):
                     elif command_array[0] in ('continent', 'c', "Continent", 'C'):
                         self._model.world_map.continent_filter()
                         self.console.add_line('Continent filter on.')
+                    elif command_array[0] in ('heat', 'h', "Heat", 'H'):
+                        self._model.world_map.heat_filter()
+                        self.console.add_line('Heat filter on.')
+                    elif command_array[0] in ('precip', 'p', "Precip", 'P'):
+                        self._model.world_map.rain_filter()
+                        self.console.add_line('Precipitation filter on.')
                     else:
                         self.console.add_line('Invalid filter type.')
 
@@ -460,21 +482,17 @@ class TextInputView(widgets.Text):
                     self._model.create_new_game(True)
                     # self.console.height = Screen.height - self._model.world_map.generation_dict['height'] - 1
                     self.console.add_line('World regenerated.')
-
                 elif main_command in ('height', 'h', 'Height', 'H'):
                     self.map_display.show_heights = not self.map_display.show_heights
                     self.console.add_line(f'Showing heights: {self.map_display.show_heights}')
                     self.map_display.update(0)
-
                 elif main_command in ('icon', 'i', 'Icon', 'I'):
                     self.map_display.show_icons = not self.map_display.show_icons
                     self.console.add_line(f'Showing icons: {self.map_display.show_icons}')
                     self.map_display.update(0)
-
                 elif main_command in ('genvars', 'gv', 'GenVars', 'GV'):
                     for i in self.map_display.world_map.generation_dict:
                         self.console.add_line(f'{i}: {self.map_display.world_map.generation_dict[i]}')
-
                 elif main_command in ('edit', 'e', 'Edit', 'E'):
                     if command_array[0] in self.map_display.world_map.generation_dict.keys() and len(command_array) > 1 \
                             and self.test_valid_int(command_array[1]):
@@ -484,6 +502,7 @@ class TextInputView(widgets.Text):
                         self.console.add_line('Input a valid generation variable and integer value.')
                 elif main_command in ('end', 'n', 'End', 'N'):
                     self._model.end_turn()
+                    self._model.start_turn()
                     self.console.add_line(f'Turn {self._model.turn}')
             else:
                 self.console.add_line('Invalid command.')
@@ -518,7 +537,7 @@ class GameView(widgets.Frame):
         self._model = game_model
 
         super(GameView, self).__init__(screen,
-                                       width=int(self._model.world_map.generation_dict['width'] * 2 + 20),
+                                       width=int(self._model.world_map.generation_dict['width'] * 2 + 30),
                                        height=screen.height,
                                        on_load=self._reload_map,
                                        hover_focus=False,
@@ -529,10 +548,10 @@ class GameView(widgets.Frame):
         self.palette['edit_text'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
         self.palette['label'] = (Screen.COLOUR_WHITE, Screen.A_BOLD, Screen.COLOUR_BLACK)
 
-        layout = widgets.Layout([int(self._model.world_map.generation_dict['width'] * 2), 20])
+        layout = widgets.Layout([int(self._model.world_map.generation_dict['width'] * 2), 30])
 
         self._info_bar = InfoBar(self._model)
-        self._entity_display = EntityView([], self._model.factions, self._model.world_map.selected_tile, self._model)
+        self._entity_display = EntityView([], self._model.world_map.selected_tile, self._model)
         self._map_console = ConsoleView(screen.height - self._model.world_map.generation_dict['height'] - 2)
         self._map_view = VoromapView(self._model.world_map, self._map_console, self._entity_display)
         self._map_view.l = layout

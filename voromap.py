@@ -7,7 +7,7 @@ from math import sqrt
 from scipy import spatial
 from scipy.ndimage.filters import gaussian_filter
 from numpy import array
-from noise import perlin
+import noise
 import copy
 
 
@@ -17,11 +17,26 @@ import copy
 # river erosion
 # get random tile in continent/region
 
+# terrain_grid = [['Frozen', 'Frozen', 'Frozen', 'Frozen', 'Desert', 'Desert', 'Desert', 'Desert', 'Desert', 'Desert'],
+#                 ['Void', 'Frozen', 'Frozen', 'Frozen', 'Desert', 'Desert', 'Desert', 'Desert', 'Desert', 'Desert'],
+#                 ['Void', 'Void', 'Frozen', 'Frozen', 'Desert', 'Desert', 'Desert', 'Desert', 'Desert', 'Desert'],
+#                 ['Void', 'Void', 'Void', 'Frozen', 'Desert', 'Desert', 'Desert', 'Desert', 'Desert', 'Desert'],
+#                 ['Void', 'Void', 'Void', 'Void', 'Forest', 'Forest', 'Forest', 'Rainforest', 'Rainforest', 'Rainforest'],
+#                 ['Void', 'Void', 'Void', 'Void', 'Void', 'Forest', 'Forest', 'Rainforest', 'Rainforest', 'Rainforest'],
+#                 ['Void', 'Void', 'Void', 'Void', 'Void', 'Void', 'Rainforest', 'Rainforest', 'Rainforest', 'Rainforest'],
+#                 ['Void', 'Void', 'Void', 'Void', 'Void', 'Void', 'Void', 'Rainforest', 'Rainforest', 'Rainforest'],
+#                 ['Void', 'Void', 'Void', 'Void', 'Void', 'Void', 'Void', 'Void', 'Rainforest', 'Rainforest'],
+#                 ['Void', 'Void', 'Void', 'Void', 'Void', 'Void', 'Void', 'Void', 'Void', 'Rainforest']]
+
+
 class Tile:
     icon = '~'
     type = 'Void'  # Land vs Sea
     terrain = 'Void'  # Desert/Coast/Mountain/Forest/Barren
     color = 15
+
+    temperature = 0
+    precipitation = 0
 
     def __init__(self, x: int, y: int, height: int):
         self.x = x
@@ -115,7 +130,9 @@ class WorldMap:
                        'fuzz_percent': 5,
                        'mountains_per_continent': 1, 'mountain_range_length': 3,
                        'continent_count': 4, 'percent_land': 50,
-                       'noise_weight': 3, 'noise_scale': 0.1,}
+                       'noise_weight': 3, 'noise_scale': 0.1,
+                       'heat_noise_scale': 0.075, 'max_temp': 7, 'temp_variance': 3, 'min_temp': 3,
+                       'base_precip': 5, 'precip_variance': 5, 'precip_noise_scale': 0.05}
 
     selected_tile: Tile
     color_filter = 'Terrain'
@@ -169,6 +186,10 @@ class WorldMap:
 
         self.world = self.apply_simplex_noise()
         self.world = self.gaussian_smooth()
+
+        # self.set_heat_map()
+        # self.set_precipitation_map()
+        # self.set_tile_terrains()
 
         self.set_sea_tiles()
 
@@ -246,6 +267,37 @@ class WorldMap:
                     j = Tile(j.x, j.y, self.generation_dict['min_altitude'])
 
         # self.update_region_tiles()
+
+    # climate generation
+
+    def set_heat_map(self):
+        noise_map = self.world
+
+        equator = int(self.generation_dict['height'] / 2)
+        min_t = self.generation_dict['min_temp']
+
+        for i in noise_map:
+            for j in i:
+                j.temperature = int(self.generation_dict['max_temp'] - (min_t * (abs(j.y - equator) / equator))**1.1 +
+                                    int(self.generation_dict['temp_variance'] *
+                                        (noise.snoise2(j.x * self.generation_dict['heat_noise_scale'],
+                                                       j.y * self.generation_dict['heat_noise_scale']))))
+
+    def set_precipitation_map(self):
+        noise_map = self.world
+
+        for i in noise_map:
+            for j in i:
+                j.precipitation = int(self.generation_dict['base_precip'] + int(self.generation_dict['precip_variance'] *
+                                      noise.snoise2(j.x * self.generation_dict['precip_noise_scale'],
+                                                    j.y * self.generation_dict['precip_noise_scale'])))
+                if j.precipitation > j.temperature:
+                    j.precipitation = j.temperature
+
+    def set_tile_terrains(self):
+        for i in self.world:
+            for j in i:
+                j.terrain = terrain_grid[j.precipitation][j.temperature]
 
     # updating methods
 
@@ -356,23 +408,46 @@ class WorldMap:
                 for t in r.tiles:
                     t.color = c.color
 
+    def heat_filter(self):
+        temperature_colors = [15, 195, 87, 86, 84, 46, 40, 190, 226, 184, 178]
+
+        for i in self.world:
+            for j in i:
+                if j.type is 'Land':
+                    j.color = temperature_colors[j.temperature]
+
+    def rain_filter(self):
+        precipitation_colors = [224, 222, 227, 190, 119, 120, 48, 46, 34, 28, 22]
+
+        for i in self.world:
+            for j in i:
+                if j.type is 'Land':
+                    j.color = precipitation_colors[j.precipitation]
+
     def get_terrain_color(self, tile):
-        forest_colors = [23, 29, 22, 28, 34, 40, 46, 83, 85]
+        forest_colors = [23, 29, 22, 28, 34, 40, 46, 47, 48]
         ocean_colors = [17, 18, 19, 20, 21, 33, 45, 201, 201, 201]
         mountain_colors = [201, 201, 201, 233, 235, 237, 241, 248, 252, 255]
         desert_colors = [3, 186, 190, 226, 227, 228, 229, 230, 252, 255]
-        # orange desert colors [130, 136, 172, 178, 220, 226, 228, 230, 252, 255]
+        rainforest_colors = [24, 30, 36, 35, 41, 47, 83, 77]
+        frozen_colors = [63, 69, 75, 81, 87, 253, 255]
 
         color_table = [201, 201, 201, 201, 201, 201, 201, 201, 201]
 
         if tile.type is not 'Land':
             color_table = ocean_colors
-        elif tile.terrain is 'Desert':
-            color_table = desert_colors
-        elif tile.height < 6:
-            color_table = forest_colors
         elif tile.height >= 6:
             color_table = mountain_colors
+        elif tile.terrain is 'Desert':
+            color_table = desert_colors
+        elif tile.terrain is 'Forest':
+            color_table = forest_colors
+        elif tile.terrain is 'Rainforest':
+            color_table = rainforest_colors
+        elif tile.terrain is 'Frozen':
+            color_table = frozen_colors
+        else:
+            color_table = forest_colors
 
         return color_table[tile.height]
 
@@ -521,22 +596,6 @@ class WorldMap:
                     if j.height > self.generation_dict['sea_level']:
                         j.height = self.generation_dict['sea_level']
 
-    def gen_desert_regions(self):
-        for c in self.continents:
-            self.set_continent_deserts(c)
-
-    def set_continent_deserts(self, continent: Continent):
-        for r in continent.regions:
-            if r.terrain is 'None':
-                desert_chance = self.base_desert_percent
-
-                if self.distance(r.get_region_center(), (r.get_region_center()[0], self.height / 2)) \
-                        < self.height * (self.tropics_latitude / 100):
-                    desert_chance = self.tropics_desert_percent
-
-                if randint(0, 99) < desert_chance:
-                    r.terrain = 'Desert'
-
     def truncate_tile_heights(self):
         for i in self.world:
             for j in i:
@@ -568,31 +627,15 @@ class WorldMap:
 
     def apply_simplex_noise(self):
         noise_map = self.world
-        noise_generator = perlin.SimplexNoise
-        noise_generator.randomize(noise_generator, None)
 
         for i in noise_map:
             for j in i:
                 j.height += int(
                     self.generation_dict['noise_weight'] *
-                    (noise_generator.noise2(noise_generator,
-                                            j.x * self.generation_dict['noise_scale'],
-                                            j.y * self.generation_dict['noise_scale'])))
+                    (noise.snoise2(j.x * self.generation_dict['noise_scale'],
+                                   j.y * self.generation_dict['noise_scale'])))
 
         return noise_map
-
-    def fuzz_regions(self):
-        for r in self.regions:
-            tiles_to_fuzz = []
-            for t in r.tiles:
-                a = self.adjacent_tiles(t)
-                for q in a:
-                    if randint(0, 99) < self.generation_dict['fuzz_percent'] and q.type is not 'Land':
-                        q.icon = r.icon
-                        q.type = 'Land'
-                        tiles_to_fuzz.append(q)
-
-            r.tiles += tiles_to_fuzz
 
     # entity manipulation
 
