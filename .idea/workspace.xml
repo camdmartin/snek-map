@@ -4,6 +4,9 @@
     <list default="true" id="3e3ab0e6-05ef-4ceb-99f1-e940ce134b5a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asciiui.py" afterPath="$PROJECT_DIR$/asciiui.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/entities.py" afterPath="$PROJECT_DIR$/entities.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game.py" afterPath="$PROJECT_DIR$/game.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/voromap.py" afterPath="$PROJECT_DIR$/voromap.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,8 +24,8 @@
       <file leaf-file-name="voromap.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/voromap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="467">
-              <caret line="656" column="18" lean-forward="false" selection-start-line="656" selection-start-column="12" selection-end-line="656" selection-end-column="18" />
+            <state relative-caret-position="566">
+              <caret line="663" column="26" lean-forward="true" selection-start-line="663" selection-start-column="26" selection-end-line="663" selection-end-column="26" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
                 <element signature="e#7088#7269#0" expanded="false" />
@@ -46,23 +49,25 @@
                 <element signature="e#14117#14273#0" expanded="false" />
                 <element signature="e#19224#20511#0" expanded="false" />
                 <element signature="e#20971#21289#0" expanded="false" />
-                <element signature="e#23019#23406#0" expanded="false" />
-                <element signature="e#23469#24036#0" expanded="false" />
-                <element signature="e#24097#25534#0" expanded="false" />
-                <element signature="e#25598#26165#0" expanded="false" />
-                <element signature="e#26211#26320#0" expanded="false" />
+                <element signature="e#23229#23616#0" expanded="false" />
+                <element signature="e#23679#24246#0" expanded="false" />
+                <element signature="e#24307#25744#0" expanded="false" />
+                <element signature="e#25808#26375#0" expanded="false" />
+                <element signature="e#26421#26530#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="asciiui.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="asciiui.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/asciiui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="873">
-              <caret line="355" column="61" lean-forward="false" selection-start-line="355" selection-start-column="61" selection-end-line="355" selection-end-column="61" />
+            <state relative-caret-position="936">
+              <caret line="213" column="91" lean-forward="false" selection-start-line="213" selection-start-column="91" selection-end-line="213" selection-end-column="91" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#619#1893#0" expanded="false" />
+                <element signature="e#1935#3837#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -71,8 +76,8 @@
       <file leaf-file-name="game.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="24" column="21" lean-forward="false" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
+            <state relative-caret-position="674">
+              <caret line="100" column="44" lean-forward="false" selection-start-line="100" selection-start-column="44" selection-end-line="100" selection-end-column="44" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -80,11 +85,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="entities.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="entities.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/entities.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1476">
-              <caret line="82" column="39" lean-forward="true" selection-start-line="82" selection-start-column="39" selection-end-line="82" selection-end-column="39" />
+            <state relative-caret-position="314">
+              <caret line="77" column="51" lean-forward="true" selection-start-line="77" selection-start-column="51" selection-end-line="77" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -121,8 +126,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>def focus</find>
-      <find>KEY_DO</find>
       <find>f focus</find>
       <find>process</find>
       <find>_focus</find>
@@ -142,7 +145,6 @@
       <find>select</find>
       <find>anchor</find>
       <find>start_m</find>
-      <find>entity</find>
       <find>icon</find>
       <find>entities.ent</find>
       <find>faction_color</find>
@@ -151,6 +153,9 @@
       <find>move_data</find>
       <find>']</find>
       <find>list</find>
+      <find>{}</find>
+      <find>entity</find>
+      <find>init</find>
     </findStrings>
     <replaceStrings>
       <replace>color</replace>
@@ -176,10 +181,10 @@
         <option value="$PROJECT_DIR$/pygletui.py" />
         <option value="$USER_HOME$/Desktop/Programs/asciimatics-master/asciimatics/widgets.py" />
         <option value="$PROJECT_DIR$/llsim.py" />
-        <option value="$PROJECT_DIR$/voromap.py" />
         <option value="$PROJECT_DIR$/game.py" />
-        <option value="$PROJECT_DIR$/entities.py" />
+        <option value="$PROJECT_DIR$/voromap.py" />
         <option value="$PROJECT_DIR$/asciiui.py" />
+        <option value="$PROJECT_DIR$/entities.py" />
       </list>
     </option>
   </component>
@@ -463,7 +468,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501173224271</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Units and structures now display simultaneously.">
+      <created>1501174122242</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1501174122242</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView">
@@ -521,7 +533,8 @@
     <MESSAGE value="No duplicate faction colors or icons; colors now easily visible" />
     <MESSAGE value="Unique entities now createable. Don't have abilities yet, but working on that." />
     <MESSAGE value="Entirely reworked entity data storage; moved entity definition to own file. Should be easier to implement abilities now." />
-    <option name="LAST_COMMIT_MESSAGE" value="Entirely reworked entity data storage; moved entity definition to own file. Should be easier to implement abilities now." />
+    <MESSAGE value="Units and structures now display simultaneously." />
+    <option name="LAST_COMMIT_MESSAGE" value="Units and structures now display simultaneously." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -557,11 +570,11 @@
             <element signature="e#14117#14273#0" expanded="false" />
             <element signature="e#19224#20511#0" expanded="false" />
             <element signature="e#20971#21289#0" expanded="false" />
-            <element signature="e#23019#23406#0" expanded="false" />
-            <element signature="e#23469#24036#0" expanded="false" />
-            <element signature="e#24097#25534#0" expanded="false" />
-            <element signature="e#25598#26165#0" expanded="false" />
-            <element signature="e#26211#26320#0" expanded="false" />
+            <element signature="e#23229#23616#0" expanded="false" />
+            <element signature="e#23679#24246#0" expanded="false" />
+            <element signature="e#24307#25744#0" expanded="false" />
+            <element signature="e#25808#26375#0" expanded="false" />
+            <element signature="e#26421#26530#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -572,6 +585,8 @@
           <caret line="254" column="32" lean-forward="true" selection-start-line="254" selection-start-column="32" selection-end-line="254" selection-end-column="32" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#619#1893#0" expanded="false" />
+            <element signature="e#1935#3837#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -637,11 +652,11 @@
             <element signature="e#14117#14273#0" expanded="false" />
             <element signature="e#19224#20511#0" expanded="false" />
             <element signature="e#20971#21289#0" expanded="false" />
-            <element signature="e#23019#23406#0" expanded="false" />
-            <element signature="e#23469#24036#0" expanded="false" />
-            <element signature="e#24097#25534#0" expanded="false" />
-            <element signature="e#25598#26165#0" expanded="false" />
-            <element signature="e#26211#26320#0" expanded="false" />
+            <element signature="e#23229#23616#0" expanded="false" />
+            <element signature="e#23679#24246#0" expanded="false" />
+            <element signature="e#24307#25744#0" expanded="false" />
+            <element signature="e#25808#26375#0" expanded="false" />
+            <element signature="e#26421#26530#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -652,6 +667,8 @@
           <caret line="204" column="41" lean-forward="false" selection-start-line="204" selection-start-column="41" selection-end-line="204" selection-end-column="41" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#619#1893#0" expanded="false" />
+            <element signature="e#1935#3837#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -716,11 +733,11 @@
             <element signature="e#14117#14273#0" expanded="false" />
             <element signature="e#19224#20511#0" expanded="false" />
             <element signature="e#20971#21289#0" expanded="false" />
-            <element signature="e#23019#23406#0" expanded="false" />
-            <element signature="e#23469#24036#0" expanded="false" />
-            <element signature="e#24097#25534#0" expanded="false" />
-            <element signature="e#25598#26165#0" expanded="false" />
-            <element signature="e#26211#26320#0" expanded="false" />
+            <element signature="e#23229#23616#0" expanded="false" />
+            <element signature="e#23679#24246#0" expanded="false" />
+            <element signature="e#24307#25744#0" expanded="false" />
+            <element signature="e#25808#26375#0" expanded="false" />
+            <element signature="e#26421#26530#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -759,11 +776,11 @@
             <element signature="e#14117#14273#0" expanded="false" />
             <element signature="e#19224#20511#0" expanded="false" />
             <element signature="e#20971#21289#0" expanded="false" />
-            <element signature="e#23019#23406#0" expanded="false" />
-            <element signature="e#23469#24036#0" expanded="false" />
-            <element signature="e#24097#25534#0" expanded="false" />
-            <element signature="e#25598#26165#0" expanded="false" />
-            <element signature="e#26211#26320#0" expanded="false" />
+            <element signature="e#23229#23616#0" expanded="false" />
+            <element signature="e#23679#24246#0" expanded="false" />
+            <element signature="e#24307#25744#0" expanded="false" />
+            <element signature="e#25808#26375#0" expanded="false" />
+            <element signature="e#26421#26530#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -802,11 +819,11 @@
             <element signature="e#14117#14273#0" expanded="false" />
             <element signature="e#19224#20511#0" expanded="false" />
             <element signature="e#20971#21289#0" expanded="false" />
-            <element signature="e#23019#23406#0" expanded="false" />
-            <element signature="e#23469#24036#0" expanded="false" />
-            <element signature="e#24097#25534#0" expanded="false" />
-            <element signature="e#25598#26165#0" expanded="false" />
-            <element signature="e#26211#26320#0" expanded="false" />
+            <element signature="e#23229#23616#0" expanded="false" />
+            <element signature="e#23679#24246#0" expanded="false" />
+            <element signature="e#24307#25744#0" expanded="false" />
+            <element signature="e#25808#26375#0" expanded="false" />
+            <element signature="e#26421#26530#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -910,10 +927,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/game.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="674">
+          <caret line="100" column="44" lean-forward="false" selection-start-line="100" selection-start-column="44" selection-end-line="100" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/voromap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="656" column="18" lean-forward="false" selection-start-line="656" selection-start-column="12" selection-end-line="656" selection-end-column="18" />
+        <state relative-caret-position="566">
+          <caret line="663" column="26" lean-forward="true" selection-start-line="663" selection-start-column="26" selection-end-line="663" selection-end-column="26" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
             <element signature="e#7088#7269#0" expanded="false" />
@@ -937,40 +964,32 @@
             <element signature="e#14117#14273#0" expanded="false" />
             <element signature="e#19224#20511#0" expanded="false" />
             <element signature="e#20971#21289#0" expanded="false" />
-            <element signature="e#23019#23406#0" expanded="false" />
-            <element signature="e#23469#24036#0" expanded="false" />
-            <element signature="e#24097#25534#0" expanded="false" />
-            <element signature="e#25598#26165#0" expanded="false" />
-            <element signature="e#26211#26320#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/entities.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1476">
-          <caret line="82" column="39" lean-forward="true" selection-start-line="82" selection-start-column="39" selection-end-line="82" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="24" column="21" lean-forward="false" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#23229#23616#0" expanded="false" />
+            <element signature="e#23679#24246#0" expanded="false" />
+            <element signature="e#24307#25744#0" expanded="false" />
+            <element signature="e#25808#26375#0" expanded="false" />
+            <element signature="e#26421#26530#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/asciiui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="873">
-          <caret line="355" column="61" lean-forward="false" selection-start-line="355" selection-start-column="61" selection-end-line="355" selection-end-column="61" />
+        <state relative-caret-position="936">
+          <caret line="213" column="91" lean-forward="false" selection-start-line="213" selection-start-column="91" selection-end-line="213" selection-end-column="91" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#619#1893#0" expanded="false" />
+            <element signature="e#1935#3837#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entities.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="77" column="51" lean-forward="true" selection-start-line="77" selection-start-column="51" selection-end-line="77" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>

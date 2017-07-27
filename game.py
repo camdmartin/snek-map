@@ -98,7 +98,7 @@ class Game:
 
 
 def create_owned_entity(owner: Faction, tile, data):
-    e = entities.create_entity(owner, data)
+    e = entities.create_entity(owner, tile, data)
     tile.entities.append(e)
     owner.entities.append(e)
 
@@ -107,3 +107,4 @@ def create_owned_entity(owner: Faction, tile, data):
 
 def place_entity(entity: entities.Entity, tile: voromap.Tile):
     tile.entities.append(entity)
+    entity.location = tile

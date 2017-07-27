@@ -136,8 +136,9 @@ class EntityView(widgets.Widget):
         super(EntityView, self).__init__('Entities')
         self._entity_list = entity_list
         self.location = location
-        self.selected_entity = entities.Entity(game_model.factions[0], {})
         self._model = game_model
+        self.selected_entity = entities.Entity(game_model.factions[0], self._model.world_map.selected_tile,
+                                               {'name': '', 'icon': '/', 'type': 'entity', 'cost': 0, 'upkeep': 0})
 
         self._is_tab_stop = False
 
@@ -195,49 +196,22 @@ class EntityView(widgets.Widget):
                 e_color = color
                 e_bg = Screen.COLOUR_BLACK
 
-            icon = e.data['icon']
-            name = e.data['name']
-
-            self._frame.canvas.print_at(f'{icon}: {name}', self._x, self._y + line, colour=e_color,
-                                        bg=e_bg)
-            line += 1
-
-            self._frame.canvas.print_at(f'    Owner: {color}', self._x, self._y + line,
-                                        colour=e_color, bg=e_bg)
-
-            line += 1
-
-            if isinstance(e, entities.Unit):
-                move = e.data['move_distance']
-                self._frame.canvas.print_at(f'    Moved {e.used_movement}/{move}', self._x, self._y + line,
-                                            colour=e_color, bg=e_bg)
+            for l in e.display_quick():
+                self._frame.canvas.print_at(l, self._x, self._y + line, colour=e_color, bg=e_bg)
                 line += 1
 
         line += 1
 
-        name = self.selected_entity.data.get('name', 'null')
-        color = self.selected_entity.owner.color
+        if self.selected_entity.data['name'] is not '':
+            for l in self.selected_entity.display_details():
+                self._frame.canvas.print_at(l, self._x, self._y + line, colour=self.selected_entity.owner.color)
+                line += 1
 
-        self._frame.canvas.print_at(f'{name}', self._x, self._y + line,
-                                    colour=color, attr=Screen.A_BOLD)
         line += 1
 
-        # for a in self.selected_entity.abilities.keys():
-        #     if isinstance(self.selected_entity.abilities[a], list):
-        #         self._frame.canvas.print_at(f'{a}:', self._x, self._y + line, colour=self.selected_entity.color)
-        #         line += 1
-        #
-        #         for b in self.selected_entity.abilities[a]:
-        #             self._frame.canvas.print_at(f'  {b}', self._x, self._y + line,
-        #                                         colour=self.selected_entity.color)
-        #             line += 1
-        #     else:
-        #         self._frame.canvas.print_at(f'{a}: {self.selected_entity.abilities[a]}', self._x, self._y + line,
-        #                                     colour=self.selected_entity.color)
-        #         line += 1
-
     def reset(self):
-        self.selected_entity = entities.Entity(self._model.factions[0], {})
+        self.selected_entity = entities.Entity(self._model.factions[0], self._model.world_map.selected_tile,
+                                               {'name': '', 'icon': '/', 'type': 'entity', 'cost': 0, 'upkeep': 0})
         self._entity_list = []
 
     def process_event(self, event):
@@ -258,7 +232,6 @@ class EntityView(widgets.Widget):
                         self.selected_entity = self.location.entities[entity_index - 1]
                     else:
                         self.selected_entity = self.location.entities[-1]
-
                     return None
                 elif event.key_code == 10 and isinstance(self.selected_entity, entities.Unit) :
                     self._model.world_map.start_movement(self.location, self.selected_entity)
@@ -267,6 +240,8 @@ class EntityView(widgets.Widget):
                 elif event.key_code == Screen.KEY_ESCAPE:
                     self._frame.switch_focus(self._frame._layouts[0], 0, 0)
                     return None
+
+                self.selected_entity.handle_abilities(event)
 
         return event
 
@@ -279,7 +254,7 @@ class EntityView(widgets.Widget):
         self._value = new_value
 
     def required_height(self, offset, width):
-        return len(self._entity_list) * 4
+        return len(self._entity_list) * 8
 
 
 class VoromapView(widgets.Widget):
@@ -368,11 +343,15 @@ class VoromapView(widgets.Widget):
                     else:
                         sel_color = 219
 
-                    icon1_bg = icon2_bg = sel_color
                     if icon1 == '█':
                         icon1_color = sel_color
+                    else:
+                        icon1_bg = sel_color
+
                     if icon2 == '█':
                         icon2_color = sel_color
+                    else:
+                        icon2_bg = sel_color
 
                 self._frame.canvas.paint(f'{icon1}{icon2}', (self._x + j.x) * 2, self._y + j.y,
                                          colour_map=[(icon1_color, icon1_attr, icon1_bg),

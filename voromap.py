@@ -654,10 +654,17 @@ class WorldMap:
         if origin.entities.__contains__(entity) and entity.used_movement < entity.data['move_distance']:
             origin.entities.remove(entity)
             destination.entities.append(entity)
+            entity.location = destination
             entity.used_movement += ceil(self.distance((origin.x, origin.y), (destination.x, destination.y)))
             return True
 
         return False
+
+    def reconcile_entity_locations(self):
+        for i in self.world:
+            for j in i:
+                for e in j.entities:
+                    e.location = j
 
     # printing methods
 
