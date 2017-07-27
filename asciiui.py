@@ -244,7 +244,7 @@ class EntityView(widgets.Widget):
         if isinstance(event, asciimatics.event.KeyboardEvent):
             global_shortcuts(event)
 
-            if self.selected_entity.data['name'] != '/':
+            if self.selected_entity.data.get('name', '/') != '/':
                 entity_index = self.location.entities.index(self.selected_entity)
 
                 if event.key_code == Screen.KEY_DOWN:
@@ -323,12 +323,37 @@ class VoromapView(widgets.Widget):
                 icon1_bg = icon2_bg = j.color
 
                 if len(j.entities) > 0:
-                    icon1 = j.entities[0].data['icon']
-                    icon1_color = 0
-                    icon1_bg = j.entities[0].owner.color
+                    structures = []
+                    units = []
 
-                    icon2 = ' '
-                    icon2_bg = icon1_bg
+                    for e in j.entities:
+                        if isinstance(e, entities.Structure):
+                            structures.append(e)
+                        elif isinstance(e, entities.Unit):
+                            units.append(e)
+
+                    if len(structures) > 0 and len(units) == 0:
+                        icon2 = structures[-1].data['icon']
+                        icon2_color = 0
+                        icon2_bg = structures[-1].owner.color
+
+                        icon1 = ' '
+                        icon1_bg = icon2_bg
+                    elif len(units) > 0 and len(structures) == 0:
+                        icon1 = units[-1].data['icon']
+                        icon1_color = 0
+                        icon1_bg = units[-1].owner.color
+
+                        icon2 = ' '
+                        icon2_bg = icon1_bg
+                    else:
+                        icon1 = units[-1].data['icon']
+                        icon1_color = 0
+                        icon1_bg = units[-1].owner.color
+
+                        icon2 = structures[-1].data['icon']
+                        icon2_color = 0
+                        icon2_bg = structures[-1].owner.color
                 elif self.show_icons:
                     icon1 = j.icon
                     icon1_color = 0

@@ -4,8 +4,6 @@
     <list default="true" id="3e3ab0e6-05ef-4ceb-99f1-e940ce134b5a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asciiui.py" afterPath="$PROJECT_DIR$/asciiui.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game.py" afterPath="$PROJECT_DIR$/game.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/voromap.py" afterPath="$PROJECT_DIR$/voromap.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -58,11 +56,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="asciiui.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="asciiui.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/asciiui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="217" column="58" lean-forward="false" selection-start-line="217" selection-start-column="58" selection-end-line="217" selection-end-column="58" />
+            <state relative-caret-position="873">
+              <caret line="355" column="61" lean-forward="false" selection-start-line="355" selection-start-column="61" selection-end-line="355" selection-end-column="61" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -82,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="entities.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="entities.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/entities.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="737">
-              <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+            <state relative-caret-position="1476">
+              <caret line="82" column="39" lean-forward="true" selection-start-line="82" selection-start-column="39" selection-end-line="82" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -151,8 +149,8 @@
       <find>name</find>
       <find>selected_entity</find>
       <find>move_data</find>
-      <find>list</find>
       <find>']</find>
+      <find>list</find>
     </findStrings>
     <replaceStrings>
       <replace>color</replace>
@@ -180,8 +178,8 @@
         <option value="$PROJECT_DIR$/llsim.py" />
         <option value="$PROJECT_DIR$/voromap.py" />
         <option value="$PROJECT_DIR$/game.py" />
-        <option value="$PROJECT_DIR$/asciiui.py" />
         <option value="$PROJECT_DIR$/entities.py" />
+        <option value="$PROJECT_DIR$/asciiui.py" />
       </list>
     </option>
   </component>
@@ -458,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501012690543</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Entirely reworked entity data storage; moved entity definition to own file. Should be easier to implement abilities now.">
+      <created>1501173224271</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1501173224271</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -515,7 +520,8 @@
     <MESSAGE value="Added information bar, turns (press n in input field), moves per turn, and nominally assigned the player a faction" />
     <MESSAGE value="No duplicate faction colors or icons; colors now easily visible" />
     <MESSAGE value="Unique entities now createable. Don't have abilities yet, but working on that." />
-    <option name="LAST_COMMIT_MESSAGE" value="Unique entities now createable. Don't have abilities yet, but working on that." />
+    <MESSAGE value="Entirely reworked entity data storage; moved entity definition to own file. Should be easier to implement abilities now." />
+    <option name="LAST_COMMIT_MESSAGE" value="Entirely reworked entity data storage; moved entity definition to own file. Should be easier to implement abilities now." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -940,13 +946,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/asciiui.py">
+    <entry file="file://$PROJECT_DIR$/entities.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="217" column="58" lean-forward="false" selection-start-line="217" selection-start-column="58" selection-end-line="217" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1476">
+          <caret line="82" column="39" lean-forward="true" selection-start-line="82" selection-start-column="39" selection-end-line="82" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -960,11 +964,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/entities.py">
+    <entry file="file://$PROJECT_DIR$/asciiui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="737">
-          <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="873">
+          <caret line="355" column="61" lean-forward="false" selection-start-line="355" selection-start-column="61" selection-end-line="355" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
