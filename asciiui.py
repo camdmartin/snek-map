@@ -4,6 +4,7 @@ from asciimatics.screen import Screen
 from asciimatics.scene import Scene
 import voromap
 import game
+import entities
 import os
 import copy
 
@@ -135,7 +136,7 @@ class EntityView(widgets.Widget):
         super(EntityView, self).__init__('Entities')
         self._entity_list = entity_list
         self.location = location
-        self.selected_entity = game.Entity(game_model.factions[0], game.entity_dict['null_entity'])
+        self.selected_entity = entities.Entity(game_model.factions[0], {})
         self._model = game_model
 
         self._is_tab_stop = False
@@ -166,8 +167,8 @@ class EntityView(widgets.Widget):
         line += 1
 
         for f in self._model.factions:
-            c = copy.copy(f.faction_color)
-            self._frame.canvas.paint(f'{f.faction_icon} {f.faction_color}: ({f.origin.x}, {f.origin.y})',
+            c = copy.copy(f.color)
+            self._frame.canvas.paint(f'{f.faction_icon} {f.color}: ({f.origin.x}, {f.origin.y})',
                                      self._x, self._y + line, colour=c)
             line += 1
 
@@ -185,55 +186,65 @@ class EntityView(widgets.Widget):
             temp_list = self._entity_list
 
         for e in temp_list:
+            color = e.owner.color
+
             if e is self.selected_entity and self._has_focus:
                 e_color = Screen.COLOUR_BLACK
-                e_bg = e.faction_color
+                e_bg = color
             else:
-                e_color = e.faction_color
+                e_color = color
                 e_bg = Screen.COLOUR_BLACK
 
-            self._frame.canvas.print_at(f'{e.icon}: {e.name}', self._x, self._y + line, colour=e_color,
+            icon = e.data['icon']
+            name = e.data['name']
+
+            self._frame.canvas.print_at(f'{icon}: {name}', self._x, self._y + line, colour=e_color,
                                         bg=e_bg)
             line += 1
 
-            self._frame.canvas.print_at(f'    Owner: {e.faction_color}', self._x, self._y + line,
+            self._frame.canvas.print_at(f'    Owner: {color}', self._x, self._y + line,
                                         colour=e_color, bg=e_bg)
 
             line += 1
 
-            if e.move_data[0] > 0:
-                self._frame.canvas.print_at(f'    Moved {e.used_movement}/{e.move_data[0]}', self._x, self._y + line,
+            if isinstance(e, entities.Unit):
+                move = e.data['move_distance']
+                self._frame.canvas.print_at(f'    Moved {e.used_movement}/{move}', self._x, self._y + line,
                                             colour=e_color, bg=e_bg)
                 line += 1
 
         line += 1
 
-        self._frame.canvas.print_at(f'{self.selected_entity.name}', self._x, self._y + line,
-                                    colour=self.selected_entity.faction_color, attr=Screen.A_BOLD)
-        line += 1
-        for a in self.selected_entity.abilities.keys():
-            if isinstance(self.selected_entity.abilities[a], list):
-                self._frame.canvas.print_at(f'{a}:', self._x, self._y + line, colour=self.selected_entity.faction_color)
-                line += 1
+        name = self.selected_entity.data.get('name', 'null')
+        color = self.selected_entity.owner.color
 
-                for b in self.selected_entity.abilities[a]:
-                    self._frame.canvas.print_at(f'  {b}', self._x, self._y + line,
-                                                colour=self.selected_entity.faction_color)
-                    line += 1
-            else:
-                self._frame.canvas.print_at(f'{a}: {self.selected_entity.abilities[a]}', self._x, self._y + line,
-                                            colour=self.selected_entity.faction_color)
-                line += 1
+        self._frame.canvas.print_at(f'{name}', self._x, self._y + line,
+                                    colour=color, attr=Screen.A_BOLD)
+        line += 1
+
+        # for a in self.selected_entity.abilities.keys():
+        #     if isinstance(self.selected_entity.abilities[a], list):
+        #         self._frame.canvas.print_at(f'{a}:', self._x, self._y + line, colour=self.selected_entity.color)
+        #         line += 1
+        #
+        #         for b in self.selected_entity.abilities[a]:
+        #             self._frame.canvas.print_at(f'  {b}', self._x, self._y + line,
+        #                                         colour=self.selected_entity.color)
+        #             line += 1
+        #     else:
+        #         self._frame.canvas.print_at(f'{a}: {self.selected_entity.abilities[a]}', self._x, self._y + line,
+        #                                     colour=self.selected_entity.color)
+        #         line += 1
 
     def reset(self):
-        self.selected_entity = game.Entity(self._model.factions[0], game.entity_dict['null_entity'])
+        self.selected_entity = entities.Entity(self._model.factions[0], {})
         self._entity_list = []
 
     def process_event(self, event):
         if isinstance(event, asciimatics.event.KeyboardEvent):
             global_shortcuts(event)
 
-            if self.selected_entity.name != '':
+            if self.selected_entity.data['name'] != '/':
                 entity_index = self.location.entities.index(self.selected_entity)
 
                 if event.key_code == Screen.KEY_DOWN:
@@ -249,7 +260,7 @@ class EntityView(widgets.Widget):
                         self.selected_entity = self.location.entities[-1]
 
                     return None
-                elif event.key_code == 10:
+                elif event.key_code == 10 and isinstance(self.selected_entity, entities.Unit) :
                     self._model.world_map.start_movement(self.location, self.selected_entity)
                     self._frame.switch_focus(self._frame._layouts[0], 0, 0)
                     return event
@@ -312,9 +323,9 @@ class VoromapView(widgets.Widget):
                 icon1_bg = icon2_bg = j.color
 
                 if len(j.entities) > 0:
-                    icon1 = j.entities[0].icon
+                    icon1 = j.entities[0].data['icon']
                     icon1_color = 0
-                    icon1_bg = j.entities[0].faction_color
+                    icon1_bg = j.entities[0].owner.color
 
                     icon2 = ' '
                     icon2_bg = icon1_bg
@@ -342,12 +353,13 @@ class VoromapView(widgets.Widget):
                                          colour_map=[(icon1_color, icon1_attr, icon1_bg),
                                                      (icon2_color, icon2_attr, icon2_bg)])
 
-                if self.world_map.is_anchored:
-                    selection_data = self.world_map.selected_entity.move_data
+                if self.world_map.is_anchored and isinstance(self.world_map.selected_entity, entities.Unit):
+                    move_distance = self.world_map.selected_entity.data['move_distance']
+                    move_terrain = self.world_map.selected_entity.data['terrain']
 
-                    if selection_data[0] > 0 and vm.distance((j.x, j.y),
+                    if move_distance > 0 and vm.distance((j.x, j.y),
                                                              (self.world_map.anchor.x, self.world_map.anchor.y)) \
-                            <= selection_data[0] and selection_data[1].__contains__(j.type):
+                            <= move_distance and move_terrain is j.type:
                         self._frame.canvas.highlight(j.x * 2, j.y, 2, 1, fg=226, bg=icon1_bg, blend=70)
 
     def handle_arrow_input(self, event):
@@ -390,10 +402,10 @@ class VoromapView(widgets.Widget):
         d = self.world_map.tile_at_point(s.x + dx, s.y + dy)
 
         if anchored:
-            # self.console.add_line('Anchored')
             a = self.world_map.anchor
-            if self.world_map.distance((a.x, a.y), (s.x + dx, s.y + dy)) > self.world_map.selected_entity.move_data[0] \
-                    or not self.world_map.selected_entity.move_data[1].__contains__(d.type):
+            if self.world_map.distance((a.x, a.y), (s.x + dx, s.y + dy)) > \
+                    self.world_map.selected_entity.data['move_distance'] \
+                    or not self.world_map.selected_entity.data['terrain'] is d.type:
                 return False
 
         try:

@@ -3,6 +3,7 @@ from random import shuffle
 from asciimatics.screen import Screen
 import matplotlib.path as mplpath
 from math import hypot
+from math import ceil
 from math import sqrt
 from scipy import spatial
 from scipy.ndimage.filters import gaussian_filter
@@ -188,7 +189,7 @@ class WorldMap:
         self.world = self.gaussian_smooth()
 
         # self.set_heat_map()
-        # self.set_precipitation_map()
+        # ;self.set_precipitation_map()
         # self.set_tile_terrains()
 
         self.set_sea_tiles()
@@ -294,10 +295,10 @@ class WorldMap:
                 if j.precipitation > j.temperature:
                     j.precipitation = j.temperature
 
-    def set_tile_terrains(self):
-        for i in self.world:
-            for j in i:
-                j.terrain = terrain_grid[j.precipitation][j.temperature]
+    # def set_tile_terrains(self):
+        # for i in self.world:
+            # for j in i:
+                # j.terrain = terrain_grid[j.precipitation][j.temperature]
 
     # updating methods
 
@@ -650,10 +651,10 @@ class WorldMap:
         self.is_anchored = False
 
     def move_entity(self, entity, origin, destination):
-        if origin.entities.__contains__(entity) and entity.used_movement < entity.move_data[0]:
+        if origin.entities.__contains__(entity) and entity.used_movement < entity.data['move_distance']:
             origin.entities.remove(entity)
             destination.entities.append(entity)
-            entity.used_movement += int(self.distance((origin.x, origin.y), (destination.x, destination.y)))
+            entity.used_movement += ceil(self.distance((origin.x, origin.y), (destination.x, destination.y)))
             return True
 
         return False
